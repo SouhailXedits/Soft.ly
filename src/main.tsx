@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import'./index.css'
 import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, from } from '@apollo/client';
-//import { onError } from '@apollo/client/link/error';
 import { GQL_API_LINK } from './config.ts';
 
 

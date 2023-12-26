@@ -5,16 +5,7 @@ import { client } from "../main";
 import { API_LINK } from "../config";
 //import { useUser } from "../features/auth/useUser";
 
-// interface CreateShortLinkResult {
-//   id: string;
-//   created_at: string;
-//   longUrl: string;
-//   shortUrl: string;
-//   title: string;
-//   qr_image_url: string;
-//   iconFilePath: string;
-//   user_id: string;
-// }
+
 
 export async function getShorterUrl({
   longUrl,
@@ -108,23 +99,35 @@ export const getUrl = gql`
 `;
 
 export async function getClicksData(userId: string | null) {
+  const token = localStorage.getItem('token')
   try {
-    const res = await fetch(`${API_LINK}status/count/${userId}`);
+    const res = await fetch(`${API_LINK}status/count/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // Add other headers if needed
+      },
+    });
+
     const data = await res.json();
     return data;
   } catch {
-    throw new Error("error on fetching clicks data");
+    throw new Error("Error fetching clicks data");
   }
 }
 
 export async function getClicksDataByUrl(urlId: string | null) {
-  console.log(urlId);
   const endpoint = `${API_LINK}status/count/url/${urlId}`;
+  const token = localStorage.getItem("token");
   try {
-    const res = await fetch(endpoint);
+    const res = await fetch(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     const data = await res.json();
     return data;
   } catch {
-    throw new Error("error on fetching clicks data");
+    throw new Error("Error fetching clicks data");
   }
 }
