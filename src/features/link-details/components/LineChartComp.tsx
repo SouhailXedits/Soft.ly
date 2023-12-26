@@ -22,7 +22,7 @@
 //         <YAxis />
 //         <Tooltip />
 //         <Legend />
-//         <Line type="basis" dataKey="value" stroke="#8884d8" />
+//         <Line type="basis" dataKey="avg" stroke="#8884d8" />
 //       </LineChart>
 //     </ResponsiveContainer>
 //   );

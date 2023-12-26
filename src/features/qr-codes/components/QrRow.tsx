@@ -14,24 +14,16 @@ import {
 import { formatDate } from "../../../utils/helpers";
 import { useEffect, useRef, useState } from "react";
 import { useDeleteQR } from "../hooks/useDeleteQr";
-type QrRowProps = {
-  qr: {
-    id: string;
-    created_at: string;
-    qr_image_url: string;
-    longUrl: string;
-    title: string;
-  };
-};
+import { QrRowProps } from "../../../types";
+
 
 const QrRow = ({ qr }: QrRowProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);
   const { deleteQr, isPending } = useDeleteQR();
   const [isOpenOptionsModal, setIsOpenOptionsModal] = useState(false);
 
-
   function handleDelete() {
-    deleteQr(qr.id);
+    deleteQr(String(qr.id));
   }
 
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -96,9 +88,9 @@ const QrRow = ({ qr }: QrRowProps) => {
                   <BsThreeDots />
                 </button>
                 {isOpenOptionsModal ? (
-                  <div className="absolute top-[3rem] max-w-[200px] right-0  p-3 rounded shadow-md border">
+                  <div className="absolute top-[3rem] w-[182px] right-0  p-3 rounded shadow-md border flex flex-col bg-white">
                     <button
-                      className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all"
+                      className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all w-full"
                       onClick={handleDelete}
                       disabled={isPending}
                     >

@@ -6,22 +6,23 @@ import request from "graphql-request";
 import gql from "graphql-tag";
 import { useUser } from "../auth/useUser";
 import { GQL_API_LINK } from "../../config";
+import { ApiResponse, UrlData } from "../../types";
 
-interface UrlData {
-  // getUrlsWithUserId: {
-    id: string;
-    created_at: string;
-    longUrl: string;
-    shortUrl: string;
-    title: string;
-    qr_image_url: string;
-    user_id: string;
-  // };
-}
+// interface UrlData {
+//   // getUrlsWithUserId: {
+//     id: string;
+//     created_at: string;
+//     longUrl: string;
+//     shortUrl: string;
+//     title: string;
+//     qr_image_url: string;
+//     user_id: string;
+//   // };
+// }
 
-interface ApiResponse {
-  getUrlsWithUserId: UrlData[];
-}
+// interface ApiResponse {
+//   getUrlsWithUserId: UrlData[];
+// }
 
 function LinksLayout() {
   const [showFilter, setShowFilter] = useState("active");

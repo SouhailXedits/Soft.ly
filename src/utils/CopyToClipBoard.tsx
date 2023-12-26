@@ -2,10 +2,7 @@
 import copy from "clipboard-copy";
 import { BsCopy } from "react-icons/bs";
 import { toast } from "react-hot-toast";
-
-interface CopyToClipboardButtonProps {
-  text: string;
-}
+import { CopyToClipboardButtonProps } from "../types";
 
 const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
   text,

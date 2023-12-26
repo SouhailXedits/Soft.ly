@@ -4,13 +4,10 @@ import {useSignUp} from './useSignup'
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 import Loader from "../../../ui/Loader";
+import { LoginFormValues } from "../../../types";
 
 
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
 
 const LoginForm: React.FC = () => {
 

@@ -67,7 +67,7 @@ function SideBar() {
             className=" bg-white shadow-sm border absolute top-0 -right-[200px] p-3 rounded z-30"
             ref={modalRef}
           >
-            <NavigLink path="/links/create" >
+            <NavigLink path="/links/create">
               {/* <BsLink45Deg /> {!isCollapsed ? "Create link" : ""} */}
               <BsLink45Deg /> Create link
             </NavigLink>
@@ -99,6 +99,7 @@ function SideBar() {
         <NavigLink path="/campains">
           <CiFolderOn /> {!isCollapsed ? "Campaigns" : ""}
         </NavigLink>
+        <a href="souhail.vercel.app">souhail</a>
       </div>
       <NavigLink path="/settings">
         <CiSettings /> {!isCollapsed ? "Settings" : ""}

@@ -10,23 +10,24 @@ import {
 } from "react-icons/bs";
 import { useState } from "react";
 import { useUser } from "../auth/useUser";
-import gql from "graphql-tag";
 import { GQL_API_LINK } from "../../config";
+import { getUrls } from "../../services/apiLinks";
+import { ApiResponse } from "../../types";
 
-interface UrlData {
-  id: number;
-  created_at: string;
-  longUrl: string;
-  shortUrl: string;
-  title: string;
-  qr_image_url: string;
-  iconFilePath:string;
-  user_id: string;
-}
+// interface UrlData {
+//   id: number;
+//   created_at: string;
+//   longUrl: string;
+//   shortUrl: string;
+//   title: string;
+//   qr_image_url: string;
+//   iconFilePath:string;
+//   user_id: string;
+// }
 
-interface ApiResponse {
-  getUrlsWithUserId: UrlData[];
-}
+// interface ApiResponse {
+//   getUrlsWithUserId: UrlData[];
+// }
 
 
 function LinksLayout() {
@@ -40,21 +41,7 @@ function LinksLayout() {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const [, { user_id }] = queryKey;
-
-      const getUrlsQuery = gql`
-        query GetUrlsWithUserId($user_id: String!) {
-          getUrlsWithUserId(id: $user_id) {
-            id
-            created_at
-            longUrl
-            shortUrl
-            title
-            qr_image_url
-            iconFilePath
-            user_id
-          }
-        }
-      `;
+      const getUrlsQuery = getUrls
 
       return request(GQL_API_LINK, getUrlsQuery, {
         user_id,

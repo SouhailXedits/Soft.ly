@@ -15,6 +15,7 @@ import CreateLinkForm from './features/links/CreateLinkForm'
 import CreateQRForm from "./features/qr-codes/CreateQRForm";
 import { Toaster } from 'react-hot-toast'
 import Analytics from './features/analytics/Analytics'
+import LinkDetails from './features/link-details/LinkDetails'
 
 function App() {
   const queryClient = new QueryClient({
@@ -70,6 +71,10 @@ function App() {
         {
           path: "/settings",
           element: <Home />,
+        },
+        {
+          path: "/link-details",
+          element: <LinkDetails />,
         },
       ],
     },

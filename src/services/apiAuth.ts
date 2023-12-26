@@ -3,10 +3,8 @@ import supabase from "./supabase";
 import { client } from "../main";
 import request from "graphql-request";
 import { GQL_API_LINK } from "../config";
+import { LoginResult, ValidateTokenResult } from "../types";
 
-interface LoginResult {
-  token: string;
-}
 export async function signup({
   email,
   password,
@@ -35,10 +33,6 @@ export async function signup({
 }
 
 
-
-interface LoginResult {
-  token: string;
-}
 export async function login({
   email,
   password,
@@ -90,23 +84,7 @@ export async function loginWithGoogle() {
 }
 
 
-// export async function getCurrentUser() {
-//   const { data: session } = await supabase.auth.getSession();
-//   if (!session.session) return null;
 
-//   const { data, error } = await supabase.auth.getUser();
-
-//   if (error) throw new Error(error.message);
-//   return data?.user;
-// }
-
-interface ValidateTokenResult {
-  validateToken: {
-    id: string;
-    role: string;
-    email: string;
-  };
-}
 export async function getCurrentUser() {
   const getUserQuery = gql`
     query ValidateToken($jwt: String!) {
@@ -145,10 +123,6 @@ export const getUser = gql`
 `;
 
 
-// export async function logout() {
-//   const { error } = await supabase.auth.signOut();
-//   if (error) throw new Error(error.message);
-// }
 export async function logout() {
   localStorage.removeItem('token')
 }

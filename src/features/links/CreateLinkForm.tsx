@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useShorterUrl } from "./hooks/useShortenLink";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
 
@@ -8,6 +8,7 @@ function CreateLinkForm() {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [back_half, setBackhalf] = useState("");
+  const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { shortenUrl, isPending } = useShorterUrl();
   const isButtonDisabled = url === "";
   const { user} = useUser()
@@ -19,6 +20,34 @@ function CreateLinkForm() {
     }
   }
 
+  const handleUrlBlur = () => {
+    let updatedUrl = url.trim();
+
+    if (
+      updatedUrl !== "" &&
+      !updatedUrl.startsWith("http://") &&
+      !updatedUrl.startsWith("https://")
+    ) {
+      updatedUrl = "http://" + updatedUrl + "/";
+      setUrl(updatedUrl);
+    }
+  };
+
+  const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newBackHalf = e.target.value;
+
+    // Validate the back half format
+    const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
+
+    if (!backHalfRegex.test(newBackHalf)) {
+      setBackHalfFormatWarning(true);
+    } else {
+      setBackHalfFormatWarning(false);
+      setBackhalf(newBackHalf);
+    }
+  };
+
+
   return (
     <div className="flex bg-white min-h-screen px-12 py-7 justify-center">
       <div className=" flex flex-col justify-between">
@@ -29,9 +58,11 @@ function CreateLinkForm() {
             className="form-input"
             type="text"
             placeholder="https://example.com/my-long-url"
-            defaultValue={url}
+            value={url}
             onChange={(e) => setUrl(e.target.value)}
+            onBlur={handleUrlBlur}
           />
+          
           <h1 className=" text-xl font-bold mt-6 mb-2">Code details</h1>
           <p>Title(optional)</p>
           <input
@@ -70,8 +101,14 @@ function CreateLinkForm() {
                 type="text"
                 className="form-input w-full"
                 defaultValue={back_half}
-                onChange={(e) => setBackhalf(e.target.value)}
+                onChange={handleBackHalfChange}
               />
+              {backHalfFormatWarning && (
+                <p className="text-red-500 mt-2">
+                  Please enter a valid back-half with a maximum length of 10
+                  alphanumeric characters.
+                </p>
+              )}
             </div>
           </div>
         </div>

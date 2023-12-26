@@ -4,16 +4,17 @@ import { useLogin } from "./useLogin";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 import Loader from "../../../ui/Loader";
+import { LoginFormValues } from "../../../types";
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+// interface LoginFormValues {
+//   email: string;
+//   password: string;
+// }
 
 const LoginForm: React.FC = () => {
   const { login, isPending: loggingIn } = useLogin();
   const navigate = useNavigate();
-  const { isLoading,isAuthenticated } = useUser();
+  const { isLoading,isAuthenticated }  = useUser();
   console.log(isAuthenticated)
 
   useEffect(
@@ -22,12 +23,6 @@ const LoginForm: React.FC = () => {
     },
     [isAuthenticated, isLoading, navigate]
   );
-  // useEffect(
-  //   function () {
-  //     if (isAuthenticated ) navigate("/");
-  //   },
-  //   [isAuthenticated, navigate]
-  // );
 
   if (isLoading) return <Loader />;
 

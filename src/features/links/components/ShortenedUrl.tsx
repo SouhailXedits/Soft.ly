@@ -8,26 +8,17 @@ import {
   BsLockFill,
   BsCalendar,
   BsTrash,
+  BsLink,
 } from "react-icons/bs";
 
 import { formatDate } from "../../../utils/helpers";
 import { useEffect, useRef, useState } from "react";
 import CopyToClipboardButton from "../../../utils/CopyToClipBoard";
 import { useDeleteLink } from "../hooks/useDeleteLink";
-type QrRowProps = {
-  link: {
-    id: number;
-    created_at: string;
-    longUrl: string;
-    shortUrl: string;
-    title: string;
-    iconFilePath:string
-  };
-  isSelected: boolean;
-  onSelect: (id: number) => void;
-};
+import { Link } from "react-router-dom";
+import { shortenedUrlProps } from "../../../types";
 
-const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
+const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);
   const { deleteL, isPending } = useDeleteLink();
   const [isOpenOptionsModal, setIsOpenOptionsModal] = useState(false);
@@ -59,7 +50,6 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
       document.addEventListener("click", handleOutsideClick);
     }
 
-    // Detach the event listener when the component unmounts or when the modal is closed
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
@@ -81,11 +71,7 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
         className=" absolute top-3 left-3"
       />
       <div>
-        <img
-          className=" w-16 "
-          src={link.iconFilePath}
-          alt="default favicon"
-        />
+        <img className=" w-16 " src={link.iconFilePath} alt="default favicon" />
       </div>
       <div className="flex flex-col justify-between items-center w-full gap-3">
         <div className="flex justify-between w-full">
@@ -106,7 +92,7 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
                   <BsThreeDots />
                 </button>
                 {isOpenOptionsModal ? (
-                  <div className="absolute top-[3rem] max-w-[200px] right-0  p-1 rounded shadow-md border">
+                  <div className="absolute top-[3rem] w-[182px] right-0  p-1 rounded shadow-md border bg-white">
                     <button
                       className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all"
                       onClick={handleDelete}
@@ -114,6 +100,12 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
                     >
                       <BsTrash /> delete
                     </button>
+                    <Link
+                      className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all"
+                      to={`/link-details?id=${link.id}`}
+                    >
+                      <BsLink /> View link details
+                    </Link>
                   </div>
                 ) : (
                   ""
