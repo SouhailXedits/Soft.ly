@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { deleteLink } from "../../../services/apiLinks";
+import { deleteLink } from "../../../services/apiQr";
 
 export function useDeleteLink() {
   const queryClient = useQueryClient();
 
   const { mutate: deleteL, isPending } = useMutation({
-    mutationFn: (id: number): Promise<string | undefined> => deleteLink(id),
+    mutationFn: (id: string): Promise<void> => deleteLink(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["urls"],

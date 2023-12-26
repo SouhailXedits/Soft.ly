@@ -1,0 +1,1 @@
+export const GQL_API_LINK = "https://api.short.softyeducation.com/graphql";

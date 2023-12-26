@@ -2,9 +2,24 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import'./index.css'
+import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, from } from '@apollo/client';
+//import { onError } from '@apollo/client/link/error';
+import { GQL_API_LINK } from './config.ts';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+
+const link = from([
+  new HttpLink({ uri: GQL_API_LINK}),
+]);
+
+export const client = new ApolloClient({
+  cache: new InMemoryCache(), 
+  link: link
+});
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </React.StrictMode>
+);

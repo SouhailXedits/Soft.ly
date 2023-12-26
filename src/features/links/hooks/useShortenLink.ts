@@ -6,14 +6,16 @@ import { toast } from "react-hot-toast";
 interface getShorterUrlParams {
   url: string;
   title: string;
+  userId: string;
+  back_half: string;
 }
 export function useShorterUrl() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { mutate: shortenUrl, isPending } = useMutation({
-    mutationFn: (params: getShorterUrlParams): Promise<string | undefined> =>
-      getShorterUrl(params.url, params.title),
+    mutationFn: ({ url, title, userId, back_half }: getShorterUrlParams): any =>
+      getShorterUrl({ longUrl: url, title, userId, back_half }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["urls"],
@@ -25,7 +27,7 @@ export function useShorterUrl() {
       console.log("ERROR", err);
       toast.error("Failed to shorten URL");
     },
-    retry: 3,
+    retry: false,
   });
   return { shortenUrl, isPending };
 }

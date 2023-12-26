@@ -1,12 +1,4 @@
-// interface ShortenedUrlProps {
-//   url: {
-//     id: number,
-//     created_at: string,
-//     longUrl: string,
-//     shortUrl: string,
-//     title: string
-//   }
-// }
+
 
 import {
   BsThreeDots,
@@ -19,7 +11,7 @@ import {
 } from "react-icons/bs";
 
 import { formatDate } from "../../../utils/helpers";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CopyToClipboardButton from "../../../utils/CopyToClipBoard";
 import { useDeleteLink } from "../hooks/useDeleteLink";
 type QrRowProps = {
@@ -29,9 +21,10 @@ type QrRowProps = {
     longUrl: string;
     shortUrl: string;
     title: string;
+    iconFilePath:string
   };
-  isSelected: boolean
-  onSelect: (id:number) => void
+  isSelected: boolean;
+  onSelect: (id: number) => void;
 };
 
 const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
@@ -43,13 +36,34 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
   }
 
   function handleDelete() {
-    deleteL(link.id);
+    deleteL(String(link.id));
   }
 
-  function handleOptionsModalOpen() {
-    setIsOpenOptionsModal((isOpenOptionsModal) => !isOpenOptionsModal);
-  }
+  const handleOptionsModalOpen = () => {
+    setIsOpenOptionsModal((prevIsOpen) => !prevIsOpen);
+  };
 
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as HTMLElement | null)
+      ) {
+        // Click outside the modal, close the modal
+        setIsOpenOptionsModal(false);
+      }
+    };
+    if (isOpenOptionsModal) {
+      document.addEventListener("click", handleOutsideClick);
+    }
+
+    // Detach the event listener when the component unmounts or when the modal is closed
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isOpenOptionsModal]);
   const shortenedUrl = isUrlCollapsed
     ? `${link.longUrl.slice(0, 30)} ${link.longUrl.length > 30 ? "..." : ""}`
     : link.longUrl;
@@ -68,8 +82,8 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
       />
       <div>
         <img
-          className=" w-16 border border-gray-500 rounded-full"
-          src="/default-favicon.png"
+          className=" w-16 "
+          src={link.iconFilePath}
           alt="default favicon"
         />
       </div>
@@ -77,7 +91,7 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
         <div className="flex justify-between w-full">
           <div className="flex flex-col items-start">
             <h1 className=" text-xl font-bold">{link.title}</h1>
-            <a href={link.shortUrl} className=" text-blue-600">
+            <a href={link.shortUrl} className=" text-blue-600" target="_blank">
               {link.shortUrl}
             </a>
           </div>
@@ -87,7 +101,7 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
               <button className="btn-icon">
                 <BsFillPencilFill />
               </button>
-              <div className="relative">
+              <div className="relative" ref={modalRef}>
                 <button className="btn-icon" onClick={handleOptionsModalOpen}>
                   <BsThreeDots />
                 </button>

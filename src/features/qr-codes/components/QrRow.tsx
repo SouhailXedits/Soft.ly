@@ -12,13 +12,13 @@ import {
 } from "react-icons/bs";
 
 import { formatDate } from "../../../utils/helpers";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDeleteQR } from "../hooks/useDeleteQr";
 type QrRowProps = {
   qr: {
-    id: number;
+    id: string;
     created_at: string;
-    qrImageUrl: string;
+    qr_image_url: string;
     longUrl: string;
     title: string;
   };
@@ -34,7 +34,31 @@ const QrRow = ({ qr }: QrRowProps) => {
     deleteQr(qr.id);
   }
 
-  const imageUrl = qr.qrImageUrl;
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as HTMLElement | null)
+      ) {
+        // Click outside the modal, close the modal
+        setIsOpenOptionsModal(false);
+      }
+    };
+
+    // Attach the event listener when the modal is open
+    if (isOpenOptionsModal) {
+      document.addEventListener("click", handleOutsideClick);
+    }
+
+    // Detach the event listener when the component unmounts or when the modal is closed
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isOpenOptionsModal]);
+
+  const imageUrl = qr.qr_image_url;
 
   function toggleUrlCollapse() {
     setIsUrlCollapsed(!isUrlCollapsed);
@@ -50,13 +74,12 @@ const QrRow = ({ qr }: QrRowProps) => {
     ? `${qr.longUrl.slice(0, 30)} ${qr.longUrl.length > 30 ? "..." : ""}`
     : qr.longUrl;
 
-  console.log(qr);
   return (
     <div className=" flex bg-white w-full px-8 py-8 gap-5 rounded-lg">
       <div>
         <img
           className=" w-32 border border-gray-500 rounded-md"
-          src={qr.qrImageUrl}
+          src={qr.qr_image_url}
           alt="qr code image"
         />
       </div>
@@ -68,7 +91,7 @@ const QrRow = ({ qr }: QrRowProps) => {
           </div>
           <div className="flex flex-col">
             <div className="actions flex items-center gap-2">
-              <div className="relative">
+              <div className="relative" ref={modalRef}>
                 <button className="btn-icon" onClick={handleOptionsModalOpen}>
                   <BsThreeDots />
                 </button>

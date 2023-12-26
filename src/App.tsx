@@ -14,6 +14,7 @@ import QrCodesLayout from './features/qr-codes/QrCodesLayout'
 import CreateLinkForm from './features/links/CreateLinkForm'
 import CreateQRForm from "./features/qr-codes/CreateQRForm";
 import { Toaster } from 'react-hot-toast'
+import Analytics from './features/analytics/Analytics'
 
 function App() {
   const queryClient = new QueryClient({
@@ -55,12 +56,12 @@ function App() {
           element: <CreateQRForm />,
         },
         {
-          path: "/link-in-bio",
-          element: <Home />,
+          path: "/create-user",
+          element: <SignupForm />,
         },
         {
           path: "/analytics",
-          element: <Home />,
+          element: <Analytics />,
         },
         {
           path: "/campains",

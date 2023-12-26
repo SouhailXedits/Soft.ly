@@ -2,14 +2,21 @@ import { Link } from "react-router-dom";
 import { useShorterUrl } from "./hooks/useShortenLink";
 import { useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
+import { useUser } from "../auth/useUser";
 
 function CreateLinkForm() {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
+  const [back_half, setBackhalf] = useState("");
   const { shortenUrl, isPending } = useShorterUrl();
   const isButtonDisabled = url === "";
+  const { user} = useUser()
+  // if(isLoading ) return Loader
+  const userId = user?.id
   async function handleClick() {
-    shortenUrl({ url, title });
+    if(userId) {
+      shortenUrl({ url, title, userId, back_half });
+    }
   }
 
   return (
@@ -59,7 +66,12 @@ function CreateLinkForm() {
               <p>
                 Custom back-half <span>(optional)</span>
               </p>
-              <input type="text" className="form-input w-full" />
+              <input
+                type="text"
+                className="form-input w-full"
+                defaultValue={back_half}
+                onChange={(e) => setBackhalf(e.target.value)}
+              />
             </div>
           </div>
         </div>

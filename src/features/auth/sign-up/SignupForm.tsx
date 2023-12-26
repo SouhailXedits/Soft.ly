@@ -1,19 +1,11 @@
 import React, { useEffect } from "react";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import {useSignUp} from './useSignup'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 import Loader from "../../../ui/Loader";
-import { useLoginWithGoogle } from "../login/useLogin";
-import { BsGoogle } from "react-icons/bs";
 
-// Replace with your actual Login function
-// const Login = async (formData: { email: string; password: string }) => {
-//   // Your login logic here
-//   const {signup, isLoading} = useSignUp()
-//   signup(formData)
-//   console.log("Logging in with:", formData);
-// };
+
 
 interface LoginFormValues {
   email: string;
@@ -23,20 +15,15 @@ interface LoginFormValues {
 const LoginForm: React.FC = () => {
 
   const { signup, isPending : signingUp } = useSignUp();
-  const { login: loginWithGoogle, isPending } = useLoginWithGoogle();
   const navigate = useNavigate();
 
-  const { isLoading, isAuthenticated } = useUser();
-
-  // 2. If there is NO authenticated user, redirect to the /login
+  const { isLoading, role } = useUser();
   useEffect(
     function () {
-      if (isAuthenticated && !isLoading) navigate("/");
+      if (role !== 'admin' && !isLoading) navigate("/");
     },
-    [isAuthenticated, isLoading, navigate]
+    [role, isLoading, navigate]
   );
-
-  // 3. While loading, show a spinner
   if (isLoading) return <Loader />;
 
   const initialValues: LoginFormValues = {
@@ -50,21 +37,15 @@ const LoginForm: React.FC = () => {
     { setSubmitting }: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      // Your asynchronous login logic here
       signup(values);
       navigate('/')
 
-
-      // If successful, you can redirect or perform other actions
     } catch (error) {
       console.error("Login failed", error);
     } finally {
       setSubmitting(false);
     }
   };
-  function handleGoogleLogin() {
-    loginWithGoogle();
-  }
 
   return (
     <div className=" h-screen w-screen flex justify-center items-center bg-gradient-to-br from-gray-700 to-gray-900 text-gray-50">
@@ -73,27 +54,16 @@ const LoginForm: React.FC = () => {
           <div>
             <div className=" mb-3">
               <img
-                src="/Logo-Softly.png"
+                src="/softtly.png"
                 alt=" logo softly"
                 className="w-[10rem]"
               />
             </div>
             <h3 className=" text-2xl text-center font-bold text-gray-100 drop-shadow-lg">
-              Sign Up Now
+              Register new user
             </h3>
           </div>
           <div className=" flex flex-col gap-7 min-w-[300px]">
-            <button
-              onClick={handleGoogleLogin}
-              disabled={isPending}
-              className=" flex items-center gap-3 bg-gray-100 text-green-700 p-2 rounded justify-center "
-            >
-              <BsGoogle />
-              SignUp with google
-            </button>
-            <Link to="/login" className=" underline">
-              Already have an account ?
-            </Link>
 
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               <Form className=" flex flex-col gap-2">
@@ -114,7 +84,7 @@ const LoginForm: React.FC = () => {
                   disabled={signingUp}
                   className=" p-2 rounded bg-gray-400 mt-4 hover:bg-gray-600 transition-all"
                 >
-                  Sign Up
+                  Create user
                 </button>
               </Form>
             </Formik>
