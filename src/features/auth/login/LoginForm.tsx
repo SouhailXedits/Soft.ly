@@ -22,12 +22,12 @@ const LoginForm: React.FC = () => {
     },
     [isAuthenticated, isLoading, navigate]
   );
-  useEffect(
-    function () {
-      if (isAuthenticated ) navigate("/");
-    },
-    [isAuthenticated, navigate]
-  );
+  // useEffect(
+  //   function () {
+  //     if (isAuthenticated ) navigate("/");
+  //   },
+  //   [isAuthenticated, navigate]
+  // );
 
   if (isLoading) return <Loader />;
 

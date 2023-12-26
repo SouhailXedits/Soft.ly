@@ -22,24 +22,8 @@ export function useLogin() {
       toast.error("Provided email or password are incorrect");
     },
   });
-
-  return { login, isPending };
-}
-
-export function useLoginWithGoogle() {
-  const navigate = useNavigate();
-
-  const { mutate: login, isPending } = useMutation({
-    mutationFn: loginWithGoogle,
-    onSuccess: () => {
-      navigate("/", { replace: true });
-    },
-    onError: (err) => {
-      console.log("ERROR", err);
-      toast.error("Provided email or password are incorrect");
-    },
-  });
-
-  return { login, isPending };
   
+
+  return { login, isPending };
 }
+
