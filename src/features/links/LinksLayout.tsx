@@ -32,12 +32,7 @@ function LinksLayout() {
   const allUrls = data?.getUrlsWithUserId || [];
 
   if (error) console.error(error.message);
-  // function handleIsAllSeleted() {
-  //   setIsAllSelected((isAllSelected) => !isAllSelected);
-  //   if(allUrls) {
-  //     setSelectedLinks(isAllSelected ? [] : allUrls.map((link) => link.id));
-  //   }
-  // }
+
   const handleLinkSelection = (linkId: number) => {
     const updatedSelectedLinks = [...selectedLinks];
     const index = updatedSelectedLinks.indexOf(linkId);
@@ -55,69 +50,12 @@ function LinksLayout() {
   return (
     <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto">
       {allUrls?.length !== 0 ? (
-        <>
           <div className="flex items-center justify-between w-full ">
-            <h2 className="text-3xl font-bold ">Links</h2>
-            {/* <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1 text-blue-600 ">
-                <BsChatFill /> Leave Feedback
-              </button>
-              <button
-                className="flex items-center gap-1 p-2 border rounded disabled:opacity-60 disabled:cursor-not-allowed"
-                disabled={true}
-              >
-                <BsBarChartFill /> Top performing
-              </button>
-            </div> */}
+            <h2 className="text-3xl font-bold">Links</h2>
+          
           </div>
-          {/* <div className="flex justify-start w-full gap-2 pb-5 border-b-2 ">
-            <button className="flex items-center gap-1 p-2 bg-white border rounded ">
-              {" "}
-              <BsCalendar /> Filter By Created date
-            </button>
-            <button className="flex items-center gap-1 p-2 bg-white border rounded ">
-              {" "}
-              <BsCalendar /> Add filters
-            </button>
-          </div> */}
-          {/* <div className="flex justify-between w-full gap-2 ">
-            <div className="flex items-center gap-5 ml-4 ">
-              <input
-                type="checkbox"
-                defaultChecked={isAllSelected}
-                onClick={handleIsAllSeleted}
-              />
-              <p className="font-light ">0 selected</p>
-              <button
-                disabled={true}
-                className="flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {" "}
-                <BsLockFill /> <span>Export</span>
-              </button>
-              <button
-                disabled={selectedLinks.length === 0}
-                className="flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {" "}
-                Hide
-              </button>
-              <button
-                disabled={selectedLinks.length === 0}
-                className="flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {" "}
-                Tag
-              </button>
-            </div>
-            <select className="flex items-center gap-1 p-2 bg-white border rounded ">
-              {" "}
-              <option value=""> active  </option>
-              <option value=""> hidden </option>
-               <BsCalendar /> Add filters 
-            </select>
-          </div> */}
-        </>
+          
+        
       ) : (
         ""
       )}
@@ -156,7 +94,7 @@ function LinksLayout() {
           </p>{" "}
         </>
       )}
-      <Link className="btn-primary" to="create">
+      <Link className="btn-primary" to="/create">
         Create a short link
       </Link>
       <span>Learn more</span>
