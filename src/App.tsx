@@ -9,13 +9,21 @@ import Loader from "./ui/Loader";
 import SignupForm from "./features/auth/sign-up/SignupForm";
 import Confirm from "./ui/Confirm";
 import ProtectedRoute from "./ui/ProtectedRoute";
-import LinksLayout from "./features/links/LinksLayout";
-import QrCodesLayout from "./features/qr-codes/QrCodesLayout";
-import CreateLinkForm from "./features/links/CreateLinkForm";
-import CreateQRForm from "./features/qr-codes/CreateQRForm";
 import { Toaster } from "react-hot-toast";
 import Analytics from "./features/analytics/Analytics";
 import LinkDetails from "./features/link-details/LinkDetails";
+import { Suspense, lazy } from "react";
+
+const LinksLayout = lazy(() => import("./features/links/LinksLayout"));
+const CreateLinkForm = lazy(
+  () => import("./features/links/CreateLinkForm")
+);
+const QrCodesLayout = lazy(
+  () => import("./features/qr-codes/QrCodesLayout")
+);
+const CreateQRForm = lazy(
+  () => import("./features/qr-codes/CreateQRForm")
+);
 
 function App() {
   const queryClient = new QueryClient({
@@ -29,12 +37,13 @@ function App() {
   const router = createBrowserRouter([
     {
       element: (
-        <ProtectedRoute>
-          <AppLayout />
-        </ProtectedRoute>
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        </Suspense>
       ),
       errorElement: <Error />,
-
       children: [
         {
           path: "/",
@@ -42,19 +51,35 @@ function App() {
         },
         {
           path: "/links",
-          element: <LinksLayout />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <LinksLayout />
+            </Suspense>
+          ),
         },
         {
           path: "/links/create",
-          element: <CreateLinkForm />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <CreateLinkForm />
+            </Suspense>
+          ),
         },
         {
           path: "/qrcodes",
-          element: <QrCodesLayout />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <QrCodesLayout />
+            </Suspense>
+          ),
         },
         {
           path: "/qrcodes/create",
-          element: <CreateQRForm />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <CreateQRForm />
+            </Suspense>
+          ),
         },
         {
           path: "/create-user",
@@ -62,7 +87,11 @@ function App() {
         },
         {
           path: "/analytics",
-          element: <Analytics />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <Analytics />
+            </Suspense>
+          ),
         },
         {
           path: "/campains",
@@ -74,7 +103,11 @@ function App() {
         },
         {
           path: "/link-details",
-          element: <LinkDetails />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <LinkDetails />
+            </Suspense>
+          ),
         },
       ],
     },
@@ -97,6 +130,7 @@ function App() {
       errorElement: <Error />,
     },
   ]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster position="top-right" />

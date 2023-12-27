@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ShortenedUrl from "./components/ShortenedUrl";
 import { request } from "graphql-request";
-import {
-  BsBarChartFill,
-  BsChatFill,
-  BsLockFill,
-} from "react-icons/bs";
+// import {
+//   BsBarChartFill,
+//   BsChatFill,
+//   BsLockFill,
+// } from "react-icons/bs";
 import { useState } from "react";
 import { useUser } from "../auth/useUser";
 import { GQL_API_LINK } from "../../config";
@@ -30,7 +30,7 @@ import { ApiResponse } from "../../types";
 
 
 function LinksLayout() {
-  const [isAllSelected, setIsAllSelected] = useState(false);
+  const [ , setIsAllSelected] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState<number[]>([]);
   const {user} = useUser()
   const userId = user?.id
@@ -50,12 +50,12 @@ function LinksLayout() {
   const allUrls = data?.getUrlsWithUserId || [];
 
   if (error) console.error(error.message);
-  function handleIsAllSeleted() {
-    setIsAllSelected((isAllSelected) => !isAllSelected);
-    if(allUrls) {
-      setSelectedLinks(isAllSelected ? [] : allUrls.map((link) => link.id));
-    }
-  }
+  // function handleIsAllSeleted() {
+  //   setIsAllSelected((isAllSelected) => !isAllSelected);
+  //   if(allUrls) {
+  //     setSelectedLinks(isAllSelected ? [] : allUrls.map((link) => link.id));
+  //   }
+  // }
   const handleLinkSelection = (linkId: number) => {
     const updatedSelectedLinks = [...selectedLinks];
     const index = updatedSelectedLinks.indexOf(linkId);

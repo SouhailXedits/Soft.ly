@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useMediaQuery } from "usehooks-ts";
 
 function NavigLink({
   path,
@@ -9,20 +10,29 @@ function NavigLink({
   children: React.ReactNode;
   onClick?: () => void;
 }) {
-  const handleClick = () => {
-    if (onClick) {
-      onClick();
-    }
-  };
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  console.log(isMobile);
 
-  return (
+  const baseNavLink = (
     <NavLink
       className="px-4 py-2 hover:hover-style rounded-sm flex items-center gap-2 whitespace-nowrap"
       to={path}
-      onClick={handleClick}
+    >
+      {children}
+
+    </NavLink>
+  );
+
+  return isMobile ? (
+    <NavLink
+      className="px-4 py-2 hover:hover-style rounded-sm flex items-center gap-2 whitespace-nowrap"
+      to={path}
+      onClick={onClick}
     >
       {children}
     </NavLink>
+  ) : (
+    baseNavLink
   );
 }
 

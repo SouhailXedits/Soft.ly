@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import QrRow from "./components/QrRow";
-import { useState } from "react";
+// import { useState } from "react";
 import request from "graphql-request";
 import gql from "graphql-tag";
 import { useUser } from "../auth/useUser";
@@ -25,7 +25,7 @@ import { ApiResponse, UrlData } from "../../types";
 // }
 
 function LinksLayout() {
-  const [showFilter, setShowFilter] = useState("active");
+  //const [showFilter, setShowFilter] = useState("active");
   const { user } = useUser();
   const userId = user?.id;
   const { data } = useQuery<ApiResponse>({
