@@ -56,61 +56,61 @@ function LinksLayout() {
     <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto">
       {allUrls?.length !== 0 ? (
         <>
-          <div className=" flex items-center justify-between w-full ">
-            <h2 className=" text-3xl font-bold ">Links</h2>
+          <div className="flex items-center justify-between w-full ">
+            <h2 className="text-3xl font-bold ">Links</h2>
             {/* <div className="flex items-center gap-2">
-              <button className=" flex items-center gap-1 text-blue-600">
+              <button className="flex items-center gap-1 text-blue-600 ">
                 <BsChatFill /> Leave Feedback
               </button>
               <button
-                className=" flex items-center gap-1  border rounded p-2 disabled:opacity-60 disabled:cursor-not-allowed "
+                className="flex items-center gap-1 p-2 border rounded disabled:opacity-60 disabled:cursor-not-allowed"
                 disabled={true}
               >
                 <BsBarChartFill /> Top performing
               </button>
             </div> */}
           </div>
-          {/* <div className=" flex gap-2 justify-start w-full pb-5 border-b-2 ">
-            <button className=" p-2 border rounded flex items-center gap-1 bg-white ">
+          {/* <div className="flex justify-start w-full gap-2 pb-5 border-b-2 ">
+            <button className="flex items-center gap-1 p-2 bg-white border rounded ">
               {" "}
               <BsCalendar /> Filter By Created date
             </button>
-            <button className=" p-2 border rounded flex items-center gap-1 bg-white">
+            <button className="flex items-center gap-1 p-2 bg-white border rounded ">
               {" "}
               <BsCalendar /> Add filters
             </button>
           </div> */}
-          {/* <div className=" flex gap-2 justify-between w-full">
-            <div className=" ml-4 flex items-center gap-5">
+          {/* <div className="flex justify-between w-full gap-2 ">
+            <div className="flex items-center gap-5 ml-4 ">
               <input
                 type="checkbox"
                 defaultChecked={isAllSelected}
                 onClick={handleIsAllSeleted}
               />
-              <p className=" font-light">0 selected</p>
+              <p className="font-light ">0 selected</p>
               <button
                 disabled={true}
-                className=" flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {" "}
                 <BsLockFill /> <span>Export</span>
               </button>
               <button
                 disabled={selectedLinks.length === 0}
-                className=" flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {" "}
                 Hide
               </button>
               <button
                 disabled={selectedLinks.length === 0}
-                className=" flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {" "}
                 Tag
               </button>
             </div>
-            <select className=" p-2 border rounded flex items-center gap-1 bg-white">
+            <select className="flex items-center gap-1 p-2 bg-white border rounded ">
               {" "}
               <option value=""> active  </option>
               <option value=""> hidden </option>
@@ -142,15 +142,15 @@ function LinksLayout() {
         )
       ) : (
         <>
-          <img
+          <img 
             className=" max-w-[400px]"
             src="links-list-empty.png"
             alt="links mist image"
           />
-          <h2 className=" text-3xl font-bold">
+          <h2 className="text-3xl font-bold ">
             More clicks are just a link away
           </h2>
-          <p className=" text-xl text-gray-700 font-light">
+          <p className="text-xl font-light text-gray-700 ">
             Shorten long links and get attention by customizing what they say.
             No more bit.ly/3yqawYa, more bit.ly/brands-bitly.
           </p>{" "}
@@ -159,7 +159,7 @@ function LinksLayout() {
       <Link className="btn-primary" to="create">
         Create a short link
       </Link>
-      <Link>Learn more</Link>
+      <span>Learn more</span>
     </div>
   );
 }
