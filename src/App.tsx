@@ -7,8 +7,8 @@ import Home from "./features/home/Home";
 import LoginForm from "./features/auth/login/LoginForm";
 import Loader from "./ui/Loader";
 import SignupForm from "./features/auth/sign-up/SignupForm";
-import Confirm from "./ui/Confirm";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import NotFound from "./ui/NotFound";
 import { Toaster } from "react-hot-toast";
 import Analytics from "./features/analytics/Analytics";
 import LinkDetails from "./features/link-details/LinkDetails";
@@ -118,14 +118,13 @@ function App() {
       errorElement: <Error />,
     },
     {
-      path: "/signup",
-      element: <SignupForm />,
+      path: "*",
+      element: <NotFound />,
       loader: Loader,
-      errorElement: <Error />,
     },
     {
-      path: "/confirm",
-      element: <Confirm />,
+      path: "/signup",
+      element: <SignupForm />,
       loader: Loader,
       errorElement: <Error />,
     },

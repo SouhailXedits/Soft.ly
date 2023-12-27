@@ -30,6 +30,7 @@
     "graphql-tag": "^2.12.6",
     "install": "^0.13.0",
     "jquery": "^3.7.1",
+    "lottie-react": "^2.4.0",
     "npm": "^10.2.5",
     "qrcode": "^1.5.3",
     "react": "^18.2.0",

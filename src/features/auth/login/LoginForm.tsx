@@ -14,8 +14,8 @@ import { LoginFormValues } from "../../../types";
 const LoginForm: React.FC = () => {
   const { login, isPending: loggingIn } = useLogin();
   const navigate = useNavigate();
-  const { isLoading,isAuthenticated }  = useUser();
-  console.log(isAuthenticated)
+  const { isLoading, isAuthenticated } = useUser();
+  console.log(isAuthenticated);
 
   useEffect(
     function () {
@@ -45,13 +45,13 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className=" h-screen w-screen flex justify-center items-center bg-gradient-to-br from-gray-700 to-gray-900 text-gray-50">
-      <div className="Login flex shadow-lg shadow-black rounded-3xl  ">
-        <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] pt-5 rounded-bl-3xl rounded-tl-3xl ">
+    <div className=" h-screen w-screen flex justify-center items-center bg-gradient-to-br from-gray-700 p-3 to-gray-900 text-gray-50">
+      <div className="Login flex md:flex-col shadow-lg shadow-black rounded-3xl  ">
+        <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] md:p-[30px] pt-5 rounded-bl-3xl rounded-tl-3xl md:rounded-bl-none md:rounded-tr-3xl">
           <div>
             <div className=" mb-3">
               <img
-                src="/softtly.png"
+                src="/logo.png"
                 alt=" logo softly"
                 className="w-[10rem]"
               />
@@ -86,16 +86,15 @@ const LoginForm: React.FC = () => {
             </Formik>
           </div>
         </div>
-        <div className="bg-white flex flex-col justify-center items-center rounded-br-3xl rounded-tr-3xl max-w-[400px] text-gray-700 p-10">
+        <div className="bg-white flex flex-col justify-center items-center rounded-br-3xl rounded-tr-3xl md:rounded-tr-none md:max-w-[500px] md:rounded-br-3xl md:rounded-bl-3xl sm:p-5 max-w-[400px] text-gray-700 p-10">
           <h1 className=" text-3xl font-semibold text-center">
             {" "}
             Your Connections Platform{" "}
           </h1>
           <p className=" mt-10">
             {" "}
-            By using the Softly API, you will exercise the full power of your
-            links through automated link customization and
-            click analytics.
+            By using the Softlink API, you will exercise the full power of your
+            links through automated link customization and click analytics.
           </p>
         </div>
       </div>
