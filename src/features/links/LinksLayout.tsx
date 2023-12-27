@@ -2,31 +2,13 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ShortenedUrl from "./components/ShortenedUrl";
 import { request } from "graphql-request";
-// import {
-//   BsBarChartFill,
-//   BsChatFill,
-//   BsLockFill,
-// } from "react-icons/bs";
+
 import { useState } from "react";
 import { useUser } from "../auth/useUser";
 import { GQL_API_LINK } from "../../config";
 import { getUrls } from "../../services/apiLinks";
 import { ApiResponse } from "../../types";
 
-// interface UrlData {
-//   id: number;
-//   created_at: string;
-//   longUrl: string;
-//   shortUrl: string;
-//   title: string;
-//   qr_image_url: string;
-//   iconFilePath:string;
-//   user_id: string;
-// }
-
-// interface ApiResponse {
-//   getUrlsWithUserId: UrlData[];
-// }
 
 
 function LinksLayout() {

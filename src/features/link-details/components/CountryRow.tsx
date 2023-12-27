@@ -1,13 +1,7 @@
-// interface DataCountry {
-//   country: {
-//     name: string;
-//     clicks: number;
-//     id: number;
-//   };
+
 
 import { DataCountry } from "../../../types";
 
-// }
 const CountryRow = ({ country }: DataCountry) => {
   return (
     <div className="flex justify-between mt-3">

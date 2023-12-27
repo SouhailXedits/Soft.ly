@@ -12,11 +12,10 @@ import {getRandomColor} from '../../utils/helpers'
 
 const Analytics: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
-  // const data: DataItem[] = [
+
   const { user } = useUser();
   const userId = user?.id;
   if (userId === undefined) {
-    // You might want to render some fallback or loading UI here
     return <div>Loading...</div>;
   }
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -63,14 +62,6 @@ const Analytics: React.FC = () => {
 
   const countryCodes = analyticsData?.count?.country_code || {};
 
-  //   { name: "desktop", value: 100, avg: 167, color: "blue" },
-  //   { name: "mobile", value: 150, avg: 367, color: "green" },
-  // ];
-  // const dataCounties: DataCountry[] = [
-  //   { id: 1, name: "Tunisia", clicks: 100 },
-  //   { id: 2, name: "Algeria", clicks: 88 },
-  //   { id: 3, name: "Libye", clicks: 55 },
-  // ];
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
@@ -97,7 +88,7 @@ const Analytics: React.FC = () => {
 
   return (
     <div className="p-5">
-      <div className=" p-4 flex-col flex gap-3 sticky top-0 bg-gray-100 z-40">
+      <div className=" p-4 flex-col flex gap-3 sticky top-0 bg-gray-100">
         <div className=" flex items-center justify-between">
           <h1 className=" text-3xl font-semibold">Analytics</h1>
           {/* <button className=" btn-primary flex items-center gap-1">

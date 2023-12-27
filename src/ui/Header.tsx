@@ -29,7 +29,6 @@ export default function Header({ onToggleOpen }: SideBarProps) {
         modalRef.current &&
         !modalRef.current.contains(event.target as HTMLElement | null)
       ) {
-        // Click outside the modal, close the modal
         setShowProfileModal(false);
       }
     };
@@ -63,7 +62,7 @@ export default function Header({ onToggleOpen }: SideBarProps) {
           <span className=" text-3xl text-white">{firstLetter}</span>
         </button>
         {showProfileModal ? (
-          <div className=" absolute top-[50px] right-3 border shadow-md p-2 rounded transition-all bg-white z-45">
+          <div className=" absolute top-[50px] right-3 border shadow-md p-2 rounded transition-all bg-white z-50">
             <button
               onClick={handleLogout}
               className="rounded p-2 hover:bg-gray-200"

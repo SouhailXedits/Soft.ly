@@ -104,7 +104,6 @@ export async function getClicksData(userId: string | null) {
     const res = await fetch(`${API_LINK}status/count/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        // Add other headers if needed
       },
     });
 

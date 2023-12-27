@@ -36,7 +36,6 @@ function CreateLinkForm() {
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;
 
-    // Validate the back half format
     const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
 
     if (!backHalfRegex.test(newBackHalf)) {
