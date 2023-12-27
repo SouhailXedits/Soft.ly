@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsCalendar, BsGraphUp, BsGripVertical, BsPlusCircle, BsThreeDots } from "react-icons/bs";
+import { BsCalendar, BsGraphUp, BsPlusCircle, BsThreeDots } from "react-icons/bs";
 import PieChartComp from "./components/PieChartComp";
 import BarChartComp from "./components/BarChartComp";
 import CountryRow from "./components/CountryRow";
@@ -9,17 +9,6 @@ import { useUser } from "../auth/useUser";
 import { useQuery } from "@tanstack/react-query";
 import {getRandomColor} from '../../utils/helpers'
 
-// interface DataItem {
-//   name: string;
-//   value: number;
-//   avg: number;
-//   color: string;
-// }
-// interface DataCountry {
-//   name: string;
-//   clicks: number;
-//   id: number;
-// }
 
 const Analytics: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
@@ -90,9 +79,9 @@ const Analytics: React.FC = () => {
     <div className="flex bg-white p-6 rounded-xl flex-col">
       <div className="flex gap-2 items-center justify-between">
         <div className="flex gap-2">
-          <button className="text-xl">
+          {/* <button className="text-xl">
             <BsGripVertical />
-          </button>
+          </button> */}
           <h2 className="text-lg font-medium">Clicks+scans {filterby}</h2>
         </div>
         <button className="rounded border p-2">

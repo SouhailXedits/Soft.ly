@@ -45,13 +45,13 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className=" h-screen w-screen flex justify-center items-center bg-gradient-to-br from-gray-700 to-gray-900 text-gray-50">
-      <div className="Login flex shadow-lg shadow-black rounded-3xl  ">
+    <div className=" h-screen w-screen flex justify-center items-center bg-gradient-to-br from-gray-300 to-gray-400 text-gray-50">
+      <div className="Login flex shadow-md shadow-black rounded-3xl  ">
         <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] pt-5 rounded-bl-3xl rounded-tl-3xl ">
           <div>
             <div className=" mb-3">
               <img
-                src="/softtly.png"
+                src="/logo.png"
                 alt=" logo softly"
                 className="w-[10rem]"
               />

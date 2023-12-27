@@ -26,7 +26,7 @@ export function useShorterUrl() {
     },
     onError: (err: string) => {
       console.log("ERROR", err);
-      toast.error("Failed to shorten URL");
+      toast.error("Back-half already in use ! 😢");
     },
     retry: false,
   });

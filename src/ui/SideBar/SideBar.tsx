@@ -9,7 +9,7 @@ import {
   BsPlusLg,
   BsQrCodeScan,
 } from "react-icons/bs";
-import { CiFolderOn, CiSettings } from "react-icons/ci";
+// import { CiFolderOn, CiSettings } from "react-icons/ci";
 import Logo from "../Logo/Logo";
 import NavigLink from "../buttons/NavigLink";
 import { useUser } from "../../features/auth/useUser";
@@ -21,25 +21,30 @@ function SideBar() {
   const { role } = useUser();
 
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (
-        showModalCreate &&
-        modalRef.current &&
-        !modalRef.current.contains(event.target as HTMLElement | null)
-      ) {
-        setShowModalCreate(false);
-      }
-    };
+const handleOutsideClick = (event: MouseEvent) => {
+  const isClickedOutsideModal =
+    showModalCreate &&
+    modalRef.current &&
+    !modalRef.current.contains(event.target as HTMLElement | null);
 
-    document.addEventListener("mouseup", handleOutsideClick);
+  if (isClickedOutsideModal) {
+    setShowModalCreate(false);
+  }
+};
+
+    document.addEventListener("mousedown", handleOutsideClick);
 
     return () => {
-      document.removeEventListener("mouseup", handleOutsideClick);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [showModalCreate]);
 
   const handleShowModalCreate = () => {
     setShowModalCreate((prev) => !prev);
+  };
+
+  const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
   };
 
   return (
@@ -55,7 +60,7 @@ function SideBar() {
         {isCollapsed ? <BsChevronRight /> : <BsChevronLeft />}
       </button>
       <Logo isCollapsed={isCollapsed} />
-      <div className="relative">
+      <div ref={modalRef} className="relative">
         <button
           className="btn-primary w-full text-white"
           onClick={handleShowModalCreate}
@@ -64,16 +69,15 @@ function SideBar() {
         </button>
         {showModalCreate && (
           <div
-            className=" bg-white shadow-sm border absolute top-0 -right-[200px] p-3 rounded z-30"
-            ref={modalRef}
+            className=" bg-white shadow-sm border absolute top-0 -right-[210px] p-3 rounded z-30 "
+            
+            onClick={handleModalClick}
           >
             <NavigLink path="/links/create">
-              {/* <BsLink45Deg /> {!isCollapsed ? "Create link" : ""} */}
               <BsLink45Deg /> Create link
             </NavigLink>
             <NavigLink path="/qrcodes/create">
               <BsQrCodeScan /> Create Qr Code
-              {/* <BsQrCodeScan /> {!isCollapsed ? "Create Qr Code" : ""} */}
             </NavigLink>
           </div>
         )}
@@ -96,14 +100,13 @@ function SideBar() {
         <NavigLink path="/analytics">
           <BsBarChart /> {!isCollapsed ? "Analytics" : ""}
         </NavigLink>
-        <NavigLink path="/campains">
+        {/* <NavigLink path="/campains">
           <CiFolderOn /> {!isCollapsed ? "Campaigns" : ""}
-        </NavigLink>
-        <a href="souhail.vercel.app">souhail</a>
+        </NavigLink> */}
       </div>
-      <NavigLink path="/settings">
+      {/* <NavigLink path="/settings">
         <CiSettings /> {!isCollapsed ? "Settings" : ""}
-      </NavigLink>
+      </NavigLink> */}
     </div>
   );
 }

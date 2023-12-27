@@ -2,7 +2,7 @@
 
 import {
   BsThreeDots,
-  BsFillPencilFill,
+  // BsFillPencilFill,
   BsBarChart,
   BsArrowReturnRight,
   BsLockFill,
@@ -42,7 +42,6 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
         modalRef.current &&
         !modalRef.current.contains(event.target as HTMLElement | null)
       ) {
-        // Click outside the modal, close the modal
         setIsOpenOptionsModal(false);
       }
     };
@@ -84,15 +83,15 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
           <div className="flex flex-col">
             <div className="actions flex items-center gap-2">
               <CopyToClipboardButton text={link.shortUrl} />
-              <button className="btn-icon">
+              {/* <button className="btn-icon">
                 <BsFillPencilFill />
-              </button>
+              </button> */}
               <div className="relative" ref={modalRef}>
                 <button className="btn-icon" onClick={handleOptionsModalOpen}>
                   <BsThreeDots />
                 </button>
                 {isOpenOptionsModal ? (
-                  <div className="absolute top-[3rem] w-[182px] right-0  p-1 rounded shadow-md border bg-white">
+                  <div className="absolute top-[3rem] w-[182px] right-0  p-1 rounded shadow-md border bg-white flex flex-col">
                     <button
                       className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all"
                       onClick={handleDelete}
@@ -102,7 +101,11 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                     </button>
                     <Link
                       className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all"
-                      to={`/link-details?id=${link.id}`}
+                      to={{
+                        pathname: "/link-details",
+                        search: `?id=${link.id}`,
+                        state: { linkData: link },
+                      }}
                     >
                       <BsLink /> View link details
                     </Link>

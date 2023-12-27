@@ -2,8 +2,8 @@ import { downloadfile } from "../../../utils/helpers";
 import {
   BsThreeDots,
   BsDownload,
-  BsFillPencilFill,
-  BsPalette,
+  // BsFillPencilFill,
+  // BsPalette,
   BsBarChart,
   BsArrowReturnRight,
   BsLockFill,
@@ -15,6 +15,8 @@ import { formatDate } from "../../../utils/helpers";
 import { useEffect, useRef, useState } from "react";
 import { useDeleteQR } from "../hooks/useDeleteQr";
 import { QrRowProps } from "../../../types";
+import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 
 const QrRow = ({ qr }: QrRowProps) => {
@@ -58,6 +60,7 @@ const QrRow = ({ qr }: QrRowProps) => {
 
   function handleDownload() {
     downloadfile(imageUrl);
+    toast.success("We've got your QR code for your volt! 😉");
   }
   function handleOptionsModalOpen() {
     setIsOpenOptionsModal((isOpenOptionsModal) => !isOpenOptionsModal);
@@ -101,19 +104,24 @@ const QrRow = ({ qr }: QrRowProps) => {
                   ""
                 )}
               </div>
-              <button className="btn-icon">
+              {/* <button className="btn-icon">
                 <BsPalette />
               </button>
               <button className="btn-icon">
                 <BsFillPencilFill />
-              </button>
+              </button> */}
               <button onClick={handleDownload} className="btn-icon">
                 <BsDownload />
               </button>
-              <button className="btn-primary bg-gray-100 text-black flex items-center gap-1">
-                {" "}
-                <BsBarChart /> View details
-              </button>
+            
+                <Link
+                  to={`/link-details?id=${qr.id}`}
+                  className="btn-primary bg-gray-100 text-black flex items-center gap-1"
+                >
+                  {" "}
+                  <BsBarChart /> View details
+                </Link>
+             
             </div>
           </div>
         </div>

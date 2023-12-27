@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import ShortenedUrl from "./components/ShortenedUrl";
 import { request } from "graphql-request";
 import {
+  BsArrowDown,
   BsBarChartFill,
   BsCalendar,
   BsChatFill,
@@ -50,7 +51,7 @@ function LinksLayout() {
   });
   const allUrls = data?.getUrlsWithUserId || [];
 
-  if (error) throw new Error(error.message);
+  if (error) console.error(error.message);
   function handleIsAllSeleted() {
     setIsAllSelected((isAllSelected) => !isAllSelected);
     if(allUrls) {
@@ -89,7 +90,7 @@ function LinksLayout() {
               </button>
             </div>
           </div>
-          <div className=" flex gap-2 justify-start w-full pb-5 border-b-2 ">
+          {/* <div className=" flex gap-2 justify-start w-full pb-5 border-b-2 ">
             <button className=" p-2 border rounded flex items-center gap-1 bg-white ">
               {" "}
               <BsCalendar /> Filter By Created date
@@ -98,7 +99,7 @@ function LinksLayout() {
               {" "}
               <BsCalendar /> Add filters
             </button>
-          </div>
+          </div> */}
           <div className=" flex gap-2 justify-between w-full">
             <div className=" ml-4 flex items-center gap-5">
               <input
@@ -129,10 +130,12 @@ function LinksLayout() {
                 Tag
               </button>
             </div>
-            <button className=" p-2 border rounded flex items-center gap-1 bg-white">
+            <select className=" p-2 border rounded flex items-center gap-1 bg-white">
               {" "}
-              <BsCalendar /> Add filters
-            </button>
+              <option value=""> active  </option>
+              <option value=""> hidden </option>
+              {/* <BsCalendar /> Add filters */}
+            </select>
           </div>
         </>
       ) : (

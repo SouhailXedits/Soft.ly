@@ -48,7 +48,7 @@ export interface getShorterUrlParams {
   url: string;
   title: string;
   userId: string;
-  back_half: string;
+  back_half?: any;
 }
 
 export type QrRowProps = {
