@@ -22,6 +22,7 @@ export function useLogin() {
       console.log("ERROR", err);
       toast.error("Provided email or password are incorrect");
     },
+    retry: 3,
   });
   
 

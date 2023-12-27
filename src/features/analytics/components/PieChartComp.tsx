@@ -24,7 +24,8 @@ const PieChartComp = ({data}:PieChartCompProps) => {
         <Legend
           verticalAlign="middle"
           align="right"
-          width={120}
+          width={100}
+          
           layout="vertical"
           iconSize={15}
           iconType="circle"

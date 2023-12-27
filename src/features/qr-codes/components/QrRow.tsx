@@ -70,10 +70,10 @@ const QrRow = ({ qr }: QrRowProps) => {
     : qr.longUrl;
 
   return (
-    <div className=" flex bg-white w-full px-8 py-8 gap-5 rounded-lg">
-      <div>
+    <div className=" flex sm:flex-col bg-white w-full px-8 py-8 gap-5 rounded-lg">
+      <div className=" self-center">
         <img
-          className=" w-32 border border-gray-500 rounded-md"
+          className=" w-32 border border-gray-500 rounded-md min-w-[125px]"
           src={qr.qr_image_url}
           alt="qr code image"
         />
@@ -126,7 +126,7 @@ const QrRow = ({ qr }: QrRowProps) => {
           </div>
         </div>
         <div className="flex flex-col items-start self-start gap-1">
-          <p className=" flex items-center">
+          <p className=" flex items-center break-all">
             <BsArrowReturnRight /> {shortenedUrl}{" "}
             {qr.longUrl.length > 30 && (
               <button

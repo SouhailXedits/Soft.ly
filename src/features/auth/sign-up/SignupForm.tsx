@@ -45,9 +45,9 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className=" h-screen w-screen flex justify-center items-center bg-gradient-to-br from-gray-300 to-gray-400 text-gray-50">
+    <div className=" h-screen flex justify-center items-center bg-gradient-to-br from-gray-300 to-gray-400 text-gray-50">
       <div className="Login flex shadow-md shadow-black rounded-3xl  ">
-        <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] pt-5 rounded-bl-3xl rounded-tl-3xl ">
+        <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] mdl:p-[40px] sm:p-[10px] pt-5 rounded-bl-3xl rounded-tl-3xl lg:rounded-3xl ">
           <div>
             <div className=" mb-3">
               <img
@@ -87,7 +87,7 @@ const LoginForm: React.FC = () => {
             </Formik>
           </div>
         </div>
-        <div className="bg-white flex flex-col justify-center items-center rounded-br-3xl rounded-tr-3xl max-w-[400px] text-gray-700 p-10">
+        <div className="bg-white flex flex-col justify-center items-center rounded-br-3xl rounded-tr-3xl max-w-[400px] text-gray-700 p-10 lg:hidden">
           <h1 className=" text-3xl font-semibold text-center">
             {" "}
             Your Connections Platform{" "}

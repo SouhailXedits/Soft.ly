@@ -3,15 +3,21 @@ import { useUser } from "../features/auth/useUser";
 import { logout } from "../services/apiAuth";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { BsJustify } from "react-icons/bs";
 
-export default function Header() {
-  const navigate = useNavigate(); 
-  const queryClient = useQueryClient()
+interface SideBarProps {
+  onToggleOpen: () => void;
+}
 
-  const [showProfileModal, setShowProfileModal] = useState(false)
+export default function Header({ onToggleOpen }: SideBarProps) {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const { user } = useUser();
   const firstLetter = user?.email?.charAt(0)?.toUpperCase();
   const handleShowProfileModal = () => {
+    
     setShowProfileModal((prevIsOpen) => !prevIsOpen);
   };
 
@@ -40,10 +46,16 @@ export default function Header() {
     queryClient.setQueryData(["user"], null);
     navigate("/login");
   }
-  
+
   return (
-    <div className="col-start-2 border-b border-gray-100 flex justify-end px-2 py-1">
-      <div ref={modalRef} className=" relative">
+    <div className="col-start-2 border-b border-gray-100 flex justify-between px-2 py-1">
+      <div className="md:flex items-center gap-2 hidden">
+        <button onClick={onToggleOpen} className=" text-xl">
+          <BsJustify />
+        </button>
+        <img className=" h-9" src="/logo.png" alt="sofly.link logo" />
+      </div>
+      <div ref={modalRef} className=" relative flex justify-end w-full">
         <button
           onClick={handleShowProfileModal}
           className="bg-blue-600 mr-3 p-5 rounded-full h-5 w-5 flex items-center justify-center"
@@ -51,10 +63,7 @@ export default function Header() {
           <span className=" text-3xl text-white">{firstLetter}</span>
         </button>
         {showProfileModal ? (
-          <div
-           
-            className=" absolute top-[50px] right-3 border shadow-md p-2 rounded transition-all bg-white"
-          >
+          <div className=" absolute top-[50px] right-3 border shadow-md p-2 rounded transition-all bg-white z-45">
             <button
               onClick={handleLogout}
               className="rounded p-2 hover:bg-gray-200"

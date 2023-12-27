@@ -88,20 +88,23 @@ const Analytics: React.FC = () => {
           <BsThreeDots />
         </button>
       </div>
+      <div className=" overflow-auto ">
+        
       {chartComponent}
+      </div>
     </div>
   );
 
   return (
     <div className="p-5">
-      <div className=" p-4 flex-col flex gap-3 sticky top-0 bg-gray-100 z-50">
+      <div className=" p-4 flex-col flex gap-3 sticky top-0 bg-gray-100 z-40">
         <div className=" flex items-center justify-between">
           <h1 className=" text-3xl font-semibold">Analytics</h1>
-          <button className=" btn-primary flex items-center gap-1">
+          {/* <button className=" btn-primary flex items-center gap-1">
             <BsPlusCircle /> Add module
-          </button>
+          </button> */}
         </div>
-        <div className=" flex gap-2 justify-start w-full pb-5 border-b-2">
+        {/* <div className=" flex gap-2 justify-start w-full pb-5 border-b-2">
           <button className=" p-2 border rounded flex items-center gap-1 bg-white ">
             {" "}
             <BsCalendar /> Filter By Created date
@@ -110,9 +113,9 @@ const Analytics: React.FC = () => {
             {" "}
             <BsCalendar /> Add filters
           </button>
-        </div>
+        </div> */}
       </div>
-      <div className="flex w-full gap-4">
+      <div className="flex 3xl:flex-col w-full gap-4">
         <div className="flex flex-col w-full">
           <div className="flex flex-col gap-5">
             {renderChart(

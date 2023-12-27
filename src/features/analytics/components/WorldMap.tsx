@@ -22,7 +22,7 @@ function WorldMap({ countries }: any) {
     <div className=" m-auto w-[700px] h-[600px]">
       <VectorMap
         map={worldMill}
-        style={{ width: "700px", height: "600px" }}
+        style={{ width: "100%", height: "100%" }}
         backgroundColor="#ccc"
         series={{
           regions: [

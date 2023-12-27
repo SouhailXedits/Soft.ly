@@ -59,7 +59,7 @@ function LinksLayout() {
       {allUrls?.length !== 0 ? (
         <div className=" flex items-center justify-between w-full">
           <h2 className=" text-3xl font-bold ">QR Codes</h2>
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <button
               className=" flex items-center gap-1 rounded border p-2 disabled:opacity-60 disabled:cursor-not-allowed"
               disabled
@@ -75,7 +75,7 @@ function LinksLayout() {
               <option value="hidden">Hidden</option>
               <option value="customized">Customized</option>
             </select>
-          </div>
+          </div> */}
         </div>
       ) : (
         ""

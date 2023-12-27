@@ -59,7 +59,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
 
   return (
     <div
-      className={` flex bg-white w-full px-8 py-8 gap-5 rounded-lg relative ${
+      className={` flex sm:flex-col bg-white w-full px-8 py-8 gap-5 rounded-lg relative ${
         isSelected ? "border border-blue-500" : "border border-white"
       }`}
     >
@@ -69,14 +69,22 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
         onChange={() => onSelect(link.id)}
         className=" absolute top-3 left-3"
       />
-      <div>
-        <img className=" w-16 " src={link.iconFilePath} alt="default favicon" />
+      <div className=" sm:self-center">
+        <img
+          className=" min-w-[50px] max-w-[50px]  "
+          src={link.iconFilePath}
+          alt="default favicon"
+        />
       </div>
       <div className="flex flex-col justify-between items-center w-full gap-3">
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full gap-2">
           <div className="flex flex-col items-start">
             <h1 className=" text-xl font-bold">{link.title}</h1>
-            <a href={link.shortUrl} className=" text-blue-600" target="_blank">
+            <a
+              href={link.shortUrl}
+              className=" text-blue-600 break-all"
+              target="_blank"
+            >
               {link.shortUrl}
             </a>
           </div>
@@ -87,7 +95,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                 <BsFillPencilFill />
               </button> */}
               <div className="relative" ref={modalRef}>
-                <button className="btn-icon" onClick={handleOptionsModalOpen}>
+                <button className="btn-icon sm:p-3 p-4" onClick={handleOptionsModalOpen}>
                   <BsThreeDots />
                 </button>
                 {isOpenOptionsModal ? (
@@ -118,7 +126,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
           </div>
         </div>
         <div className="flex flex-col items-start self-start gap-1">
-          <p className=" flex items-center">
+          <p className=" flex items-center break-all">
             <BsArrowReturnRight /> {shortenedUrl}{" "}
             {link.longUrl.length > 30 && (
               <button

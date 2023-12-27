@@ -1,30 +1,30 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import AppLayout from './ui/AppLayout'
-import Error from './ui/Error'
-import Home from './features/home/Home'
-import LoginForm from './features/auth/login/LoginForm'
-import Loader from './ui/Loader'
-import SignupForm from './features/auth/sign-up/SignupForm'
-import Confirm from './ui/Confirm'
-import ProtectedRoute from './ui/ProtectedRoute'
-import LinksLayout from './features/links/LinksLayout'
-import QrCodesLayout from './features/qr-codes/QrCodesLayout'
-import CreateLinkForm from './features/links/CreateLinkForm'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AppLayout from "./ui/AppLayout";
+import Error from "./ui/Error";
+import Home from "./features/home/Home";
+import LoginForm from "./features/auth/login/LoginForm";
+import Loader from "./ui/Loader";
+import SignupForm from "./features/auth/sign-up/SignupForm";
+import Confirm from "./ui/Confirm";
+import ProtectedRoute from "./ui/ProtectedRoute";
+import LinksLayout from "./features/links/LinksLayout";
+import QrCodesLayout from "./features/qr-codes/QrCodesLayout";
+import CreateLinkForm from "./features/links/CreateLinkForm";
 import CreateQRForm from "./features/qr-codes/CreateQRForm";
-import { Toaster } from 'react-hot-toast'
-import Analytics from './features/analytics/Analytics'
-import LinkDetails from './features/link-details/LinkDetails'
+import { Toaster } from "react-hot-toast";
+import Analytics from "./features/analytics/Analytics";
+import LinkDetails from "./features/link-details/LinkDetails";
 
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 0,
-      }
-    }
-  })
+        staleTime: 3 * 1000,
+      },
+    },
+  });
 
   const router = createBrowserRouter([
     {
@@ -99,11 +99,11 @@ function App() {
   ]);
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster position='top-right'/>
+      <Toaster position="top-right" />
       <RouterProvider router={router} />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  )
+  );
 }
 
-export default App
+export default App;

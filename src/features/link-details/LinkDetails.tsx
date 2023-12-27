@@ -74,7 +74,7 @@ const LinkDetails: React.FC = () => {
           <BsThreeDots />
         </button>
       </div>
-      <div className=" w-full self-center ">
+      <div className=" w-full self-center overflow-auto ">
 
           {chartComponent}
       </div>

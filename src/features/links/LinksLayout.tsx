@@ -3,9 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import ShortenedUrl from "./components/ShortenedUrl";
 import { request } from "graphql-request";
 import {
-  BsArrowDown,
   BsBarChartFill,
-  BsCalendar,
   BsChatFill,
   BsLockFill,
 } from "react-icons/bs";
@@ -78,7 +76,7 @@ function LinksLayout() {
         <>
           <div className=" flex items-center justify-between w-full ">
             <h2 className=" text-3xl font-bold ">Links</h2>
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <button className=" flex items-center gap-1 text-blue-600">
                 <BsChatFill /> Leave Feedback
               </button>
@@ -88,7 +86,7 @@ function LinksLayout() {
               >
                 <BsBarChartFill /> Top performing
               </button>
-            </div>
+            </div> */}
           </div>
           {/* <div className=" flex gap-2 justify-start w-full pb-5 border-b-2 ">
             <button className=" p-2 border rounded flex items-center gap-1 bg-white ">
@@ -100,7 +98,7 @@ function LinksLayout() {
               <BsCalendar /> Add filters
             </button>
           </div> */}
-          <div className=" flex gap-2 justify-between w-full">
+          {/* <div className=" flex gap-2 justify-between w-full">
             <div className=" ml-4 flex items-center gap-5">
               <input
                 type="checkbox"
@@ -134,9 +132,9 @@ function LinksLayout() {
               {" "}
               <option value=""> active  </option>
               <option value=""> hidden </option>
-              {/* <BsCalendar /> Add filters */}
+               <BsCalendar /> Add filters 
             </select>
-          </div>
+          </div> */}
         </>
       ) : (
         ""
