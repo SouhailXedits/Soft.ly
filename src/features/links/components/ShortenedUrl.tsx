@@ -107,12 +107,12 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                     >
                       <BsTrash /> delete
                     </button>
-                    <Link
-  className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all"
+                   <Link
+  className="flex items-center gap-1 p-2 transition-all rounded hover:bg-gray-100"
   to={{
     pathname: "/link-details",
     search: `?id=${link.id}`,
-    state: { linkData: link },
+    state: { linkData: link } as { linkData: typeof link },
   }}
 >
   <BsLink /> View link details
