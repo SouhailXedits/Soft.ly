@@ -94,7 +94,7 @@ function LinksLayout() {
           </p>{" "}
         </>
       )}
-      <Link className="btn-primary" to="/create">
+      <Link className="btn-primary" to="create">
         Create a short link
       </Link>
       <span>Learn more</span>
