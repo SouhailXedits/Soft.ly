@@ -5,11 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 import Loader from "../../../ui/Loader";
 import { LoginFormValues } from "../../../types";
-
+import { useQueryClient } from "@tanstack/react-query";
 
 
 
 const LoginForm: React.FC = () => {
+  const queryClient = useQueryClient()
+  
+
 
   const { signup, isPending : signingUp } = useSignUp();
   const navigate = useNavigate();
@@ -35,7 +38,8 @@ const LoginForm: React.FC = () => {
   ) => {
     try {
       signup(values);
-      navigate('/')
+      queryClient.invalidateQueries({queryKey: ["users"]})
+      navigate('/create-user')
 
     } catch (error) {
       console.error("Login failed", error);

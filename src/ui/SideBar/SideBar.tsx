@@ -123,7 +123,7 @@ function SideBar({ onToggleOpen }: SideBarProps) {
         </NavigLink>
         {role === "admin" && (
           <NavigLink path="/create-user" onClick={handleLinkClick}>
-            <BsCardText /> {!isCollapsed ? "Create user" : ""}
+            <BsCardText /> {!isCollapsed ? "Users" : ""}
           </NavigLink>
         )}
         <NavigLink path="/analytics" onClick={handleLinkClick}>

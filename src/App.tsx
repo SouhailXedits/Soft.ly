@@ -7,6 +7,7 @@ import Home from "./features/home/Home";
 import LoginForm from "./features/auth/login/LoginForm";
 import Loader from "./ui/Loader";
 import SignupForm from "./features/auth/sign-up/SignupForm";
+import RegisterUser from "./features/auth/sign-up/RegisterUser";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import NotFound from "./ui/NotFound";
 import { Toaster } from "react-hot-toast";
@@ -14,7 +15,7 @@ import Analytics from "./features/analytics/Analytics";
 import LinkDetails from "./features/link-details/LinkDetails";
 import { Suspense, lazy } from "react";
 
-const LinksLayout = lazy(() => import("./features/links/LinksLayout"));
+import LinksLayout from "./features/links/LinksLayout"
 const CreateLinkForm = lazy(
   () => import("./features/links/CreateLinkForm")
 );
@@ -51,11 +52,12 @@ function App() {
         },
         {
           path: "/links",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <LinksLayout />
-            </Suspense>
-          ),
+          element: <LinksLayout/>
+          // element: (
+          //   <Suspense fallback={<Loader />}>
+          //     <LinksLayout />
+          //   </Suspense>
+          // ),
         },
         {
           path: "/links/create",
@@ -81,8 +83,16 @@ function App() {
             </Suspense>
           ),
         },
+        // {
+        //   path: "/create-user",
+        //   element: <SignupForm />,
+        // },
         {
           path: "/create-user",
+          element: <RegisterUser />,
+        },
+        {
+          path: "/create-user/new",
           element: <SignupForm />,
         },
         {
@@ -128,6 +138,7 @@ function App() {
       loader: Loader,
       errorElement: <Error />,
     },
+
   ]);
 
   return (
