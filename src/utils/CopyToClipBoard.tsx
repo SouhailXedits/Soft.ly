@@ -2,10 +2,7 @@
 import copy from "clipboard-copy";
 import { BsCopy } from "react-icons/bs";
 import { toast } from "react-hot-toast";
-
-interface CopyToClipboardButtonProps {
-  text: string;
-}
+import { CopyToClipboardButtonProps } from "../types";
 
 const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
   text,
@@ -25,8 +22,8 @@ const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
 
   return (
     <div>
-      <button className=" flex items-center gap-2 rounded border p-2" onClick={handleCopyClick}>
-        <BsCopy /> copy
+      <button className=" flex items-center gap-2 rounded border p-3" onClick={handleCopyClick}>
+        <BsCopy /> <span className=" sm:hidden"> copy</span>
       </button>
     </div>
   );

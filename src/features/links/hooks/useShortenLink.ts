@@ -2,18 +2,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getShorterUrl } from "../../../services/apiLinks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { getShorterUrlParams } from "../../../types";
 
-interface getShorterUrlParams {
-  url: string;
-  title: string;
-}
+// interface getShorterUrlParams {
+//   url: string;
+//   title: string;
+//   userId: string;
+//   back_half: string;
+// }
 export function useShorterUrl() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { mutate: shortenUrl, isPending } = useMutation({
-    mutationFn: (params: getShorterUrlParams): Promise<string | undefined> =>
-      getShorterUrl(params.url, params.title),
+    mutationFn: ({ url, title, userId, back_half }: getShorterUrlParams) =>
+      getShorterUrl({ longUrl: url, title, userId, back_half }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["urls"],
@@ -23,9 +26,9 @@ export function useShorterUrl() {
     },
     onError: (err: string) => {
       console.log("ERROR", err);
-      toast.error("Failed to shorten URL");
+      toast.error("Back-half already in use ! 😢");
     },
-    retry: 3,
+    retry: false,
   });
   return { shortenUrl, isPending };
 }

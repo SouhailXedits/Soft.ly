@@ -1,61 +1,42 @@
-import QRCode from "qrcode";
-import supabase from "./supabase";
-import { getCurrentUser } from "./apiAuth";
 
-export const GenerateQR = async (NewUrl: string, title: string) => {
-  console.log("✅", title);
+import { GraphQLClient, gql } from "graphql-request";
+//import { client } from "../main";
+import { GQL_API_LINK } from "../config";
+
+
+
+const client = new GraphQLClient(
+  GQL_API_LINK
+);
+
+// export const deleteLink = async (id: string): any => {
+export const deleteLink = async (id: string) => {
+  const DELETE_URLS_MUTATION = gql`
+    mutation DeleteUrls($id: String!) {
+      deleteUrls(id: $id)
+    }
+  `;
+
   try {
-    const data = await QRCode.toDataURL(NewUrl);
-    await setQRCode({ NewQr: data, NewLongUrl: NewUrl, NewTitle: title });
-    console.log("after");
-    console.log(data);
-    return data;
-  } catch (err) {
-    console.error(err);
+    const response = await client.request(DELETE_URLS_MUTATION, { id });
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+    throw error; // Re-throw the error to be caught by the error handler in useMutation
   }
 };
 
-async function setQRCode({
-  NewQr,
-  NewLongUrl,
-  NewTitle,
-}: {
-  NewQr: string;
-  NewLongUrl: string;
-  NewTitle?: string;
-}): Promise<void> {
-  console.log(NewQr, NewLongUrl, NewTitle);
-  const user = await getCurrentUser();
-  console.log(user);
-  const { error } = await supabase
-    .from("qr-codes")
-    .insert([
-      {
-        qrImageUrl: NewQr,
-        longUrl: NewLongUrl,
-        title: NewTitle,
-        user_id: user?.id,
-      },
-    ])
-    .select();
-  if (error) {
-    console.log(error);
-  }
-}
 
-export async function getQrCodes() {
-  const { data, error } = await supabase.from("qr-codes").select("*");
-  if (error) {
-    console.log(error);
+export const getQrCodes = gql`
+  query AllUrls {
+    allUrls {
+      id
+      created_at
+      shortUrl
+      longUrl
+      title
+      qr_image_url
+      user_id
+    }
   }
-  console.log(data);
-  return data;
-}
-
-export const deleteQrCode = async (id: number) => {
-  const { error } = await supabase
-    .from("qr-codes")
-    .delete()
-    .eq("id", id);
-  if(error) return error.message
-};
+`;

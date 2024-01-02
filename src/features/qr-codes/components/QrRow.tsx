@@ -2,8 +2,8 @@ import { downloadfile } from "../../../utils/helpers";
 import {
   BsThreeDots,
   BsDownload,
-  BsFillPencilFill,
-  BsPalette,
+  // BsFillPencilFill,
+  // BsPalette,
   BsBarChart,
   BsArrowReturnRight,
   BsLockFill,
@@ -12,29 +12,47 @@ import {
 } from "react-icons/bs";
 
 import { formatDate } from "../../../utils/helpers";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDeleteQR } from "../hooks/useDeleteQr";
-type QrRowProps = {
-  qr: {
-    id: number;
-    created_at: string;
-    qrImageUrl: string;
-    longUrl: string;
-    title: string;
-  };
-};
+import { QrRowProps } from "../../../types";
+import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 
 const QrRow = ({ qr }: QrRowProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);
   const { deleteQr, isPending } = useDeleteQR();
   const [isOpenOptionsModal, setIsOpenOptionsModal] = useState(false);
 
-
   function handleDelete() {
-    deleteQr(qr.id);
+    deleteQr(String(qr.id));
   }
 
-  const imageUrl = qr.qrImageUrl;
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as HTMLElement | null)
+      ) {
+        // Click outside the modal, close the modal
+        setIsOpenOptionsModal(false);
+      }
+    };
+
+    // Attach the event listener when the modal is open
+    if (isOpenOptionsModal) {
+      document.addEventListener("click", handleOutsideClick);
+    }
+
+    // Detach the event listener when the component unmounts or when the modal is closed
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isOpenOptionsModal]);
+
+  const imageUrl = qr.qr_image_url;
 
   function toggleUrlCollapse() {
     setIsUrlCollapsed(!isUrlCollapsed);
@@ -42,6 +60,7 @@ const QrRow = ({ qr }: QrRowProps) => {
 
   function handleDownload() {
     downloadfile(imageUrl);
+    toast.success("We've got your QR code for your volt! 😉");
   }
   function handleOptionsModalOpen() {
     setIsOpenOptionsModal((isOpenOptionsModal) => !isOpenOptionsModal);
@@ -50,13 +69,12 @@ const QrRow = ({ qr }: QrRowProps) => {
     ? `${qr.longUrl.slice(0, 30)} ${qr.longUrl.length > 30 ? "..." : ""}`
     : qr.longUrl;
 
-  console.log(qr);
   return (
-    <div className=" flex bg-white w-full px-8 py-8 gap-5 rounded-lg">
-      <div>
+    <div className=" flex sm:flex-col bg-white w-full px-8 py-8 gap-5 rounded-lg">
+      <div className=" self-center">
         <img
-          className=" w-32 border border-gray-500 rounded-md"
-          src={qr.qrImageUrl}
+          className=" w-32 border border-gray-500 rounded-md min-w-[125px]"
+          src={qr.qr_image_url}
           alt="qr code image"
         />
       </div>
@@ -68,14 +86,14 @@ const QrRow = ({ qr }: QrRowProps) => {
           </div>
           <div className="flex flex-col">
             <div className="actions flex items-center gap-2">
-              <div className="relative">
+              <div className="relative" ref={modalRef}>
                 <button className="btn-icon" onClick={handleOptionsModalOpen}>
                   <BsThreeDots />
                 </button>
                 {isOpenOptionsModal ? (
-                  <div className="absolute top-[3rem] max-w-[200px] right-0  p-3 rounded shadow-md border">
+                  <div className="absolute top-[3rem] w-[182px] right-0  p-3 rounded shadow-md border flex flex-col bg-white">
                     <button
-                      className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all"
+                      className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all w-full"
                       onClick={handleDelete}
                       disabled={isPending}
                     >
@@ -86,24 +104,29 @@ const QrRow = ({ qr }: QrRowProps) => {
                   ""
                 )}
               </div>
-              <button className="btn-icon">
+              {/* <button className="btn-icon">
                 <BsPalette />
               </button>
               <button className="btn-icon">
                 <BsFillPencilFill />
-              </button>
+              </button> */}
               <button onClick={handleDownload} className="btn-icon">
                 <BsDownload />
               </button>
-              <button className="btn-primary bg-gray-100 text-black flex items-center gap-1">
-                {" "}
-                <BsBarChart /> View details
-              </button>
+            
+                <Link
+                  to={`/link-details?id=${qr.id}`}
+                  className="btn-primary bg-gray-100 text-black flex items-center gap-1"
+                >
+                  {" "}
+                  <BsBarChart /> View details
+                </Link>
+             
             </div>
           </div>
         </div>
         <div className="flex flex-col items-start self-start gap-1">
-          <p className=" flex items-center">
+          <p className=" flex items-center break-all">
             <BsArrowReturnRight /> {shortenedUrl}{" "}
             {qr.longUrl.length > 30 && (
               <button

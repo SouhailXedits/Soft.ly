@@ -1,22 +1,21 @@
 import React, { useEffect } from "react";
 import { Formik, Form, Field, FormikHelpers } from "formik";
-import { useLogin, useLoginWithGoogle } from "./useLogin";
-import { Link, useNavigate } from "react-router-dom";
+import { useLogin } from "./useLogin";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 import Loader from "../../../ui/Loader";
-import { BsGoogle } from "react-icons/bs";
+import { LoginFormValues } from "../../../types";
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+// interface LoginFormValues {
+//   email: string;
+//   password: string;
+// }
 
 const LoginForm: React.FC = () => {
   const { login, isPending: loggingIn } = useLogin();
-  const { login: loginWithGoogle, isPending } = useLoginWithGoogle();
   const navigate = useNavigate();
-
   const { isLoading, isAuthenticated } = useUser();
+  console.log(isAuthenticated);
 
   useEffect(
     function () {
@@ -44,18 +43,15 @@ const LoginForm: React.FC = () => {
       setSubmitting(false);
     }
   };
-  function handleGoogleLogin() {
-    loginWithGoogle();
-  }
 
   return (
-    <div className=" h-screen w-screen flex justify-center items-center bg-gradient-to-br from-gray-700 to-gray-900 text-gray-50">
-      <div className="Login flex shadow-lg shadow-black rounded-3xl  ">
-        <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] pt-5 rounded-bl-3xl rounded-tl-3xl ">
+    <div className=" h-screen w-screen flex justify-center items-center bg-gradient-to-br from-gray-700 p-3 to-gray-900 text-gray-50">
+      <div className="Login flex md:flex-col shadow-lg shadow-black rounded-3xl  ">
+        <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] md:p-[30px] pt-5 rounded-bl-3xl rounded-tl-3xl md:rounded-bl-none md:rounded-tr-3xl">
           <div>
             <div className=" mb-3">
               <img
-                src="/Logo-Softly.png"
+                src="/logo.png"
                 alt=" logo softly"
                 className="w-[10rem]"
               />
@@ -65,15 +61,6 @@ const LoginForm: React.FC = () => {
             </h3>
           </div>
           <div className=" flex flex-col gap-7 min-w-[300px]">
-            <button
-              onClick={handleGoogleLogin}
-              disabled={isPending}
-              className=" flex items-center gap-3 bg-gray-100 text-green-700 p-2 rounded justify-center "
-            >
-              <BsGoogle />
-              Login with google
-            </button>
-            <Link to='/signup' className=' underline'>Didn't have an account ?</Link>
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               <Form className=" flex flex-col gap-2">
                 <label htmlFor="email">E-mail</label>
@@ -99,16 +86,15 @@ const LoginForm: React.FC = () => {
             </Formik>
           </div>
         </div>
-        <div className="bg-white flex flex-col justify-center items-center rounded-br-3xl rounded-tr-3xl max-w-[400px] text-gray-700 p-10">
+        <div className="bg-white flex flex-col justify-center items-center rounded-br-3xl rounded-tr-3xl md:rounded-tr-none md:max-w-[500px] md:rounded-br-3xl md:rounded-bl-3xl sm:p-5 max-w-[400px] text-gray-700 p-10">
           <h1 className=" text-3xl font-semibold text-center">
             {" "}
             Your Connections Platform{" "}
           </h1>
           <p className=" mt-10">
             {" "}
-            By using the Softly API, you will exercise the full power of your
-            links through automated link customization and
-            click analytics.
+            By using the Softlink API, you will exercise the full power of your
+            links through automated link customization and click analytics.
           </p>
         </div>
       </div>

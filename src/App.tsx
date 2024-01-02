@@ -1,38 +1,50 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import AppLayout from './ui/AppLayout'
-import Error from './ui/Error'
-import Home from './ui/Home'
-import LoginForm from './features/auth/login/LoginForm'
-import Loader from './ui/Loader'
-import SignupForm from './features/auth/sign-up/SignupForm'
-import Confirm from './ui/Confirm'
-import ProtectedRoute from './ui/ProtectedRoute'
-import LinksLayout from './features/links/LinksLayout'
-import QrCodesLayout from './features/qr-codes/QrCodesLayout'
-import CreateLinkForm from './features/links/CreateLinkForm'
-import CreateQRForm from "./features/qr-codes/CreateQRForm";
-import { Toaster } from 'react-hot-toast'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AppLayout from "./ui/AppLayout";
+import Error from "./ui/Error";
+import Home from "./features/home/Home";
+import LoginForm from "./features/auth/login/LoginForm";
+import Loader from "./ui/Loader";
+import SignupForm from "./features/auth/sign-up/SignupForm";
+import RegisterUser from "./features/auth/sign-up/RegisterUser";
+import ProtectedRoute from "./ui/ProtectedRoute";
+import NotFound from "./ui/NotFound";
+import { Toaster } from "react-hot-toast";
+import Analytics from "./features/analytics/Analytics";
+import LinkDetails from "./features/link-details/LinkDetails";
+import { Suspense, lazy } from "react";
+
+import LinksLayout from "./features/links/LinksLayout"
+const CreateLinkForm = lazy(
+  () => import("./features/links/CreateLinkForm")
+);
+const QrCodesLayout = lazy(
+  () => import("./features/qr-codes/QrCodesLayout")
+);
+const CreateQRForm = lazy(
+  () => import("./features/qr-codes/CreateQRForm")
+);
 
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 0,
-      }
-    }
-  })
+        staleTime: 3 * 1000,
+      },
+    },
+  });
 
   const router = createBrowserRouter([
     {
       element: (
-        <ProtectedRoute>
-          <AppLayout />
-        </ProtectedRoute>
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        </Suspense>
       ),
       errorElement: <Error />,
-
       children: [
         {
           path: "/",
@@ -40,27 +52,56 @@ function App() {
         },
         {
           path: "/links",
-          element: <LinksLayout />,
+          element: <LinksLayout/>
+          // element: (
+          //   <Suspense fallback={<Loader />}>
+          //     <LinksLayout />
+          //   </Suspense>
+          // ),
         },
         {
           path: "/links/create",
-          element: <CreateLinkForm />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <CreateLinkForm />
+            </Suspense>
+          ),
         },
         {
           path: "/qrcodes",
-          element: <QrCodesLayout />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <QrCodesLayout />
+            </Suspense>
+          ),
         },
         {
           path: "/qrcodes/create",
-          element: <CreateQRForm />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <CreateQRForm />
+            </Suspense>
+          ),
+        },
+        // {
+        //   path: "/create-user",
+        //   element: <SignupForm />,
+        // },
+        {
+          path: "/create-user",
+          element: <RegisterUser />,
         },
         {
-          path: "/link-in-bio",
-          element: <Home />,
+          path: "/create-user/new",
+          element: <SignupForm />,
         },
         {
           path: "/analytics",
-          element: <Home />,
+          element: (
+            <Suspense fallback={<Loader />}>
+              <Analytics />
+            </Suspense>
+          ),
         },
         {
           path: "/campains",
@@ -69,6 +110,14 @@ function App() {
         {
           path: "/settings",
           element: <Home />,
+        },
+        {
+          path: "/link-details",
+          element: (
+            <Suspense fallback={<Loader />}>
+              <LinkDetails />
+            </Suspense>
+          ),
         },
       ],
     },
@@ -79,25 +128,26 @@ function App() {
       errorElement: <Error />,
     },
     {
+      path: "*",
+      element: <NotFound />,
+      loader: Loader,
+    },
+    {
       path: "/signup",
       element: <SignupForm />,
       loader: Loader,
       errorElement: <Error />,
     },
-    {
-      path: "/confirm",
-      element: <Confirm />,
-      loader: Loader,
-      errorElement: <Error />,
-    },
+
   ]);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster position='top-right'/>
+      <Toaster position="top-right" />
       <RouterProvider router={router} />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  )
+  );
 }
 
-export default App
+export default App;

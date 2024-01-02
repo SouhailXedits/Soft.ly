@@ -1,40 +1,24 @@
-// interface ShortenedUrlProps {
-//   url: {
-//     id: number,
-//     created_at: string,
-//     longUrl: string,
-//     shortUrl: string,
-//     title: string
-//   }
-// }
+
 
 import {
   BsThreeDots,
-  BsFillPencilFill,
+  // BsFillPencilFill,
   BsBarChart,
   BsArrowReturnRight,
   BsLockFill,
   BsCalendar,
   BsTrash,
+  BsLink,
 } from "react-icons/bs";
 
 import { formatDate } from "../../../utils/helpers";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CopyToClipboardButton from "../../../utils/CopyToClipBoard";
 import { useDeleteLink } from "../hooks/useDeleteLink";
-type QrRowProps = {
-  link: {
-    id: number;
-    created_at: string;
-    longUrl: string;
-    shortUrl: string;
-    title: string;
-  };
-  isSelected: boolean
-  onSelect: (id:number) => void
-};
+import { Link } from "react-router-dom";
+import { shortenedUrlProps } from "../../../types";
 
-const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
+const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);
   const { deleteL, isPending } = useDeleteLink();
   const [isOpenOptionsModal, setIsOpenOptionsModal] = useState(false);
@@ -43,20 +27,39 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
   }
 
   function handleDelete() {
-    deleteL(link.id);
+    deleteL(String(link.id));
   }
 
-  function handleOptionsModalOpen() {
-    setIsOpenOptionsModal((isOpenOptionsModal) => !isOpenOptionsModal);
-  }
+  const handleOptionsModalOpen = () => {
+    setIsOpenOptionsModal((prevIsOpen) => !prevIsOpen);
+  };
 
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as HTMLElement | null)
+      ) {
+        setIsOpenOptionsModal(false);
+      }
+    };
+    if (isOpenOptionsModal) {
+      document.addEventListener("click", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isOpenOptionsModal]);
   const shortenedUrl = isUrlCollapsed
     ? `${link.longUrl.slice(0, 30)} ${link.longUrl.length > 30 ? "..." : ""}`
     : link.longUrl;
 
   return (
     <div
-      className={` flex bg-white w-full px-8 py-8 gap-5 rounded-lg relative ${
+      className={` flex sm:flex-col bg-white w-full px-8 py-8 gap-5 rounded-lg relative ${
         isSelected ? "border border-blue-500" : "border border-white"
       }`}
     >
@@ -66,33 +69,37 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
         onChange={() => onSelect(link.id)}
         className=" absolute top-3 left-3"
       />
-      <div>
+      <div className=" sm:self-center">
         <img
-          className=" w-16 border border-gray-500 rounded-full"
-          src="/default-favicon.png"
+          className=" min-w-[50px] max-w-[50px]  "
+          src={link.iconFilePath}
           alt="default favicon"
         />
       </div>
       <div className="flex flex-col justify-between items-center w-full gap-3">
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full gap-2">
           <div className="flex flex-col items-start">
             <h1 className=" text-xl font-bold">{link.title}</h1>
-            <a href={link.shortUrl} className=" text-blue-600">
+            <a
+              href={link.shortUrl}
+              className=" text-blue-600 break-all"
+              target="_blank"
+            >
               {link.shortUrl}
             </a>
           </div>
           <div className="flex flex-col">
             <div className="actions flex items-center gap-2">
               <CopyToClipboardButton text={link.shortUrl} />
-              <button className="btn-icon">
+              {/* <button className="btn-icon">
                 <BsFillPencilFill />
-              </button>
-              <div className="relative">
-                <button className="btn-icon" onClick={handleOptionsModalOpen}>
+              </button> */}
+              <div className="relative" ref={modalRef}>
+                <button className="btn-icon sm:p-3 p-4" onClick={handleOptionsModalOpen}>
                   <BsThreeDots />
                 </button>
                 {isOpenOptionsModal ? (
-                  <div className="absolute top-[3rem] max-w-[200px] right-0  p-1 rounded shadow-md border">
+                  <div className="absolute top-[3rem] w-[182px] right-0  p-1 rounded shadow-md border bg-white flex flex-col">
                     <button
                       className="flex items-center gap-1 hover:bg-gray-100 p-2 rounded transition-all"
                       onClick={handleDelete}
@@ -100,6 +107,13 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
                     >
                       <BsTrash /> delete
                     </button>
+                    <Link
+  className="flex items-center gap-1 p-2 transition-all rounded hover:bg-gray-100"
+  to={`/link-details?id=${link.id}`}
+  state={{ linkData: link } as { linkData: typeof link }}
+>
+  <BsLink /> View link details
+</Link>
                   </div>
                 ) : (
                   ""
@@ -109,7 +123,7 @@ const ShorenedUrl = ({ link, isSelected , onSelect}: QrRowProps) => {
           </div>
         </div>
         <div className="flex flex-col items-start self-start gap-1">
-          <p className=" flex items-center">
+          <p className=" flex items-center break-all">
             <BsArrowReturnRight /> {shortenedUrl}{" "}
             {link.longUrl.length > 30 && (
               <button
