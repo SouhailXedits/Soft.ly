@@ -48,6 +48,7 @@
     "react-lazy-load-image-component": "^1.6.0",
     "react-modal-hook": "^3.0.2",
     "react-paginate": "^8.2.0",
+    "react-router-dom": "^6.21.1",
     "react-spinners": "^0.13.8",
     "recharts": "^2.10.3",
     "simplebar-react": "^3.2.4",
