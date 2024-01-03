@@ -1,12 +1,13 @@
 // UserTable.tsx
 
-import { GQL_API_LINK } from "@/config";
+ import { GQL_API_LINK } from "@/config";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { useDeleteUsers } from "../useDeleteUsers";
 import UserRow from "./UserRow";
+
 
 interface User {
   id: string;
