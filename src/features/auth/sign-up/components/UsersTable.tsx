@@ -111,6 +111,10 @@ const UserTable: React.FC = () => {
           Create User
         </button>
       </div>
+
+      <div className=" overflow-auto">
+
+      
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -158,7 +162,7 @@ const UserTable: React.FC = () => {
           ))}
         </tbody>
       </table>
-
+      </div>
       <div className=" flex justify-end">
         <div className="mt-4 flex justify-end">
           <ReactPaginate

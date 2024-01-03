@@ -120,7 +120,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
           className="form-checkbox h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded"
         />
       </td>
-      <td className="px-6 py-4 whitespace-nowrap">{user.id}</td>
+      <td className="px-6 py-4 break-all min-w-[200px] ">{user.id}</td>
       <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
       <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
       <td className="px-6 py-4 whitespace-nowrap relative">
