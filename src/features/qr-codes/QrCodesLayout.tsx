@@ -99,10 +99,10 @@ function LinksLayout() {
           </p>
         </>
       )}
-      <Link className="btn-primary" to="create">
+      <Link className="btn-primary" to="/qrcodes/create">
         Create a QR Code
       </Link>
-      <Link>Learn more</Link>
+      <p>Learn more</p>
     </div>
   );
 }

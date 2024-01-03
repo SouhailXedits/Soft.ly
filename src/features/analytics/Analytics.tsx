@@ -88,7 +88,7 @@ const Analytics: React.FC = () => {
 
   return (
     <div className="p-5">
-      <div className=" p-4 flex-col flex gap-3 sticky top-0 bg-gray-100">
+      <div className=" p-4 flex-col flex gap-3 sticky top-0 bg-gray-100 z-40">
         <div className=" flex items-center justify-between">
           <h1 className=" text-3xl font-semibold">Analytics</h1>
           {/* <button className=" btn-primary flex items-center gap-1">

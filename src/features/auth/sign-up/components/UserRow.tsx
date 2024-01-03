@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { useDeleteUsers } from "../useDeleteUsers";
+import EditUserModal from "./EditModal";
+import { useUpdateUser } from "../useUpdateUser";
+import { useUser } from "../../useUser";
 
 
 interface User {
@@ -19,6 +22,9 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const { deleteManyUsers, isDeleting } = useDeleteUsers();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const {updateUser} = useUpdateUser()
+
 
   const modalRef = useRef<HTMLDivElement | null>(null);
   console.log(modalRef);
@@ -66,9 +72,44 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
 
   const handleEdit = (userId: string) => {
     console.log(userId)
-    // Add your logic to navigate to the edit page or show an edit form
+    setIsEditModalOpen(true);
     closeModal();
   };
+
+
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+  const {id: userId } = user
+
+
+  const handleSaveEdit = async (data: { password?: string; role: string }) => {
+    try {
+      const newData: { [key: string]: string } = {};
+
+      if (data.password !== undefined && data.password !== "") {
+        newData.password = data.password;
+      }
+
+      newData.role = data.role;
+
+      console.log({ id: userId, ...newData });
+      updateUser({ id: userId, ...newData });
+
+
+
+      // Close the modal
+      handleCloseEditModal();
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
+  const {user: curUser} = useUser();
+  const isCurrentUser = curUser?.id === userId;
+
+
   return (
     <tr key={user.id}>
       <td className="px-6 py-4 whitespace-nowrap">
@@ -79,7 +120,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
           className="form-checkbox h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded"
         />
       </td>
-      <td className="px-6 py-4 whitespace-nowrap">{user.id}</td>
+      <td className="px-6 py-4 break-all min-w-[200px] ">{user.id}</td>
       <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
       <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
       <td className="px-6 py-4 whitespace-nowrap relative">
@@ -98,19 +139,22 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
           {isModalOpen && selectedUserId === user.id && (
             <div className="absolute left-0 mt-2  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
               <div
-                className="py-1 flex flex-col"
+                className="py-1 flex flex-col min-w-[70px]"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby={`options-menu-${user.id}`}
               >
-                <button
+                
+                { isCurrentUser ? '' : 
+                  <button
                   onClick={handleDelete}
                   disabled={isDeleting}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                 >
                   Delete
-                </button>
+                </button> 
+                }
                 <button
                   onClick={() => handleEdit(user.id)}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -122,7 +166,15 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
             </div>
           )}
         </div>
+      {isEditModalOpen && (
+        <EditUserModal
+          user = {user}
+          onClose={handleCloseEditModal}
+          onEdit={handleSaveEdit}
+        />
+      )}
       </td>
+      
     </tr>
   );
 }

@@ -1,6 +1,6 @@
 // UserTable.tsx
 
-import { GQL_API_LINK } from "@/config";
+ import { GQL_API_LINK } from "@/config";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
@@ -94,12 +94,7 @@ const UserTable: React.FC = () => {
   return (
     <div className="container h-screen p-6 bg-white rounded-md shadow-md relative">
       <div className="my-4 flex justify-between">
-        <button
-          onClick={handleCreateUserClick}
-          className="ml-4 bg-green-500 text-white px-4 py-2 rounded-md"
-        >
-          Create User
-        </button>
+        
         <button
           onClick={handleDeleteSelected}
           disabled={selectedUsers.length === 0 || isDeleting}
@@ -109,7 +104,17 @@ const UserTable: React.FC = () => {
         >
           Delete Selected
         </button>
+        <button
+          onClick={handleCreateUserClick}
+          className="ml-4 bg-green-500 text-white px-4 py-2 rounded-md"
+        >
+          Create User
+        </button>
       </div>
+
+      <div className=" overflow-auto">
+
+      
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -157,7 +162,7 @@ const UserTable: React.FC = () => {
           ))}
         </tbody>
       </table>
-
+      </div>
       <div className=" flex justify-end">
         <div className="mt-4 flex justify-end">
           <ReactPaginate

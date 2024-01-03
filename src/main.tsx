@@ -6,6 +6,7 @@ import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, from } from '@ap
 import { GQL_API_LINK } from './config.ts';
 
 
+
 const link = from([
   new HttpLink({ uri: GQL_API_LINK}),
 ]);

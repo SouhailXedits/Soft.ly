@@ -88,11 +88,11 @@ function App() {
         //   element: <SignupForm />,
         // },
         {
-          path: "/create-user",
+          path: "/users",
           element: <RegisterUser />,
         },
         {
-          path: "/create-user/new",
+          path: "/users/new",
           element: <SignupForm />,
         },
         {
