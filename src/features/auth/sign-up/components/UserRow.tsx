@@ -81,7 +81,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
   };
-  const {id: userId ,email} = user
+  const {id: userId } = user
 
 
   const handleSaveEdit = async (data: { password?: string; role: string }) => {
@@ -97,15 +97,12 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
       console.log({ id: userId, ...newData });
       updateUser({ id: userId, ...newData });
 
-      // Assuming updateUser is an asynchronous function, use await here
-      //updateUser({ id: userID, newData });
-      // Add your logic to handle the edit (e.g., calling an API to update user data)
+)
 
       // Close the modal
       handleCloseEditModal();
     } catch (error) {
       console.error("Error updating user:", error);
-      // Handle errors accordingly
     }
   };
 
