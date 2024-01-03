@@ -94,12 +94,7 @@ const UserTable: React.FC = () => {
   return (
     <div className="container h-screen p-6 bg-white rounded-md shadow-md relative">
       <div className="my-4 flex justify-between">
-        <button
-          onClick={handleCreateUserClick}
-          className="ml-4 bg-green-500 text-white px-4 py-2 rounded-md"
-        >
-          Create User
-        </button>
+        
         <button
           onClick={handleDeleteSelected}
           disabled={selectedUsers.length === 0 || isDeleting}
@@ -108,6 +103,12 @@ const UserTable: React.FC = () => {
           }`}
         >
           Delete Selected
+        </button>
+        <button
+          onClick={handleCreateUserClick}
+          className="ml-4 bg-green-500 text-white px-4 py-2 rounded-md"
+        >
+          Create User
         </button>
       </div>
       <table className="min-w-full divide-y divide-gray-200">
