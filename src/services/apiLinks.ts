@@ -1,6 +1,5 @@
 import gql from "graphql-tag";
 
-import supabase from "./supabase";
 import { client } from "../main";
 import { API_LINK } from "../config";
 //import { useUser } from "../features/auth/useUser";
@@ -64,10 +63,6 @@ export async function getShorterUrl({
   }
 }
 
-export const deleteLink = async (id: number) => {
-  const { error } = await supabase.from("urls").delete().eq("id", id);
-  if (error) return error.message;
-};
 
 export const getUrls = gql`
   query GetUrlsWithUserId($user_id: String!) {

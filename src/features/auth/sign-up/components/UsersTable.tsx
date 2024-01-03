@@ -112,7 +112,7 @@ const UserTable: React.FC = () => {
         </button>
       </div>
 
-      <div className=" overflow-auto">
+      <div className=" overflow-auto pb-20">
 
       
       <table className="min-w-full divide-y divide-gray-200">

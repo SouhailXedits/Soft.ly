@@ -90,7 +90,6 @@ function LinksLayout() {
           </h2>
           <p className="text-xl font-light text-gray-700 ">
             Shorten long links and get attention by customizing what they say.
-            No more bit.ly/3yqawYa, more bit.ly/brands-bitly.
           </p>{" "}
         </>
       )}
