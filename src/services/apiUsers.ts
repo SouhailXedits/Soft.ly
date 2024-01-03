@@ -37,7 +37,7 @@ export const deleteManyUsers = async (userIds: string[]) => {
 
 
 
-export const updateUser = async (userData) => {
+export const updateUser = async (userData: any) => {
   try {
     //const [userId, userUpdateData] = Object.entries(userData)[0];
     console.log(userData)

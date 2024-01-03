@@ -23,7 +23,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const { deleteManyUsers, isDeleting } = useDeleteUsers();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const {updateUser, isPending} = useUpdateUser()
+  const {updateUser} = useUpdateUser()
 
 
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -97,7 +97,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
       console.log({ id: userId, ...newData });
       updateUser({ id: userId, ...newData });
 
-)
+
 
       // Close the modal
       handleCloseEditModal();
