@@ -5,6 +5,8 @@ import request from "graphql-request";
 import { GQL_API_LINK } from "../../../config";
 import { getUrls } from "../../../services/apiLinks";
 
+
+
 function ProgressComp() {
     const { user } = useUser();
     const userId = user?.id;
