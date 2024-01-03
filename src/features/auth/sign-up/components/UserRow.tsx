@@ -4,19 +4,12 @@ import { useDeleteUsers } from "../useDeleteUsers";
 import EditUserModal from "./EditModal";
 import { useUpdateUser } from "../useUpdateUser";
 import { useUser } from "../../useUser";
+import { UserRowProps } from "@/types";
 
 
-interface User {
-  id: string;
-  role: string;
-  email: string;
-}
 
-interface UserRowProps {
-  user: User;
-  selectedUsers: string[];
-  setSelectedUsers: React.Dispatch<React.SetStateAction<string[]>>;
-}
+
+
 
 function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -84,7 +77,11 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
   const {id: userId } = user
 
 
-  const handleSaveEdit = async (data: { password?: string; role: string }) => {
+  const handleSaveEdit = async (data: {
+    password?: string;
+    role: string;
+    shortsLimits: string;
+  }) => {
     try {
       const newData: { [key: string]: string } = {};
 
@@ -93,11 +90,10 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
       }
 
       newData.role = data.role;
+      newData.shortsLimits = data.shortsLimits
 
       console.log({ id: userId, ...newData });
       updateUser({ id: userId, ...newData });
-
-
 
       // Close the modal
       handleCloseEditModal();

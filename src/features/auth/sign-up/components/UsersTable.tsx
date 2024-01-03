@@ -1,42 +1,15 @@
 // UserTable.tsx
 
- import { GQL_API_LINK } from "@/config";
-import { useQuery } from "@tanstack/react-query";
+ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { useDeleteUsers } from "../useDeleteUsers";
 import UserRow from "./UserRow";
+import { fetchAllUsers } from "@/services/apiUsers";
 
-interface User {
-  id: string;
-  role: string;
-  email: string;
-}
 
-const fetchAllUsers = async () => {
-  const response = await fetch(GQL_API_LINK, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `
-        query GetAllUser {
-          getAllUser {
-            id
-            role
-            email
-          }
-        }
-      `,
-    }),
-  });
 
-  const data = await response.json();
-  console.log(data);
-  return data.data.getAllUser as User[];
-};
 
 const UserTable: React.FC = () => {
   const itemsPerPage = 10;

@@ -23,6 +23,7 @@ const Analytics: React.FC = () => {
     queryKey: ["analytics"],
     queryFn: () => getClicksData(userId),
   });
+  console.log(analyticsData)
 
   const devicesObj = analyticsData?.count?.devices;
   let devicesClicks: {

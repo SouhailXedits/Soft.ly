@@ -1,6 +1,6 @@
 import { VectorMap } from "@react-jvectormap/core";
 import { worldMill } from "@react-jvectormap/world";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
  
 
@@ -41,6 +41,9 @@ function WorldMap({ countries }: any) {
     //     console.error("Error fetching country data:", error);
     //   });
   };
+  useEffect(() => {
+    console.log(selectedCountry);
+  }, [selectedCountry]);
   return (
     <div className=" m-auto w-[700px] h-[600px]">
       <VectorMap
@@ -61,7 +64,9 @@ function WorldMap({ countries }: any) {
           ],
         }}
       />
+      
     </div>
+    
   );
 }
 

@@ -6,6 +6,7 @@ export interface ValidateTokenResult {
   validateToken: {
     id: string;
     role: string;
+    LinksCount: string;
     email: string;
   };
 }
@@ -95,3 +96,16 @@ export type BarChartCompProps = {
   }[];
 };
 
+
+export interface User {
+  id: string;
+  role: string;
+  LinksCount: string;
+  email: string;
+}
+
+export interface UserRowProps {
+  user: User;
+  selectedUsers: string[];
+  setSelectedUsers: React.Dispatch<React.SetStateAction<string[]>>;
+}

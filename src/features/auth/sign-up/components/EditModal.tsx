@@ -1,15 +1,12 @@
+import { User } from "@/types";
 import React, { useState } from "react";
 
 
-interface User {
-  id: string;
-  role: string;
-  email: string;
-}
+
 interface EditUserModalProps {
-    user: User
+  user: User;
   onClose: () => void;
-  onEdit: (data: {password?: string, role: string}) => void;
+  onEdit: (data: { password?: string; role: string; shortsLimits: string}) => void;
 }
 
 const EditUserModal: React.FC<EditUserModalProps> = ({
@@ -19,6 +16,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
 }) => {
     const [password, setPassword] = useState("");
     const [role, setRole] = useState(user.role);
+    const [shortsLimits, setShortsLimits] = useState("0");
     const isPasswordValid = password.length >= 8 || password === ''; 
 
     const handleEdit = () => {
@@ -27,7 +25,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
         // Validate form data if needed
         
         // Call the onEdit callback with the userId and form data
-        onEdit({ password, role });
+        onEdit({ password, role, shortsLimits });
         
         // Close the modal
         onClose();
@@ -52,6 +50,21 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
                         className="mt-1 p-2 border rounded-md w-full"
                     />
                 </div>
+                <div className="mb-4">
+                    <label
+                        htmlFor="shorts"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Links number limit(optional):
+                    </label>
+                    <input
+                        id="shorts"
+                        type="number"
+                        value={shortsLimits}
+                        onChange={(e) => setShortsLimits(e.target.value)}
+                        className="mt-1 p-2 border rounded-md w-full"
+                    />
+                </div>
                 <div className="mb-6">
                     <label
                         htmlFor="role"
@@ -59,7 +72,6 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
                     >
                         Role:
                     </label>
-
                     <select
                         value={role}
                         name="role"

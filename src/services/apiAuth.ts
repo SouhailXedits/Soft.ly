@@ -78,6 +78,7 @@ export async function getCurrentUser() {
       validateToken(jwt: $jwt) {
         id
         role
+        LinksCount
         email
       }
     }
