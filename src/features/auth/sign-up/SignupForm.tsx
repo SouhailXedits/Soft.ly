@@ -39,7 +39,7 @@ const LoginForm: React.FC = () => {
     try {
       signup(values);
       queryClient.invalidateQueries({queryKey: ["users"]})
-      navigate('/create-user')
+      navigate('/users')
 
     } catch (error) {
       console.error("Login failed", error);

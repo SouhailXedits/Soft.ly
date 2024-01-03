@@ -77,7 +77,7 @@ function SideBar({ onToggleOpen }: SideBarProps) {
       } flex flex-col gap-5 relative md:w-full`}
     >
       <button
-        className="absolute -right-5 top-6 rounded-full bg-white shadow-black border shadow-sm p-1.5 text-sm md:hidden"
+        className="absolute z-10 -right-5 top-6 rounded-full bg-white shadow-black border shadow-sm p-1.5 text-sm md:hidden"
         onClick={() => setIsCollapsed((prevCollapsed) => !prevCollapsed)}
       >
         {isCollapsed ? <BsChevronRight /> : <BsChevronLeft />}
@@ -122,7 +122,7 @@ function SideBar({ onToggleOpen }: SideBarProps) {
           <BsQrCodeScan /> {!isCollapsed ? "Qr Code" : ""}
         </NavigLink>
         {role === "admin" && (
-          <NavigLink path="/create-user" onClick={handleLinkClick}>
+          <NavigLink path="/users" onClick={handleLinkClick}>
             <BsCardText /> {!isCollapsed ? "Users" : ""}
           </NavigLink>
         )}
