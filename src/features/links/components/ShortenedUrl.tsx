@@ -95,7 +95,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                 <BsFillPencilFill />
               </button> */}
               <div className="relative" ref={modalRef}>
-                <button className="btn-icon sm:p-3 p-4" onClick={handleOptionsModalOpen}>
+                <button className="btn-icon sm:p-3" onClick={handleOptionsModalOpen}>
                   <BsThreeDots />
                 </button>
                 {isOpenOptionsModal ? (
