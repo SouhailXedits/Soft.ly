@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsGraphUp, BsThreeDots } from "react-icons/bs";
+import { BsGraphUp } from "react-icons/bs";
 import PieChartComp from "./components/PieChartComp";
 import BarChartComp from "./components/BarChartComp";
 import CountryRow from "./components/CountryRow";
@@ -70,15 +70,15 @@ const Analytics: React.FC = () => {
   const renderChart = (chartComponent: React.ReactNode, filterby: string) => (
     <div className="flex bg-white p-6 rounded-xl flex-col">
       <div className="flex gap-2 items-center justify-between">
-        <div className="flex gap-2">
+        <div className="flex gap-2 mb-2">
           {/* <button className="text-xl">
             <BsGripVertical />
           </button> */}
           <h2 className="text-lg font-medium">Clicks+scans {filterby}</h2>
         </div>
-        <button className="rounded border p-2">
+        {/* <button className="rounded border p-2">
           <BsThreeDots />
-        </button>
+        </button> */}
       </div>
       <div className=" overflow-auto ">
         
@@ -161,7 +161,7 @@ const Analytics: React.FC = () => {
               <div>
                 <WorldMap countries={countryCodes} />
               </div>,
-              "over time"
+              "in world map"
             )}
           </div>
         </div>
@@ -217,7 +217,7 @@ const Analytics: React.FC = () => {
                   {/* <DataRow data={data}/> */}
                 </div>
               </div>,
-              "over time"
+              "by Countries"
             )}
           </div>
         </div>
