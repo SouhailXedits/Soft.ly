@@ -84,7 +84,6 @@ export async function getCurrentUser() {
     }
   `;
   const token = localStorage.getItem('token')
-  //const endpoint = "https://api.short.softyeducation.com/graphql";
   const variables = {
     jwt: token,
   };

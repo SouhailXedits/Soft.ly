@@ -24,7 +24,8 @@ function WorldMap({ countries }: any) {
 
 
 
-  const handleRegionClick = (event: any, code: string): void => {
+  const handleRegionClick = ( code: string): void => {
+  // const handleRegionClick = (event: any, code: string): void => {
     // Update the state with the selected country code
     setSelectedCountry(code);
     console.log(selectedCountry)
