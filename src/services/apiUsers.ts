@@ -1,4 +1,5 @@
 import { GQL_API_LINK } from "@/config";
+import { User } from "@/types";
 
 
 export const deleteManyUsers = async (userIds: string[]) => {
