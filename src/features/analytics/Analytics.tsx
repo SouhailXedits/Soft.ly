@@ -209,7 +209,7 @@ const Analytics: React.FC = () => {
                       {activeTab === "cities" ? "Cities" : "Countries"}
                     </p>
                     <p>Click + Scan</p>
-                    <p>%</p>
+                    {/* <p>%</p> */}
                   </div>
                   {countriesClicks?.map((country) => (
                     <CountryRow key={country.id} country={country} />
