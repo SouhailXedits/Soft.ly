@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsGraphUp, BsThreeDots } from "react-icons/bs";
+import { BsGraphUp } from "react-icons/bs";
 import PieChartComp from "./components/PieChartComp";
 import BarChartComp from "./components/BarChartComp";
 import CountryRow from "./components/CountryRow";

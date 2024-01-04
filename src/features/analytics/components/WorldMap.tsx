@@ -26,7 +26,7 @@ function WorldMap({ countries }: any) {
 
   const handleRegionClick = ( code: string): void => {
   // const handleRegionClick = (event: any, code: string): void => {
-    // Update the state with the selected country code
+
     setSelectedCountry(code);
     console.log(selectedCountry)
 
@@ -53,7 +53,7 @@ function WorldMap({ countries }: any) {
         map={worldMill}
         style={{ width: "100%", height: "100%" }}
         backgroundColor="#ccc"
-        onRegionClick={handleRegionClick} // Add this event handler
+        onRegionClick={handleRegionClick} 
         //selectedRegions={[selectedCountry]}
         series={{
           regions: [
