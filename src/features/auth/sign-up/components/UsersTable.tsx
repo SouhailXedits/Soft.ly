@@ -130,7 +130,7 @@ const UserTable: React.FC = () => {
         </thead>
         <tbody className="divide-y divide-gray-200">
           {currentUsers.map((user) => (
-            <UserRow user={user} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
+            <UserRow user={user} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} key={user.id}/>
             
           ))}
         </tbody>
