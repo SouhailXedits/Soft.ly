@@ -28,7 +28,7 @@ function CreateLinkForm() {
       !updatedUrl.startsWith("http://") &&
       !updatedUrl.startsWith("https://")
     ) {
-      updatedUrl = "http://" + updatedUrl + "/";
+      updatedUrl = "https://" + updatedUrl + "/";
       setUrl(updatedUrl);
     }
   };

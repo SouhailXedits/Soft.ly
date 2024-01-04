@@ -1,5 +1,5 @@
 import { gql } from "graphql-tag";
-import supabase from "./supabase";
+
 import { client } from "../main";
 import request from "graphql-request";
 import { GQL_API_LINK } from "../config";
@@ -69,19 +69,6 @@ export async function login({
 
 
 
-export async function loginWithGoogle() {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      queryParams: {
-        access_type: "offline",
-        prompt: "consent",
-      },
-    },
-  });
-  if(error) throw new Error(error.message)
-  return data
-}
 
 
 
@@ -91,6 +78,7 @@ export async function getCurrentUser() {
       validateToken(jwt: $jwt) {
         id
         role
+        LinksCount
         email
       }
     }

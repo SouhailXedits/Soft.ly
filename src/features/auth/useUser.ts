@@ -6,6 +6,7 @@ export function useUser() {
   const { isLoading, data: user, error } = useQuery({
     queryKey: ["user"],
     queryFn: getCurrentUser,
+    retry: false,
   });
   if (error) {
     console.error("Error fetching user data:", error);

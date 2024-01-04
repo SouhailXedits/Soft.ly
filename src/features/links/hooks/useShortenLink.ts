@@ -26,7 +26,7 @@ export function useShorterUrl() {
     },
     onError: (err: string) => {
       console.log("ERROR", err);
-      toast.error("Back-half already in use ! 😢");
+      toast.error("Invalid link or you've exceed your limit ! 😢");
     },
     retry: false,
   });

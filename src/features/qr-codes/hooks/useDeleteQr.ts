@@ -17,7 +17,7 @@ export function useDeleteQR() {
       console.error("ERROR", err);
       toast.error("Failed to delte Qer code");
     },
-    retry: 2,
+    retry: false,
   });
 
   return { deleteQr, isPending };

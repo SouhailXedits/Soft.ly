@@ -17,7 +17,7 @@ export function useDeleteLink() {
       console.error("ERROR", err);
       toast.error("Failed to Delete link");
     },
-    retry: 2,
+    retry: false,
   });
 
   return { deleteL, isPending };

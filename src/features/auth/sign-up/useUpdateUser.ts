@@ -12,6 +12,7 @@ export function useUpdateUser() {
       id: string;
       password?: string;
       role?: string;
+      shortsLimits?: string;
       email?: string;
     }) => updateUserApi(userData),
     onSuccess: (updatedUser: any) => {
@@ -28,7 +29,7 @@ export function useUpdateUser() {
       console.error("ERROR", err);
       toast.error("Failed to update user information");
     },
-    retry: 3,
+    retry: false,
   });
 
   return { updateUser, isPending };

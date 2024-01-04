@@ -49,10 +49,11 @@ export const updateUser = async (userData: any) => {
       },
       body: JSON.stringify({
         query: `
-          mutation UpdateUser($id: String!, $password: String, $role: String) {
-            UpdateUser(id: $id, UpdateUser: { password: $password, role: $role }) {
+          mutation UpdateUser($id: String!, $password: String,$LinksCount: String, $role: String) {
+            UpdateUser(id: $id, UpdateUser: { password: $password,LinksCount: $LinksCount , role: $role }) {
               id
               role
+              LinksCount
               email
             }
           }
@@ -60,7 +61,8 @@ export const updateUser = async (userData: any) => {
         variables: {
           id: userData.id,
           password: userData.password || null,
-          role:userData.role || null,
+          LinksCount: userData.shortsLimits || null,
+          role: userData.role || null,
         },
       }),
     });
@@ -77,3 +79,28 @@ export const updateUser = async (userData: any) => {
     throw new Error("Failed to update user");
   }
 };
+
+
+ export const fetchAllUsers = async () => {
+    const response = await fetch(GQL_API_LINK, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `
+          query GetAllUser {
+            getAllUser {
+              id
+              role
+              LinksCount
+              email
+            }
+          }
+        `,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data.data.getAllUser as User[];
+  };
