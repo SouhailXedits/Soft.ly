@@ -29,7 +29,7 @@ export function useUpdateUser() {
       console.error("ERROR", err);
       toast.error("Failed to update user information");
     },
-    retry: 3,
+    retry: false,
   });
 
   return { updateUser, isPending };

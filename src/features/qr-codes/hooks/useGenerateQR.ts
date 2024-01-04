@@ -34,7 +34,7 @@ export function useGenerateQR() {
       console.error("ERROR", err);
       toast.error("Failed to shorten URL");
     },
-    retry: 2,
+    retry: false,
   });
 
   return { generateQr, isPending };
