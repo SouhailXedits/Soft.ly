@@ -1,26 +1,24 @@
 import React, { useEffect } from "react";
 import { Formik, Form, Field, FormikHelpers } from "formik";
-import {useSignUp} from './useSignup'
-import { useNavigate } from "react-router-dom";
+import { useSignUp } from "./useSignup";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 import Loader from "../../../ui/Loader";
 import { LoginFormValues } from "../../../types";
 import { useQueryClient } from "@tanstack/react-query";
-
+import { BsArrowLeft } from "react-icons/bs";
 
 
 const LoginForm: React.FC = () => {
-  const queryClient = useQueryClient()
-  
+  const queryClient = useQueryClient();
 
-
-  const { signup, isPending : signingUp } = useSignUp();
+  const { signup, isPending: signingUp } = useSignUp();
   const navigate = useNavigate();
 
   const { isLoading, role } = useUser();
   useEffect(
     function () {
-      if (role !== 'admin' && !isLoading) navigate("/");
+      if (role !== "admin" && !isLoading) navigate("/");
     },
     [role, isLoading, navigate]
   );
@@ -30,7 +28,6 @@ const LoginForm: React.FC = () => {
     email: "",
     password: "",
   };
-  
 
   const onSubmit = async (
     values: LoginFormValues,
@@ -38,9 +35,8 @@ const LoginForm: React.FC = () => {
   ) => {
     try {
       signup(values);
-      queryClient.invalidateQueries({queryKey: ["users"]})
-      navigate('/users')
-
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      navigate("/users");
     } catch (error) {
       console.error("Login failed", error);
     } finally {
@@ -49,63 +45,50 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className=" h-screen flex justify-center items-center bg-gradient-to-br from-gray-300 to-gray-400 text-gray-50">
-      <div className="Login flex shadow-md shadow-black rounded-3xl  ">
-        <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] mdl:p-[40px] sm:p-[10px] pt-5 rounded-bl-3xl rounded-tl-3xl lg:rounded-3xl ">
-          <div>
-            <div className=" mb-3">
-              <img
-                src="/logo.png"
-                alt=" logo softly"
-                className="w-[10rem]"
+    <div className="flex bg-white min-h-screen justify-between">
+      <div className=" flex flex-col justify-between w-full items-center">
+        <div className="flex flex-col basis-[60%] px-5 py-10 gap-5 relative w-[80%] md:w-full">
+          <Link to='/users' className=" flex items-center gap-2 text-gray-500"><BsArrowLeft/> <span>Go back</span></Link>
+          <h1 className=" text-xl font-bold">Enter your user credantials</h1>
+          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            <Form className=" flex flex-col gap-3">
+              <label htmlFor="email">E-mail</label>
+              <Field
+                className=" form-input bg-transparent border"
+                name="email"
+                type="text"
               />
-            </div>
-            <h3 className=" text-2xl text-center font-bold text-gray-100 drop-shadow-lg">
-              Register new user
-            </h3>
-          </div>
-          <div className=" flex flex-col gap-7 min-w-[300px]">
-
-            <Formik initialValues={initialValues} onSubmit={onSubmit}>
-              <Form className=" flex flex-col gap-2">
-                <label htmlFor="email">E-mail</label>
-                <Field
-                  className=" form-input bg-transparent border"
-                  name="email"
-                  type="text"
-                />
-                <label htmlFor="password">Password</label>
-                <Field
-                  className=" form-input bg-transparent border"
-                  name="password"
-                  type="password"
-                />
+              <label htmlFor="password">Password</label>
+              <Field
+                className=" form-input bg-transparent border"
+                name="password"
+                type="password"
+              />
+              <div className=" flex items-center justify-between">
+                <Link to="/users" className="border px-4 py-1.5 rounded">
+                  Cancel
+                </Link>
                 <button
                   type="submit"
                   disabled={signingUp}
-                  className=" p-2 rounded bg-gray-400 mt-4 hover:bg-gray-600 transition-all"
+                  className=" p-2 rounded bg-gray-400 hover:bg-gray-600 transition-all"
                 >
                   Create user
                 </button>
-              </Form>
-            </Formik>
-          </div>
+              </div>
+            </Form>
+          </Formik>
         </div>
-        <div className="bg-white flex flex-col justify-center items-center rounded-br-3xl rounded-tr-3xl max-w-[400px] text-gray-700 p-10 lg:hidden">
-          <h1 className=" text-3xl font-semibold text-center">
-            {" "}
-            Your Connections Platform{" "}
-          </h1>
-          <p className=" mt-10">
-            {" "}
-            By using the Softly API, you will exercise the full power of your
-            links through automated link customization and
-            click analytics.
-          </p>
-        </div>
+      </div>
+      <div className=" flex flex-col basis-[40%] items-center bg-gray-100 px-4 py-10 gap-7 sm:hidden">
+        <img
+          src="/default-user.png"
+          alt="default user image"
+        />
       </div>
     </div>
   );
+
 };
 
 export default LoginForm;

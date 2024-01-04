@@ -139,7 +139,7 @@ const LinkDetails: React.FC = () => {
               <div>
                 <WorldMap countries={countryCodes} />
               </div>,
-              "over time"
+              "in world map"
             )}
           </div>
         </div>
@@ -195,7 +195,7 @@ const LinkDetails: React.FC = () => {
                   {/* <DataRow data={data}/> */}
                 </div>
               </div>,
-              "over time"
+              "by countries"
             )}
           </div>
         </div>

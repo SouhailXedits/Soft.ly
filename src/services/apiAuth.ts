@@ -90,7 +90,7 @@ export async function getCurrentUser() {
   const data = await request<ValidateTokenResult>(
     GQL_API_LINK,
     getUserQuery,
-    variables
+    variables,
   );
 
   return data?.validateToken;
