@@ -55,7 +55,7 @@ function LinksLayout() {
   });
   const allUrls = data?.getUrlsWithUserId || [];
   return (
-    <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto">
+    <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto h-screen">
       {allUrls?.length !== 0 ? (
         <div className=" flex items-center justify-between w-full">
           <h2 className=" text-3xl font-bold ">QR Codes</h2>
@@ -86,7 +86,7 @@ function LinksLayout() {
       ) : (
         <>
           <img
-            className=" max-w-[400px]"
+            className=" max-w-[400px] sm:max-w-[300px]"
             src="qrc-list-empty.png"
             alt="Qr code list empty"
           />
