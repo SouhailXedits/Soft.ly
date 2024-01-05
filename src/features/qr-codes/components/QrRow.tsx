@@ -70,7 +70,7 @@ const QrRow = ({ qr }: QrRowProps) => {
     : qr.longUrl;
 
   return (
-    <div className=" flex sm:flex-col bg-white w-full px-8 py-8 gap-5 rounded-lg">
+    <div className=" flex sm:flex-col bg-white w-full p-8 sm:p-4 gap-5 rounded-lg">
       <div className=" self-center">
         <img
           className=" w-32 border border-gray-500 rounded-md min-w-[125px]"
@@ -78,8 +78,8 @@ const QrRow = ({ qr }: QrRowProps) => {
           alt="qr code image"
         />
       </div>
-      <div className="flex flex-col justify-between items-center w-full">
-        <div className="flex justify-between w-full">
+      <div className="flex flex-col justify-between items-center w-full gap-5">
+        <div className="flex justify-between w-full gap-1 sm:flex-col-reverse items-center">
           <div className="flex flex-col items-start">
             <h1 className=" text-xl font-bold">{qr.title}</h1>
             <p>Website</p>
@@ -119,7 +119,7 @@ const QrRow = ({ qr }: QrRowProps) => {
                   className="btn-primary bg-gray-100 text-black flex items-center gap-1"
                 >
                   {" "}
-                  <BsBarChart /> View details
+                  <BsBarChart /> <span className=" sm:hidden">View</span>  details
                 </Link>
              
             </div>
@@ -130,7 +130,7 @@ const QrRow = ({ qr }: QrRowProps) => {
             <BsArrowReturnRight /> {shortenedUrl}{" "}
             {qr.longUrl.length > 30 && (
               <button
-                className="ml-2 text-blue-500"
+                className="ml-2 text-blue-500 break-keep"
                 onClick={toggleUrlCollapse}
               >
                 {isUrlCollapsed ? "Show More" : "Show Less"}

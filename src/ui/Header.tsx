@@ -57,9 +57,9 @@ export default function Header({ onToggleOpen }: SideBarProps) {
       <div ref={modalRef} className=" relative flex justify-end w-full">
         <button
           onClick={handleShowProfileModal}
-          className="bg-blue-600 mr-3 p-5 rounded-full h-5 w-5 flex items-center justify-center"
+          className="bg-blue-600 mr-3 p-5 rounded-full h-5 w-5 flex items-center justify-center sm:h-3 sm:w-3 sm:p-4"
         >
-          <span className=" text-3xl text-white">{firstLetter}</span>
+          <span className=" text-3xl sm:text-xl text-white">{firstLetter}</span>
         </button>
         {showProfileModal ? (
           <div className=" absolute top-[50px] right-3 border shadow-md p-2 rounded transition-all bg-white z-50">

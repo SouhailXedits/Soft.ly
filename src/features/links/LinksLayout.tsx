@@ -48,14 +48,11 @@ function LinksLayout() {
   };
 
   return (
-    <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto">
+    <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto h-screen">
       {allUrls?.length !== 0 ? (
-          <div className="flex items-center justify-between w-full ">
-            <h2 className="text-3xl font-bold">Links</h2>
-          
-          </div>
-          
-        
+        <div className="flex items-center justify-between w-full ">
+          <h2 className="text-3xl font-bold">Links</h2>
+        </div>
       ) : (
         ""
       )}
@@ -80,8 +77,8 @@ function LinksLayout() {
         )
       ) : (
         <>
-          <img 
-            className=" max-w-[400px]"
+          <img
+            className=" max-w-[400px] sm:max-w-[300px]"
             src="links-list-empty.png"
             alt="links mist image"
           />

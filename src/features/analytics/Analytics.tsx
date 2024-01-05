@@ -22,6 +22,14 @@ const Analytics: React.FC = () => {
     queryKey: ["analytics"],
     queryFn: () => getClicksData(userId),
   });
+
+  if (analyticsData?.count.totalRequestCount === 0)
+    return (
+      <div className=" w-full h-screen flex items-center justify-center ">
+        <p>You have no analytics right now ! *</p>
+      </div>
+    );
+
   console.log(analyticsData);
 
   const devicesObj = analyticsData?.count?.devices;
