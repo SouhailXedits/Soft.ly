@@ -1,74 +1,77 @@
-import { VectorMap } from "@react-jvectormap/core";
-import { worldMill } from "@react-jvectormap/world";
-import { useEffect, useState } from "react";
+// import { VectorMap } from "@react-jvectormap/core";
+// import { worldMill } from "@react-jvectormap/world";
+// import { useEffect, useState } from "react";
 
- 
+// export const colorScale = ["#E2AEFF", "#5E32CA"];
 
-// const countries = {
-//   IN: 88,
-//   CN: 33,
-//   RU: 79,
-//   MY: 2,
-//   GB: 100,
-//   FK: 10,
-//   AR: 50,
-//   VE: 90,
-//   TN: 30,
-//   US: 34,
-// };
+// function WorldMap({ countries }: any) {
+//   console.log(countries)
+//   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
-export const colorScale = ["#E2AEFF", "#5E32CA"];
-function WorldMap({ countries }: any) {
-  // const [selectedCountry, setSelectedCountry] = useState<string[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+//   const handleRegionClick = (_, code: string): void => {
+//     setSelectedCountry(code);
+//   };
 
+//   // ['TN': 3]
 
+//   // const handleRegionTipShow = (e: any, label: string, code: string): void => {
+//   //   // You can customize the tooltip content here based on the country code
+//   //   const customData = getCustomDataForCountry(code);
+//   //   const customTooltip = `<div class="custom-tooltip">
+//   //                            <p>${label}</p>
+//   //                            ssss
+//   //                            <p>Custom Data: ${customData}</p>
+//   //                          </div>`;
 
-  const handleRegionClick = ( code: string): void => {
-  // const handleRegionClick = (event: any, code: string): void => {
+//   //   e.html = customTooltip;
+//   // };
 
-    setSelectedCountry(code);
-    console.log(selectedCountry)
+//   useEffect(() => {
+//     console.log(selectedCountry);
+//   }, [selectedCountry]);
 
-    // Perform an AJAX request to fetch detailed information about the selected country
-    // Adjust the endpoint and data payload based on your backend setup
-    // axios
-    //   .post("/api/getCountryData", { countryId: code })
-    //   .then((response) => {
-    //     // Handle the response from the backend (update map or perform other actions)
-    //     console.log("Country Data:", response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching country data:", error);
-    //   });
-  };
-  useEffect(() => {
-    console.log(selectedCountry);
-  }, [selectedCountry]);
-  return (
-    <div className=" m-auto w-[700px] h-[600px]">
-      <VectorMap
-        regionsSelectableOne
-        zoomMax={16}
-        map={worldMill}
-        style={{ width: "100%", height: "100%" }}
-        backgroundColor="#ccc"
-        onRegionClick={handleRegionClick} 
-        //selectedRegions={[selectedCountry]}
-        series={{
-          regions: [
-            {
-              values: countries,
-              scale: colorScale,
-              attribute: "fill",
-            },
-          ],
-        }}
-      />
-      
-    </div>
-    
-  );
-}
+//   // const getCustomDataForCountry = (code: string): string => {
+//   //   const customDataMap = {
+//   //     // Add custom data for each country as needed
+//   //     US: "Custom Data for the United States",
 
-export default WorldMap;
+//   //   };
+
+//   //   return customDataMap[code] || "No custom data available";
+//   // };
+
+//   return (
+//     <div className="m-auto w-[700px] h-[600px]">
+//       <VectorMap
+//         regionsSelectableOne
+//         zoomMax={16}
+//         map={worldMill}
+//         style={{ width: "100%", height: "100%" }}
+//         backgroundColor="#ccc"
+//         onRegionClick={handleRegionClick}
+//         onRegionTipShow={function regionalTip(_, label, code) {
+//           // setTimeout(() => {
+//           //   console.log("Country Code:", code);
+//           //   console.log("Countries:", countries);
+//           // }, 0);
+
+//           const countryData = countries[code] || "No data available";
+//           return label.html(
+//             `<div><p>${label.html()} </p><p>${countryData} </p></div>`
+//           );
+//         }}
+//         series={{
+//           regions: [
+//             {
+//               values: countries,
+//               scale: colorScale,
+//               attribute: "fill",
+//             },
+//           ],
+//         }}
+//       />
+//     </div>
+//   );
+// }
+
+// export default WorldMap;

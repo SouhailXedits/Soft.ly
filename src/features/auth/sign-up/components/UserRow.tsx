@@ -95,7 +95,6 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
       console.log({ id: userId, ...newData });
       updateUser({ id: userId, ...newData });
 
-      // Close the modal
       handleCloseEditModal();
     } catch (error) {
       console.error("Error updating user:", error);

@@ -15,15 +15,11 @@ export function useUpdateUser() {
       shortsLimits?: string;
       email?: string;
     }) => updateUserApi(userData),
-    onSuccess: (updatedUser: any) => {
-      // Assuming your API returns the updated user
-      queryClient.setQueryData(["user"], updatedUser);
-
-      // Display a success toast
+    onSuccess: () => {
       toast.success("User information updated successfully");
 
-      // Redirect to the home page or the user's profile page
-      navigate("/", { replace: true });
+      navigate("/users", { replace: true });
+      queryClient.invalidateQueries({queryKey: ["users"]})
     },
     onError: (err) => {
       console.error("ERROR", err);

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { BsArrowLeftShort, BsThreeDots } from "react-icons/bs";
+import { BsArrowLeftShort } from "react-icons/bs";
 import PieChartComp from "./components/PieChartComp";
 import BarChartComp from "./components/BarChartComp";
 import CountryRow from "./components/CountryRow";
-import WorldMap from "./components/WorldMap";
+// import WorldMap from "./components/WorldMap";
 import { getClicksDataByUrl } from "../../services/apiLinks";
 import { useQuery } from "@tanstack/react-query";
 import { getRandomColor } from "../../utils/helpers";
@@ -19,6 +19,7 @@ const LinkDetails: React.FC = () => {
     queryKey: ["url-analytics"],
     queryFn: () => getClicksDataByUrl(urlId),
   });
+  console.log(analyticsData)
 
   const devicesObj = analyticsData?.count?.devices;
   let devicesClicks: {
@@ -46,7 +47,7 @@ const LinkDetails: React.FC = () => {
     }));
   }
 
-  const countriesObj = analyticsData?.count?.Location;
+  const countriesObj = analyticsData?.count?.country_name;
   let countriesClicks: { id: number; name: string; clicks: number }[] = [];
   if (countriesObj) {
     countriesClicks = Object.keys(countriesObj).map((country, index) => ({
@@ -55,8 +56,17 @@ const LinkDetails: React.FC = () => {
       clicks: countriesObj[country],
     }));
   }
+  const citiesObj = analyticsData?.count?.Location;
+  let citiesClicks: { id: number; name: string; clicks: number }[] = [];
+  if (citiesObj) {
+    citiesClicks = Object.keys(citiesObj).map((city, index) => ({
+      id: index + 1,
+      name: city.toLowerCase(),
+      clicks: citiesObj[city],
+    }));
+  }
 
-  const countryCodes = analyticsData?.count?.country_code || {};
+  // const countryCodes = analyticsData?.count?.country_code || {};
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
@@ -64,15 +74,15 @@ const LinkDetails: React.FC = () => {
   const renderChart = (chartComponent: React.ReactNode, filterby: string) => (
     <div className="flex bg-white p-6 rounded-xl flex-col items-center">
       <div className="flex gap-2 items-center justify-between self-start">
-        <div className="flex gap-2 ">
+        <div className="flex gap-2 mb-3 ">
           {/* <button className="text-xl">
             <BsGripVertical />
           </button> */}
           <h2 className="text-lg font-medium">Clicks+scans {filterby}</h2>
         </div>
-        <button className="rounded border p-2">
+        {/* <button className="rounded border p-2">
           <BsThreeDots />
-        </button>
+        </button> */}
       </div>
       <div className=" w-full self-center overflow-auto ">
 
@@ -135,12 +145,12 @@ const LinkDetails: React.FC = () => {
               "over time"
             )} */}
 
-            {renderChart(
+            {/* {renderChart(
               <div>
                 <WorldMap countries={countryCodes} />
               </div>,
               "in world map"
-            )}
+            )} */}
           </div>
         </div>
 
@@ -187,11 +197,14 @@ const LinkDetails: React.FC = () => {
                       {activeTab === "cities" ? "Cities" : "Countries"}
                     </p>
                     <p>Click + Scan</p>
-                    <p>%</p>
+                    {/* <p>%</p> */}
                   </div>
-                  {countriesClicks?.map((country) => (
+                  {activeTab === "cities" ? 
+                  citiesClicks?.map((country) => (
                     <CountryRow key={country.id} country={country} />
-                  ))}
+                  )) : countriesClicks?.map((country) => (
+                    <CountryRow key={country.id} country={country} />))}
+                  
                   {/* <DataRow data={data}/> */}
                 </div>
               </div>,
