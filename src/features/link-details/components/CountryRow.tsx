@@ -8,7 +8,7 @@ const CountryRow = ({ country }: DataCountry) => {
       <p>{country.id}</p>
       <p className=" basis-[60%]">{country.name}</p>
       <p>{country.clicks}</p>
-      <p>X</p>
+      {/* <p>X</p> */}
     </div>
   );
 };

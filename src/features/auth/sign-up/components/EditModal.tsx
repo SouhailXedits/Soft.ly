@@ -16,18 +16,13 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
 }) => {
     const [password, setPassword] = useState("");
     const [role, setRole] = useState(user.role);
-    const [shortsLimits, setShortsLimits] = useState("0");
+    const [shortsLimits, setShortsLimits] = useState(user.LinksCount);
     const isPasswordValid = password.length >= 8 || password === ''; 
 
     const handleEdit = () => {
         
-        
-        // Validate form data if needed
-        
-        // Call the onEdit callback with the userId and form data
         onEdit({ password, role, shortsLimits });
-        
-        // Close the modal
+
         onClose();
     };
 

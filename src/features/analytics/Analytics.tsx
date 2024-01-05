@@ -3,12 +3,11 @@ import { BsGraphUp } from "react-icons/bs";
 import PieChartComp from "./components/PieChartComp";
 import BarChartComp from "./components/BarChartComp";
 import CountryRow from "./components/CountryRow";
-import WorldMap from "./components/WorldMap";
+// import WorldMap from "./components/WorldMap";
 import { getClicksData } from "../../services/apiLinks";
 import { useUser } from "../auth/useUser";
 import { useQuery } from "@tanstack/react-query";
-import {getRandomColor} from '../../utils/helpers'
-
+import { getRandomColor } from "../../utils/helpers";
 
 const Analytics: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
@@ -23,7 +22,7 @@ const Analytics: React.FC = () => {
     queryKey: ["analytics"],
     queryFn: () => getClicksData(userId),
   });
-  console.log(analyticsData)
+  console.log(analyticsData);
 
   const devicesObj = analyticsData?.count?.devices;
   let devicesClicks: {
@@ -51,7 +50,7 @@ const Analytics: React.FC = () => {
     }));
   }
 
-  const countriesObj = analyticsData?.count?.Location;
+  const countriesObj = analyticsData?.count?.country_name;
   let countriesClicks: { id: number; name: string; clicks: number }[] = [];
   if (countriesObj) {
     countriesClicks = Object.keys(countriesObj).map((country, index) => ({
@@ -60,8 +59,18 @@ const Analytics: React.FC = () => {
       clicks: countriesObj[country],
     }));
   }
+  const citiesObj = analyticsData?.count?.Location;
+  let citiesClicks: { id: number; name: string; clicks: number }[] = [];
+  if (citiesObj) {
+    citiesClicks = Object.keys(citiesObj).map((city, index) => ({
+      id: index + 1,
+      name: city.toLowerCase(),
+      clicks: citiesObj[city],
+    }));
+  }
 
   const countryCodes = analyticsData?.count?.country_code || {};
+  console.log(countryCodes);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -80,10 +89,7 @@ const Analytics: React.FC = () => {
           <BsThreeDots />
         </button> */}
       </div>
-      <div className=" overflow-auto ">
-        
-      {chartComponent}
-      </div>
+      <div className=" overflow-auto ">{chartComponent}</div>
     </div>
   );
 
@@ -157,31 +163,12 @@ const Analytics: React.FC = () => {
               "over time"
             )} */}
 
-            {renderChart(
+            {/* {renderChart(
               <div>
                 <WorldMap countries={countryCodes} />
               </div>,
               "in world map"
-            )}
-          </div>
-        </div>
-
-        <div className="flex flex-col w-full">
-          <div className="flex flex-col gap-5">
-            {renderChart(
-              <div>
-                <PieChartComp data={devicesClicks} />
-              </div>,
-              "device clicks"
-            )}
-
-            {renderChart(
-              <div className="mt-8">
-                <BarChartComp data={referrersClicks} />
-              </div>,
-              "referrer"
-            )}
-
+            )} */}
             {renderChart(
               <div>
                 <div className="bg-gray-300 flex items-center rounded-full p-1 justify-between gap-1 mt-4 mb-8">
@@ -209,15 +196,37 @@ const Analytics: React.FC = () => {
                       {activeTab === "cities" ? "Cities" : "Countries"}
                     </p>
                     <p>Click + Scan</p>
-                    <p>%</p>
+                    {/* <p>%</p> */}
                   </div>
-                  {countriesClicks?.map((country) => (
-                    <CountryRow key={country.id} country={country} />
-                  ))}
+                  {activeTab === "cities"
+                    ? citiesClicks?.map((country) => (
+                        <CountryRow key={country.id} country={country} />
+                      ))
+                    : countriesClicks?.map((country) => (
+                        <CountryRow key={country.id} country={country} />
+                      ))}
                   {/* <DataRow data={data}/> */}
                 </div>
               </div>,
               "by Countries"
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col w-full">
+          <div className="flex flex-col gap-5">
+            {renderChart(
+              <div>
+                <PieChartComp data={devicesClicks} />
+              </div>,
+              "device clicks"
+            )}
+
+            {renderChart(
+              <div className="mt-8">
+                <BarChartComp data={referrersClicks} />
+              </div>,
+              "referrer"
             )}
           </div>
         </div>
