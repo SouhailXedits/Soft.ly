@@ -17,6 +17,7 @@ const LoginForm: React.FC = () => {
   const { login, isPending: loggingIn } = useLogin();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useUser();
+  
 
 
   if (isAuthenticated && !isLoading) navigate("/");
@@ -31,7 +32,12 @@ const LoginForm: React.FC = () => {
     { setSubmitting }: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      login(values);
+      const {email, password} = values ;
+      const userData = {
+        email: email.trim(),
+        password: password
+      }
+      login(userData);
     } catch (error) {
       console.error("Login failed", error);
     } finally {

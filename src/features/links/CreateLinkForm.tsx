@@ -36,14 +36,14 @@ function CreateLinkForm() {
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;
 
-    const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
+    // const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
 
-    if (!backHalfRegex.test(newBackHalf)) {
-      setBackHalfFormatWarning(true);
-    } else {
-      setBackHalfFormatWarning(false);
-      setBackhalf(newBackHalf);
-    }
+    setBackHalfFormatWarning(false);
+    // setBackHalfFormatWarning(true);
+    setBackhalf(newBackHalf);
+    // if (!backHalfRegex.test(newBackHalf)) {
+    // } else {
+    // }
   };
 
 
