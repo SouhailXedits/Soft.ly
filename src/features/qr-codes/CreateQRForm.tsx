@@ -56,7 +56,7 @@ function CreateLinkForm() {
                 disabled={true}
                 className=" bg-gray-100 form-input w-full"
               >
-                <option value="">soft.ly</option>
+                <option value="">softy.link</option>
               </select>
             </div>
             <p>/</p>
