@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useUser } from "../features/auth/useUser";
 import Loader from "./Loader";
 
