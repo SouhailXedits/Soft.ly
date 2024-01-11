@@ -1,20 +1,25 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useUser } from "../features/auth/useUser";
 import Loader from "./Loader";
 
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
 
-function ProtectedRoute({ children }: {children: React.ReactNode}) {
-  const navigate = useNavigate()
+  const { isLoading, isAuthenticated } = useUser();
   
-  const { isLoading  , isAuthenticated } = useUser();
-  if (isLoading)
-    return (
 
-        <Loader />
+  useEffect(() => {
+    const redirectTimeout = setTimeout(() => {
+      if (!isAuthenticated) {
+        navigate("/login");
+      }
+    }, 1000);
 
-    );
-  if (!isAuthenticated) navigate("/login");
-  
+    return () => clearTimeout(redirectTimeout);
+  }, [isAuthenticated, navigate]);
+  if (isLoading) return <Loader />;
+
   if (isAuthenticated) return children;
 }
 
