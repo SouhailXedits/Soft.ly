@@ -92,6 +92,7 @@ export async function getCurrentUser() {
     getUserQuery,
     variables,
   );
+  console.log(data)
 
   return data?.validateToken;
   

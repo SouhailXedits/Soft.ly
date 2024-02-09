@@ -4,10 +4,11 @@ import { getCurrentUser } from "../../services/apiAuth";
 
 export function useUser() {
   const { isLoading, data: user, error } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user", 'log'],
     queryFn: getCurrentUser,
     retry: 1,
   });
+  // console.log(user);
   if (error) {
     console.error("Error fetching user data:", error);
 
