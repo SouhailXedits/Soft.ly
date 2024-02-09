@@ -23,14 +23,14 @@ function ProgressComp() {
   });
   if (error) console.error(error.message);
   const allUrls = data?.getUrlsWithUserId || [];
-  console.log(allUrls);
+
 
   const maxUrls = parseInt(user?.LinksCount ?? "1");
   const usagePercentage = (allUrls.length / maxUrls) * 100;
 
 
 
-    console.log(usagePercentage);
+
     return (
       <div className=" p-4 flex flex-col gap-2 bg-white rounded-lg">
         <h2 className=" text-xl font-semibold ">Usage this month</h2>

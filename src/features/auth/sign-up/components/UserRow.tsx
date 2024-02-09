@@ -20,7 +20,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
 
 
   const modalRef = useRef<HTMLDivElement | null>(null);
-  console.log(modalRef);
+  // console.log(modalRef);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -64,7 +64,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
   };
 
   const handleEdit = (userId: string) => {
-    console.log(userId)
+    // console.log(userId)
     setIsEditModalOpen(true);
     closeModal();
   };
@@ -92,7 +92,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
       newData.role = data.role;
       newData.shortsLimits = data.shortsLimits
 
-      console.log({ id: userId, ...newData });
+      // console.log({ id: userId, ...newData });
       updateUser({ id: userId, ...newData });
 
       handleCloseEditModal();

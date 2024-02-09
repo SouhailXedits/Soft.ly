@@ -46,7 +46,7 @@ function CreateLinkForm() {
     // } else {
     // }
   };
-  console.log(DOMAIN_NAME)
+
   const domainName = DOMAIN_NAME
 
 

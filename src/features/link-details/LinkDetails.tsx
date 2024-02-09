@@ -13,13 +13,12 @@ const LinkDetails: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
   const [searchParams] = useSearchParams();
   const urlId = searchParams.get("id");
-  console.log(urlId);
+
 
   const { data: analyticsData } = useQuery({
     queryKey: ["url-analytics"],
     queryFn: () => getClicksDataByUrl(urlId),
   });
-  console.log(analyticsData)
 
   const devicesObj = analyticsData?.count?.devices;
   let devicesClicks: {

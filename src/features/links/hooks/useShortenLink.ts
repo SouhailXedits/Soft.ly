@@ -25,7 +25,6 @@ export function useShorterUrl() {
       toast.success("URL Shortened Successfully!");
     },
     onError: (err: string) => {
-      console.log("ERROR", err);
       toast.error("Invalid link or you've exceed your limit ! 😢");
     },
     retry: false,

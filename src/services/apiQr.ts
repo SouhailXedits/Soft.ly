@@ -19,7 +19,6 @@ export const deleteLink = async (id: string) => {
 
   try {
     const response = await client.request(DELETE_URLS_MUTATION, { id });
-    console.log(response);
   } catch (error) {
     console.error(error);
     throw error; // Re-throw the error to be caught by the error handler in useMutation

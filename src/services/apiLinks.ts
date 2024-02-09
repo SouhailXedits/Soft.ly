@@ -17,7 +17,6 @@ export async function getShorterUrl({
   userId: string;
   back_half?: string; // Make back_half parameter optional
 }) {
-  console.log(longUrl, title, userId, back_half);
   const user_id = userId;
   const mutation = gql`
     mutation CreateUrls(
