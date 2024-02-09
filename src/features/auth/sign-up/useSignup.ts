@@ -14,7 +14,7 @@ export function useSignUp() {
       toast.success('registered succefully');
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
-    onError: (err) => {
+    onError: () => {
       // console.log("ERROR", err);
       toast.error("Cannot register user");
     },

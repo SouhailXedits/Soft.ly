@@ -76,7 +76,7 @@ const Analytics: React.FC = () => {
     }));
   }
 
-  const countryCodes = analyticsData?.count?.country_code || {};
+  // const countryCodes = analyticsData?.count?.country_code || {};
 
 
   const handleTabChange = (tab: string) => {

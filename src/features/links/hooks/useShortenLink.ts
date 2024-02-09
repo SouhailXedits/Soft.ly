@@ -24,7 +24,7 @@ export function useShorterUrl() {
       navigate("/links", { replace: true });
       toast.success("URL Shortened Successfully!");
     },
-    onError: (err: string) => {
+    onError: () => {
       toast.error("Invalid link or you've exceed your limit ! 😢");
     },
     retry: false,

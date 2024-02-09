@@ -63,7 +63,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
     closeModal();
   };
 
-  const handleEdit = (userId: string) => {
+  const handleEdit = () => {
     // console.log(userId)
     setIsEditModalOpen(true);
     closeModal();
@@ -151,7 +151,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
                 </button> 
                 }
                 <button
-                  onClick={() => handleEdit(user.id)}
+                  onClick={() => handleEdit()}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                 >

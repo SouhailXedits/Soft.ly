@@ -18,7 +18,7 @@ export function useLogin() {
       localStorage.setItem("token", token);
       navigate("/", { replace: true });
     },
-    onError: (err) => {
+    onError: () => {
       // console.log("ERROR", err);
       toast.error("Provided email or password are incorrect");
     },
