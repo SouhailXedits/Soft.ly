@@ -3,6 +3,7 @@ import { useShorterUrl } from "./hooks/useShortenLink";
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
+import { DOMAIN_NAME } from "@/config";
 
 function CreateLinkForm() {
   const [url, setUrl] = useState("");
@@ -45,6 +46,8 @@ function CreateLinkForm() {
     // } else {
     // }
   };
+  console.log(DOMAIN_NAME)
+  const domainName = DOMAIN_NAME
 
 
   return (
@@ -61,7 +64,7 @@ function CreateLinkForm() {
             onChange={(e) => setUrl(e.target.value)}
             onBlur={handleUrlBlur}
           />
-          
+
           <h1 className=" text-xl font-bold mt-6 mb-2">Code details</h1>
           <p>Title(optional)</p>
           <input
@@ -88,7 +91,7 @@ function CreateLinkForm() {
                 disabled={true}
                 className=" bg-gray-100 form-input w-full"
               >
-                <option value="">softy.link</option>
+                <option value="">{domainName}</option>
               </select>
             </div>
             <p>/</p>
