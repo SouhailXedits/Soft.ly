@@ -18,8 +18,10 @@ export interface UrlData {
   shortUrl: string;
   title: string;
   qr_image_url: string;
+  qr_image_svg: string;
   iconFilePath: string;
   user_id: string;
+  totalRequestCount: string;
 }
 
 export interface ApiResponse {
@@ -60,8 +62,10 @@ export type QrRowProps = {
     shortUrl: string;
     title: string;
     qr_image_url: string;
+    qr_image_svg: string;
     iconFilePath: string;
     user_id: string;
+    totalRequestCount: string;
   };
 };
 
@@ -73,6 +77,7 @@ export type shortenedUrlProps = {
     shortUrl: string;
     title: string;
     iconFilePath: string;
+    totalRequestCount: string;
   };
   isSelected: boolean;
   onSelect: (id: number) => void;
