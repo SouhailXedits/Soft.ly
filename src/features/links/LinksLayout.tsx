@@ -132,7 +132,10 @@ function LinksLayout() {
           <div ref={modalRef} className="bg-white p-6 rounded-lg">
             {/* Modal content goes here */}
             <h2>Filter by date :</h2>
-            <DateRangePicker setdate={handleChangeDateRange} defaultSelected={filters.dateRange} />
+            <DateRangePicker
+              setdate={handleChangeDateRange}
+              defaultSelected={filters.dateRange}
+            />
             <button
               className=" p-2 bg-blue-700 hover:bg-blue-400 transition-all text-white rounded"
               onClick={handleApplyFilters}
@@ -161,6 +164,7 @@ function LinksLayout() {
             shortUrl: string;
             title: string;
             iconFilePath: string;
+            totalRequestCount: string;
           }) => (
             <ShortenedUrl
               link={Newlink}

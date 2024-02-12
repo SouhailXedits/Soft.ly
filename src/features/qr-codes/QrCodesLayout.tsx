@@ -3,26 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import QrRow from "./components/QrRow";
 // import { useState } from "react";
 import request from "graphql-request";
-import gql from "graphql-tag";
 import { useUser } from "../auth/useUser";
 import { GQL_API_LINK } from "../../config";
 import { ApiResponse, UrlData } from "../../types";
-
-// interface UrlData {
-//   // getUrlsWithUserId: {
-//     id: string;
-//     created_at: string;
-//     longUrl: string;
-//     shortUrl: string;
-//     title: string;
-//     qr_image_url: string;
-//     user_id: string;
-//   // };
-// }
-
-// interface ApiResponse {
-//   getUrlsWithUserId: UrlData[];
-// }
+import { getUrls } from "@/services/apiLinks";
 
 function LinksLayout() {
   //const [showFilter, setShowFilter] = useState("active");
@@ -34,19 +18,7 @@ function LinksLayout() {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const [, { user_id }] = queryKey;
-      const getUrlsQuery = gql`
-        query GetUrlsWithUserId($user_id: String!) {
-          getUrlsWithUserId(id: $user_id) {
-            id
-            created_at
-            longUrl
-            shortUrl
-            title
-            qr_image_url
-            user_id
-          }
-        }
-      `;
+      const getUrlsQuery = getUrls
 
       return request(GQL_API_LINK, getUrlsQuery, {
         user_id,

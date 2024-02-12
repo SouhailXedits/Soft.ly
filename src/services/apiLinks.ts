@@ -69,6 +69,7 @@ export const getUrls = gql`
       shortUrl
       title
       qr_image_url
+      qr_image_svg
       iconFilePath
       user_id
       totalRequestCount

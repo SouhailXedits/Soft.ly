@@ -2,7 +2,7 @@ import download from "downloadjs";
 
 
 export const downloadfile = (qrImage: string) => {
-  download(qrImage, "downloaded_image.png", "image/png");
+  download(qrImage, "downloaded_image.svg", "image/svg");
 };
 
 export function formatDate(inputDate: string): string {

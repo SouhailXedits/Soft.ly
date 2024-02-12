@@ -123,11 +123,19 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
 
               {isModalOpen && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
-                  <div ref={editmodalRef} className="bg-white p-6 rounded-lg relative">
+                  <div
+                    ref={editmodalRef}
+                    className="bg-white p-6 rounded-lg relative"
+                  >
                     {/* Modal content goes here */}
 
-                    <EditLinkForm oldData={link}/>
-                    <button className=" absolute top-4 right-4" onClick={() => setIsModalOpen(false)}><BsX/></button>
+                    <EditLinkForm oldData={link} />
+                    <button
+                      className=" absolute top-4 right-4"
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      <BsX />
+                    </button>
                     {/* <button onClick={closeModal}>Close Modal</button> */}
                   </div>
                 </div>
@@ -176,12 +184,15 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
             )}
           </p>
           <div className="flex gap-7 mt-2">
-            <button>
-              <BsBarChart />
+            <button className=" flex items-center gap-2">
+              <BsBarChart /> Engagments : {link.totalRequestCount}
             </button>
-            <button className="flex items-center gap-1">
+            {/* <button className="flex items-center gap-1">
               <BsLockFill /> Scan data
-            </button>
+            </button> */}
+            {/* <button className="flex items-center gap-1">
+              <BsLockFill /> {link.totalRequestCount}
+            </button> */}
             <p className="flex items-center gap-1 ">
               <BsCalendar /> {formatDate(link.created_at)}
             </p>
