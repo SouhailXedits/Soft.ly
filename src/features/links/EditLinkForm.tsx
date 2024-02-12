@@ -106,7 +106,7 @@ function EditLinkForm({ oldData }: any) {
             </div>
           </div>
           <div>
-            <AnimatedMulti/>
+            <AnimatedMulti />
           </div>
         </div>
         <div className="px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
