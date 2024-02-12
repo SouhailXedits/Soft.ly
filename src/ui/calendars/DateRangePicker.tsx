@@ -25,11 +25,7 @@ export default function DateRangePicker({ setdate, defaultSelected }: any) {
     color: white
   }
 
-  .my-today { 
-    font-weight: bold;
-    font-size: 140%; 
-    color: red;
-  }
+
 `;
 
   let footer = <p>Please pick the first day.</p>;
