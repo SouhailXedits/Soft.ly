@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { addDays, format } from "date-fns";
+import {  format } from "date-fns";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
-const pastMonth = Date.now();
 
 export default function DateRangePicker({ setdate, defaultSelected }: any) {
   // const defaultSelected: DateRange = {

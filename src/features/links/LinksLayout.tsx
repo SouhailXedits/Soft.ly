@@ -10,9 +10,6 @@ import { getUrls } from "../../services/apiLinks";
 import { ApiResponse } from "../../types";
 import { BsCalendar } from "react-icons/bs";
 import DateRangePicker from "@/ui/calendars/DateRangePicker";
-import DateRangePickerTwo from "@/ui/calendars/DateRangePickerTwo";
-// const { DatePicker, Space } = 'antd';
-
 function LinksLayout() {
   const [, setIsAllSelected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +20,7 @@ function LinksLayout() {
   const modalRef = useRef<any>(null);
   const { user } = useUser();
   const userId = user?.id;
-  const { data, error } = useQuery<ApiResponse>({
+  const { data } = useQuery<ApiResponse>({
     queryKey: ["urls", { user_id: userId }],
     queryFn: async ({ queryKey }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -56,7 +53,11 @@ function LinksLayout() {
       setFilteredUrls(data?.getUrlsWithUserId || []);
     }
   }, [data, filters, isFilterApplied]);
-  console.log(filters)
+  // console.log(filters)
+  console.log(data)
+  // const {data: urlData} = useQuery({
+  //   queryKey: []
+  // })
 
   const handleLinkSelection = (linkId: number) => {
     const updatedSelectedLinks = [...selectedLinks];

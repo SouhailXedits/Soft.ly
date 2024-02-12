@@ -2,9 +2,8 @@ import download from "downloadjs";
 
 
 export const downloadfile = (qrImage: string) => {
-  download(qrImage, "downloaded_image.jpg", "image/jpeg");
+  download(qrImage, "downloaded_image.png", "image/png");
 };
-
 
 export function formatDate(inputDate: string): string {
   const dateObject = new Date(inputDate);

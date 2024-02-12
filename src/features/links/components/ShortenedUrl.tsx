@@ -9,6 +9,8 @@ import {
   BsCalendar,
   BsTrash,
   BsLink,
+  BsFillPencilFill,
+  BsX,
 } from "react-icons/bs";
 
 import { formatDate } from "../../../utils/helpers";
@@ -17,6 +19,7 @@ import CopyToClipboardButton from "../../../utils/CopyToClipBoard";
 import { useDeleteLink } from "../hooks/useDeleteLink";
 import { Link } from "react-router-dom";
 import { shortenedUrlProps } from "../../../types";
+import EditLinkForm from "../EditLinkForm";
 
 const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);
@@ -53,6 +56,29 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [isOpenOptionsModal]);
+
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const editmodalRef = useRef<any>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event:any) => {
+      if (editmodalRef.current && !editmodalRef.current.contains(event.target)) {
+        setIsModalOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleEditClick = () => {
+    setIsModalOpen(true);
+  };
+
   const shortenedUrl = isUrlCollapsed
     ? `${link.longUrl.slice(0, 30)} ${link.longUrl.length > 30 ? "..." : ""}`
     : link.longUrl;
@@ -91,11 +117,26 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
           <div className="flex flex-col">
             <div className="actions flex items-center gap-2">
               <CopyToClipboardButton text={link.shortUrl} />
-              {/* <button className="btn-icon">
+              <button className="btn-icon" onClick={handleEditClick}>
                 <BsFillPencilFill />
-              </button> */}
+              </button>
+
+              {isModalOpen && (
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
+                  <div ref={editmodalRef} className="bg-white p-6 rounded-lg relative">
+                    {/* Modal content goes here */}
+
+                    <EditLinkForm oldData={link}/>
+                    <button className=" absolute top-4 right-4" onClick={() => setIsModalOpen(false)}><BsX/></button>
+                    {/* <button onClick={closeModal}>Close Modal</button> */}
+                  </div>
+                </div>
+              )}
               <div className="relative" ref={modalRef}>
-                <button className="btn-icon sm:p-3 p-4" onClick={handleOptionsModalOpen}>
+                <button
+                  className="btn-icon sm:p-3 p-4"
+                  onClick={handleOptionsModalOpen}
+                >
                   <BsThreeDots />
                 </button>
                 {isOpenOptionsModal ? (
@@ -108,12 +149,12 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                       <BsTrash /> delete
                     </button>
                     <Link
-  className="flex items-center gap-1 p-2 transition-all rounded hover:bg-gray-100"
-  to={`/link-details?id=${link.id}`}
-  state={{ linkData: link } as { linkData: typeof link }}
->
-  <BsLink /> View link details
-</Link>
+                      className="flex items-center gap-1 p-2 transition-all rounded hover:bg-gray-100"
+                      to={`/link-details?id=${link.id}`}
+                      state={{ linkData: link } as { linkData: typeof link }}
+                    >
+                      <BsLink /> View link details
+                    </Link>
                   </div>
                 ) : (
                   ""
