@@ -39,7 +39,7 @@ function LinksLayout() {
   // let sorted = [] as any;
 
   const sorted = allUrls.sort(
-    (a, b):any =>
+    (a: any, b: any) =>
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
   console.log(sorted);
