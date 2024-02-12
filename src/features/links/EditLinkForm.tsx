@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import { useShorterUrl } from "./hooks/useShortenLink";
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
@@ -8,7 +8,7 @@ import AnimatedMulti from "@/ui/selects/MultiSelect";
 
 function EditLinkForm({ oldData }: any) {
   console.log(oldData);
-  const [url, setUrl] = useState("");
+  const [url, ] = useState("");
   const [title, setTitle] = useState("");
   const [back_half, setBackhalf] = useState("");
   const { shortenUrl, isPending } = useShorterUrl();
@@ -22,18 +22,18 @@ function EditLinkForm({ oldData }: any) {
     }
   }
 
-  const handleUrlBlur = () => {
-    let updatedUrl = url.trim();
+  // const handleUrlBlur = () => {
+  //   let updatedUrl = url.trim();
 
-    if (
-      updatedUrl !== "" &&
-      !updatedUrl.startsWith("http://") &&
-      !updatedUrl.startsWith("https://")
-    ) {
-      updatedUrl = "https://" + updatedUrl + "/";
-      setUrl(updatedUrl);
-    }
-  };
+  //   if (
+  //     updatedUrl !== "" &&
+  //     !updatedUrl.startsWith("http://") &&
+  //     !updatedUrl.startsWith("https://")
+  //   ) {
+  //     updatedUrl = "https://" + updatedUrl + "/";
+  //     setUrl(updatedUrl);
+  //   }
+  // };
 
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;

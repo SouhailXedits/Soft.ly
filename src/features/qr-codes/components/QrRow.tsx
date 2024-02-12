@@ -6,7 +6,6 @@ import {
   // BsPalette,
   BsBarChart,
   BsArrowReturnRight,
-  BsLockFill,
   BsCalendar,
   BsTrash,
 } from "react-icons/bs";
