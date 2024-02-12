@@ -20,7 +20,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
 
 
   const modalRef = useRef<HTMLDivElement | null>(null);
-  console.log(modalRef);
+  // console.log(modalRef);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -63,8 +63,8 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
     closeModal();
   };
 
-  const handleEdit = (userId: string) => {
-    console.log(userId)
+  const handleEdit = () => {
+    // console.log(userId)
     setIsEditModalOpen(true);
     closeModal();
   };
@@ -92,7 +92,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
       newData.role = data.role;
       newData.shortsLimits = data.shortsLimits
 
-      console.log({ id: userId, ...newData });
+      // console.log({ id: userId, ...newData });
       updateUser({ id: userId, ...newData });
 
       handleCloseEditModal();
@@ -151,7 +151,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
                 </button> 
                 }
                 <button
-                  onClick={() => handleEdit(user.id)}
+                  onClick={() => handleEdit()}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                 >

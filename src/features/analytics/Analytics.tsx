@@ -30,7 +30,6 @@ const Analytics: React.FC = () => {
       </div>
     );
 
-  console.log(analyticsData);
 
   const devicesObj = analyticsData?.count?.devices;
   let devicesClicks: {
@@ -77,8 +76,8 @@ const Analytics: React.FC = () => {
     }));
   }
 
-  const countryCodes = analyticsData?.count?.country_code || {};
-  console.log(countryCodes);
+  // const countryCodes = analyticsData?.count?.country_code || {};
+
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);

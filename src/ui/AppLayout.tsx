@@ -9,7 +9,7 @@ function AppLayout() {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
   function handleShowSideBar() {
-    console.log("click");
+
     setIsOpenSideOpts((prev) => !prev);
   }
   return (

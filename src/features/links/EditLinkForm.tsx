@@ -1,45 +1,45 @@
-import { Link } from "react-router-dom";
+
 import { useShorterUrl } from "./hooks/useShortenLink";
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
+import AnimatedMulti from "@/ui/selects/MultiSelect";
 
-function CreateLinkForm() {
-  const [url, setUrl] = useState("");
+function EditLinkForm({ oldData }: any) {
+  console.log(oldData);
+  const [url, ] = useState("");
   const [title, setTitle] = useState("");
   const [back_half, setBackhalf] = useState("");
-  const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { shortenUrl, isPending } = useShorterUrl();
   const isButtonDisabled = url === "";
-  const { user} = useUser()
+  const { user } = useUser();
   // if(isLoading ) return Loader
-  const userId = user?.id
+  const userId = user?.id;
   async function handleClick() {
-    if(userId) {
+    if (userId) {
       shortenUrl({ url, title, userId, back_half });
     }
   }
 
-  const handleUrlBlur = () => {
-    let updatedUrl = url.trim();
+  // const handleUrlBlur = () => {
+  //   let updatedUrl = url.trim();
 
-    if (
-      updatedUrl !== "" &&
-      !updatedUrl.startsWith("http://") &&
-      !updatedUrl.startsWith("https://")
-    ) {
-      updatedUrl = "https://" + updatedUrl + "/";
-      setUrl(updatedUrl);
-    }
-  };
+  //   if (
+  //     updatedUrl !== "" &&
+  //     !updatedUrl.startsWith("http://") &&
+  //     !updatedUrl.startsWith("https://")
+  //   ) {
+  //     updatedUrl = "https://" + updatedUrl + "/";
+  //     setUrl(updatedUrl);
+  //   }
+  // };
 
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;
 
     // const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
 
-    setBackHalfFormatWarning(false);
     // setBackHalfFormatWarning(true);
     setBackhalf(newBackHalf);
     // if (!backHalfRegex.test(newBackHalf)) {
@@ -47,22 +47,20 @@ function CreateLinkForm() {
     // }
   };
 
-  const domainName = DOMAIN_NAME
-
+  const domainName = DOMAIN_NAME;
 
   return (
-    <div className="flex bg-white min-h-screen px-12 py-7 justify-center">
+    <div className="flex bg-white px-12 py-7 justify-center">
       <div className=" flex flex-col justify-between">
         <div className="flex flex-col basis-[60%] px-5 py-10 gap-3 relative">
-          <h1 className=" text-3xl font-bold">Create new</h1>
           <p>Destination URL</p>
           <input
             className="form-input"
             type="text"
             placeholder="https://example.com/my-long-url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            onBlur={handleUrlBlur}
+            value={oldData.longUrl}
+            disabled
+            // onChange={(e) => setUrl(e.target.value)}
           />
 
           <h1 className=" text-xl font-bold mt-6 mb-2">Code details</h1>
@@ -105,19 +103,17 @@ function CreateLinkForm() {
                 defaultValue={back_half}
                 onChange={handleBackHalfChange}
               />
-              {backHalfFormatWarning && (
-                <p className="text-red-500 mt-2">
-                  Please enter a valid back-half with a maximum length of 10
-                  alphanumeric characters.
-                </p>
-              )}
             </div>
           </div>
+          <div>
+            <p className=" text-lg text-left pb-2">Tags : </p>
+            <AnimatedMulti />
+          </div>
         </div>
-        <div className=" sticky px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
-          <Link to="/" className="border px-4 py-1.5 rounded">
+        <div className="px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
+          {/* <Link to="/" className="border px-4 py-1.5 rounded">
             Cancel
-          </Link>
+          </Link> */}
           <button
             onClick={handleClick}
             disabled={isButtonDisabled || isPending}
@@ -125,7 +121,7 @@ function CreateLinkForm() {
               isButtonDisabled ? "opacity-50" : ""
             }`}
           >
-            Generate Short Link <BsArrowRight />
+            Edit Short Link <BsArrowRight />
           </button>
         </div>
       </div>
@@ -133,4 +129,4 @@ function CreateLinkForm() {
   );
 }
 
-export default CreateLinkForm;
+export default EditLinkForm;

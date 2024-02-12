@@ -6,7 +6,6 @@ import {
   // BsPalette,
   BsBarChart,
   BsArrowReturnRight,
-  BsLockFill,
   BsCalendar,
   BsTrash,
 } from "react-icons/bs";
@@ -52,7 +51,7 @@ const QrRow = ({ qr }: QrRowProps) => {
     };
   }, [isOpenOptionsModal]);
 
-  const imageUrl = qr.qr_image_url;
+  const imageUrl = qr.qr_image_svg;
 
   function toggleUrlCollapse() {
     setIsUrlCollapsed(!isUrlCollapsed);
@@ -113,15 +112,14 @@ const QrRow = ({ qr }: QrRowProps) => {
               <button onClick={handleDownload} className="btn-icon">
                 <BsDownload />
               </button>
-            
-                <Link
-                  to={`/link-details?id=${qr.id}`}
-                  className="btn-primary bg-gray-100 text-black flex items-center gap-1"
-                >
-                  {" "}
-                  <BsBarChart /> <span className=" sm:hidden">View</span>  details
-                </Link>
-             
+
+              <Link
+                to={`/link-details?id=${qr.id}`}
+                className="btn-primary bg-gray-100 text-black flex items-center gap-1"
+              >
+                {" "}
+                <BsBarChart /> <span className=" sm:hidden">View</span> details
+              </Link>
             </div>
           </div>
         </div>
@@ -138,12 +136,13 @@ const QrRow = ({ qr }: QrRowProps) => {
             )}
           </p>
           <div className="flex gap-7 mt-2">
-            <button>
-              <BsBarChart />
+            <button className=" flex items-center gap-2">
+              <BsBarChart /> Engagments : {qr.totalRequestCount}
             </button>
-            <button className="flex items-center gap-1">
+            {/* <button className="flex items-center gap-1">
               <BsLockFill /> Scan data
-            </button>
+            </button> */}
+            {/* <p>{qr?.totalRequestCount}</p> */}
             <p className="flex items-center gap-1">
               <BsCalendar /> {formatDate(qr.created_at)}
             </p>

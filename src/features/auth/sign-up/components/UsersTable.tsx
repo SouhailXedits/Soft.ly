@@ -25,7 +25,7 @@ const UserTable: React.FC = () => {
     queryKey: ["users"],
     queryFn: fetchAllUsers,
   });
-  console.log(users);
+
   if (error) return <div>Error fetching users</div>;
   if (!users || users.length === 0) {
     return <div>No users available.</div>;
