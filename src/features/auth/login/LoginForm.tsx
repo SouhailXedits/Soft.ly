@@ -52,7 +52,7 @@ const LoginForm: React.FC = () => {
           <div>
             <div className=" mb-3">
               <img
-                src="/logo.png"
+                src="/logo-taki.png"
                 alt=" logo softly"
                 className="w-[10rem]"
               />

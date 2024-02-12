@@ -9,27 +9,36 @@ import { GQL_API_LINK } from "../../config";
 import { getUrls } from "../../services/apiLinks";
 import { ApiResponse } from "../../types";
 
-
-
 function LinksLayout() {
-  const [ , setIsAllSelected] = useState(false);
+  const [, setIsAllSelected] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState<number[]>([]);
-  const {user} = useUser()
-  const userId = user?.id
+  const { user } = useUser();
+  const userId = user?.id;
   const { data, error } = useQuery<ApiResponse>({
     queryKey: ["urls", { user_id: userId }],
     queryFn: async ({ queryKey }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const [, { user_id }] = queryKey;
-      const getUrlsQuery = getUrls
+      const getUrlsQuery = getUrls;
 
       return request(GQL_API_LINK, getUrlsQuery, {
         user_id,
       });
     },
   });
-  const allUrls = data?.getUrlsWithUserId || [];
+  const allUrls = data?.getUrlsWithUserId.reverse() || ([] as any);
+  console.log(allUrls);
+  // let sorted = [] as any;
+
+  const sorted = allUrls.sort(
+    (a, b) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+  console.log(sorted);
+
+  // const reversedUrlsArray = allUrls.reverse();
+  // console.log(reversedUrlsArray);
 
   if (error) console.error(error.message);
 
@@ -46,6 +55,7 @@ function LinksLayout() {
     setSelectedLinks(updatedSelectedLinks);
     setIsAllSelected(updatedSelectedLinks.length === allUrls?.length);
   };
+  console.log(sorted);
 
   return (
     <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto h-screen">
@@ -57,8 +67,8 @@ function LinksLayout() {
         ""
       )}
 
-      {allUrls?.length !== 0 ? (
-        allUrls?.map(
+      {sorted?.length !== 0 ? (
+        sorted?.map(
           (Newlink: {
             id: number;
             created_at: string;
