@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
+import AnimatedMulti from "@/ui/selects/MultiSelect";
 
 function EditLinkForm({ oldData }: any) {
   console.log(oldData);
@@ -103,6 +104,9 @@ function EditLinkForm({ oldData }: any) {
                 onChange={handleBackHalfChange}
               />
             </div>
+          </div>
+          <div>
+            <AnimatedMulti/>
           </div>
         </div>
         <div className="px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
