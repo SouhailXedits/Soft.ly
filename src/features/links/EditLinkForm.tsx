@@ -106,6 +106,7 @@ function EditLinkForm({ oldData }: any) {
             </div>
           </div>
           <div>
+            <p className=" text-lg text-left pb-2">Tags : </p>
             <AnimatedMulti />
           </div>
         </div>
