@@ -8,13 +8,13 @@ import makeAnimated from "react-select/animated";
 const animatedComponents = makeAnimated();
 
 export default function AnimatedMulti({ userId , setTags, tags:oldTags}: { userId: string, setTags: any, tags?:any }) {
-  const { data: tags, isPending: isTagsPending } = useQuery({
+  const { data: tags } = useQuery({
     queryKey: ["user-tags", userId],
     queryFn: () => getAllUserTags(userId),
   });
 
   console.log(tags);
-  const {createTag, isPending} = useCreateTag();
+  const {createTag} = useCreateTag();
 
 
 
@@ -37,8 +37,8 @@ export default function AnimatedMulti({ userId , setTags, tags:oldTags}: { userI
 
   const handleChange = (selectedOptions: any) => {
     console.log(selectedOptions)
-    const selectedIds = selectedOptions.map((option: any) => option.value);
-    setTags(selectedIds);
+    
+    setTags(selectedOptions);
     setSelectedOptions(selectedOptions);
   };
   const customNoOptionsMessage = ({ inputValue }: any) => {

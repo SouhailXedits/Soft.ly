@@ -1,12 +1,5 @@
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-type LineChartCompProps = {
-  data: {
-    name: string;
-    value: number;
-    avg: number 
-  }[];
-};
 
 const LineChartComp = ({data}:any) => {
   return (

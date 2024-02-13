@@ -22,7 +22,7 @@ export function useGenerateQR() {
 
   const { mutate: generateQr, isPending } = useMutation({
     mutationFn: ({ url, title, userId, back_half }: getShorterUrlParams) =>
-      getShorterUrl({ longUrl: url, title, userId, back_half }),
+      getShorterUrl({ longUrl: url, title, userId, back_half, tags: [] }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["urls"],

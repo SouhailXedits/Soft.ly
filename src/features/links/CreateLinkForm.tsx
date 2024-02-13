@@ -19,8 +19,9 @@ function CreateLinkForm() {
   // if(isLoading ) return Loader
   const userId = user?.id as string
   async function handleClick() {
+    const tagsIds = tags.map((tag: any) => tag.value)
     if(userId) {
-      shortenUrl({ url, title, userId, back_half , tags});
+      shortenUrl({ url, title, userId, back_half, tags: tagsIds });
     }
   }
 

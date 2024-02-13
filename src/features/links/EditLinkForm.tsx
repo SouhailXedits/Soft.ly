@@ -1,5 +1,4 @@
 
-import { useShorterUrl } from "./hooks/useShortenLink";
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
@@ -21,9 +20,11 @@ function EditLinkForm({ oldData }: any) {
   const {updateUrl, isPending: isUpdating} = useUpdateLink()
   async function handleClick() {
     const id = oldData.id
-    console.log({ id, title, back_half, tags });
+    console.log(tags)
+    const oldTagsIds = tags.map((tag: any) => tag.id || tag.value);
+    console.log({ id, title, back_half, oldTagsIds });
     if (userId) {
-      updateUrl({ id, title, back_half, tags });
+      updateUrl({ id, title, back_half, tags: oldTagsIds });
     }
   }
   

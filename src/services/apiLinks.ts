@@ -15,7 +15,7 @@ export async function getShorterUrl({
   title: string;
   userId: string;
   back_half?: string; // Make back_half parameter optional
-  tags: string[]; // Specify that tags is an array of strings
+  tags: any; // Specify that tags is an array of strings
 }) {
   console.log(tags);
 
@@ -232,8 +232,8 @@ export const updateUrl = async (urlData: {
 }) => {
   try {
     console.log(urlData);
-    const newTags = urlData.tags?.map(tag => (tag.id))
-    console.log(newTags);
+    // const newTags = urlData.tags?.map((tag:any) => (tag.id))
+    // console.log(newTags);
     const response = await fetch(GQL_API_LINK, {
       method: "POST",
       headers: {
