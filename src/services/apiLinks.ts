@@ -9,19 +9,53 @@ export async function getShorterUrl({
   title,
   userId,
   back_half = "", // Set a default value of an empty string
+  tags = [],
 }: {
   longUrl: string;
   title: string;
   userId: string;
   back_half?: string; // Make back_half parameter optional
+  tags: string[]; // Specify that tags is an array of strings
 }) {
+  console.log(tags);
+  
   const user_id = userId;
+  console.log(user_id)
+  // const mutation = gql`
+  //   mutation CreateUrls(
+  //     $longUrl: String!
+  //     $title: String!
+  //     $user_id: String!
+  //     $back_half: String!
+  //     $tags: [String!]! // Specify that tags is an array of strings and required
+  //   ) {
+  //     createUrls(
+  //       createUrlInput: {
+  //         longUrl: $longUrl
+  //         title: $title
+  //         user_id: $user_id
+  //         back_half: $back_half
+  //         tags: $tags // Include tags in the mutation input
+  //       }
+  //     ) {
+  //       id
+  //       created_at
+  //       longUrl
+  //       shortUrl
+  //       title
+  //       qr_image_url
+  //       user_id
+  //     }
+  //   }
+  // `;
+  
   const mutation = gql`
     mutation CreateUrls(
       $longUrl: String!
       $title: String!
       $user_id: String!
       $back_half: String!
+      $tags: [String!]! 
     ) {
       createUrls(
         createUrlInput: {
@@ -29,6 +63,7 @@ export async function getShorterUrl({
           title: $title
           user_id: $user_id
           back_half: $back_half
+          tags: $tags 
         }
       ) {
         id
@@ -42,8 +77,9 @@ export async function getShorterUrl({
     }
   `;
 
+  console.log(user_id);
+  
   try {
-    //const result = await client.mutate<CreateShortLinkResult>({
     const result = await client.mutate({
       mutation,
       variables: {
@@ -51,14 +87,17 @@ export async function getShorterUrl({
         title,
         user_id,
         back_half,
+        tags,
       },
     });
+    console.log(result)
     return result.data;
   } catch (error) {
     console.error("Error during createShortLink mutation:", error);
     throw new Error("Failed to create short link");
   }
 }
+
 
 export const getUrls = gql`
   query GetUrlsWithUserId($user_id: String!) {

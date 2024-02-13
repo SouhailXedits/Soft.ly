@@ -10,12 +10,18 @@ import { getShorterUrlParams } from "../../../types";
 //   userId: string;
 //   back_half: string;
 // }
-export function useShorterUrl() {
+export function useUpdateLink() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { mutate: shortenUrl, isPending } = useMutation({
-    mutationFn: ({ url, title, userId, back_half, tags }: getShorterUrlParams) =>
+    mutationFn: ({
+      url,
+      title,
+      userId,
+      back_half,
+      tags,
+    }: getShorterUrlParams) =>
       getShorterUrl({ longUrl: url, title, userId, back_half, tags }),
     onSuccess: () => {
       queryClient.invalidateQueries({

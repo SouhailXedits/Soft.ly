@@ -5,22 +5,26 @@ import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
 import AnimatedMulti from "@/ui/selects/MultiSelect";
+import { useQuery } from "@tanstack/react-query";
+import { getAllUserTags } from "@/services/apiTag";
 
 function EditLinkForm({ oldData }: any) {
-  console.log(oldData);
+  // console.log(oldData);
   const [url, ] = useState("");
   const [title, setTitle] = useState("");
   const [back_half, setBackhalf] = useState("");
   const { shortenUrl, isPending } = useShorterUrl();
   const isButtonDisabled = url === "";
   const { user } = useUser();
+  const [tags, setTags] = useState([])
   // if(isLoading ) return Loader
-  const userId = user?.id;
+  const userId = user?.id as string;
   async function handleClick() {
     if (userId) {
-      shortenUrl({ url, title, userId, back_half });
+      shortenUrl({ url, title, userId, back_half, tags });
     }
   }
+  
 
   // const handleUrlBlur = () => {
   //   let updatedUrl = url.trim();
@@ -107,7 +111,7 @@ function EditLinkForm({ oldData }: any) {
           </div>
           <div>
             <p className=" text-lg text-left pb-2">Tags : </p>
-            <AnimatedMulti />
+            <AnimatedMulti userId={userId} setTags={setTags}/>
           </div>
         </div>
         <div className="px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
