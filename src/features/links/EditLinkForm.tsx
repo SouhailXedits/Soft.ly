@@ -5,22 +5,28 @@ import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
 import AnimatedMulti from "@/ui/selects/MultiSelect";
+import { useUpdateLink } from "./hooks/useUpdateLink";
 
 function EditLinkForm({ oldData }: any) {
-  console.log(oldData);
-  const [url, ] = useState("");
-  const [title, setTitle] = useState("");
-  const [back_half, setBackhalf] = useState("");
-  const { shortenUrl, isPending } = useShorterUrl();
-  const isButtonDisabled = url === "";
+  // console.log(oldData);
+  const [title, setTitle] = useState(oldData.title);
+  const [back_half, setBackhalf] = useState(oldData.back_half);
+  // const { shortenUrl, isPending } = useShorterUrl();
   const { user } = useUser();
+  const oldTags = oldData.tags
+  const [tags, setTags] = useState(oldTags);
   // if(isLoading ) return Loader
-  const userId = user?.id;
+  const userId = user?.id as string;
+
+  const {updateUrl, isPending: isUpdating} = useUpdateLink()
   async function handleClick() {
+    const id = oldData.id
+    console.log({ id, title, back_half, tags });
     if (userId) {
-      shortenUrl({ url, title, userId, back_half });
+      updateUrl({ id, title, back_half, tags });
     }
   }
+  
 
   // const handleUrlBlur = () => {
   //   let updatedUrl = url.trim();
@@ -68,7 +74,7 @@ function EditLinkForm({ oldData }: any) {
           <input
             className="form-input"
             type="text"
-            defaultValue={title}
+            defaultValue={oldData.title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <h1 className=" text-2xl font-bold mt-4 pt-6 border-t-2 ">
@@ -100,14 +106,14 @@ function EditLinkForm({ oldData }: any) {
               <input
                 type="text"
                 className="form-input w-full"
-                defaultValue={back_half}
+                defaultValue={oldData.back_half}
                 onChange={handleBackHalfChange}
               />
             </div>
           </div>
           <div>
             <p className=" text-lg text-left pb-2">Tags : </p>
-            <AnimatedMulti />
+            <AnimatedMulti tags={tags} userId={userId} setTags={setTags} />
           </div>
         </div>
         <div className="px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
@@ -116,9 +122,9 @@ function EditLinkForm({ oldData }: any) {
           </Link> */}
           <button
             onClick={handleClick}
-            disabled={isButtonDisabled || isPending}
+            disabled={isUpdating}
             className={`btn-primary flex items-center gap1 ${
-              isButtonDisabled ? "opacity-50" : ""
+              isUpdating ? "opacity-50" : ""
             }`}
           >
             Edit Short Link <BsArrowRight />
