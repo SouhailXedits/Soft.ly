@@ -7,7 +7,7 @@ import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 
-export default function AnimatedMulti({ userId , setTags}: { userId: string, setTags: any }) {
+export default function AnimatedMulti({ userId , setTags, tags:oldTags}: { userId: string, setTags: any, tags?:any }) {
   const { data: tags, isPending: isTagsPending } = useQuery({
     queryKey: ["user-tags", userId],
     queryFn: () => getAllUserTags(userId),
@@ -19,7 +19,7 @@ export default function AnimatedMulti({ userId , setTags}: { userId: string, set
 
 
   const [inputValue, setInputValue] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState<any>([]);
+  const [selectedOptions, setSelectedOptions] = useState<any>(oldTags);
   const options = tags?.map((tag: any) => ({
     value: tag._id,
     label: tag.label,

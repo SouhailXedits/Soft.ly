@@ -170,6 +170,7 @@ function LinksLayout() {
             title: string;
             iconFilePath: string;
             totalRequestCount: string;
+            tags: any;
           }) => (
             <ShortenedUrl
               link={Newlink}

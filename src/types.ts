@@ -54,6 +54,12 @@ export interface getShorterUrlParams {
   back_half?: any;
   tags: any
 }
+export interface updateUrlInput {
+  id: string;
+  title?: string;
+  back_half?: string;
+  tags?: any
+}
 
 export type QrRowProps = {
   qr: {
@@ -79,6 +85,7 @@ export type shortenedUrlProps = {
     title: string;
     iconFilePath: string;
     totalRequestCount: string;
+    tags: any
   };
   isSelected: boolean;
   onSelect: (id: number) => void;

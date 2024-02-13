@@ -18,9 +18,9 @@ export async function getShorterUrl({
   tags: string[]; // Specify that tags is an array of strings
 }) {
   console.log(tags);
-  
+
   const user_id = userId;
-  console.log(user_id)
+  console.log(user_id);
   // const mutation = gql`
   //   mutation CreateUrls(
   //     $longUrl: String!
@@ -48,14 +48,14 @@ export async function getShorterUrl({
   //     }
   //   }
   // `;
-  
+
   const mutation = gql`
     mutation CreateUrls(
       $longUrl: String!
       $title: String!
       $user_id: String!
       $back_half: String!
-      $tags: [String!]! 
+      $tags: [String!]!
     ) {
       createUrls(
         createUrlInput: {
@@ -63,7 +63,7 @@ export async function getShorterUrl({
           title: $title
           user_id: $user_id
           back_half: $back_half
-          tags: $tags 
+          tags: $tags
         }
       ) {
         id
@@ -78,7 +78,7 @@ export async function getShorterUrl({
   `;
 
   console.log(user_id);
-  
+
   try {
     const result = await client.mutate({
       mutation,
@@ -90,14 +90,13 @@ export async function getShorterUrl({
         tags,
       },
     });
-    console.log(result)
+    console.log(result);
     return result.data;
   } catch (error) {
     console.error("Error during createShortLink mutation:", error);
     throw new Error("Failed to create short link");
   }
 }
-
 
 export const getUrls = gql`
   query GetUrlsWithUserId($user_id: String!) {
@@ -108,10 +107,16 @@ export const getUrls = gql`
       shortUrl
       title
       qr_image_url
+      back_half
       qr_image_svg
       iconFilePath
       user_id
       totalRequestCount
+      tags {
+        id
+        value
+        label
+      }
     }
   }
 `;
@@ -163,8 +168,72 @@ export async function getClicksDataByUrl(urlId: string | null) {
   }
 }
 
-export const updateUser = async (urlData: any) => {
+// export const updateUser = async (urlData: any) => {
+//   try {
+//     const response = await fetch(GQL_API_LINK, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         query: `
+//             mutation UpdateUrls($id: String!, $tags: String,$LinksCount: String, $role: String) {
+//               updateUrls(
+//                   updateUrlsInput: { urlsId: "65b3c14e7f78edf5fff9f0ea", back_half: null, title: null }
+//               ) {
+//                   id
+//                   created_at
+//                   longUrl
+//                   shortUrl
+//                   title
+//                   qr_image_url
+//                   iconFilePath
+//                   user_id
+//                   back_half
+//                   totalRequestCount
+//               }
+//           }
+//           mutation UpdateUser($id: String!, $password: String,$LinksCount: String, $role: String) {
+//             UpdateUser(id: $id, UpdateUser: { password: $password,LinksCount: $LinksCount , role: $role }) {
+//               id
+//               role
+//               LinksCount
+//               email
+//             }
+//           }
+//         `,
+//         variables: {
+//           id: urlData.id,
+//           tags: urlData.tags || null,
+//           title: urlData.title || null,
+//           backHalf: urlData.back_half || null,
+//         },
+//       }),
+//     });
+
+//     const data = await response.json();
+
+//     if (response.ok) {
+//       return data.data.updateUser;
+//     } else {
+//       throw new Error(data.errors?.[0].message || "Failed to update user");
+//     }
+//   } catch (error) {
+//     console.error("Error updating user:", error);
+//     throw new Error("Failed to update user");
+//   }
+// };
+
+export const updateUrl = async (urlData: {
+  id: string;
+  tags?: any;
+  title?: string;
+  back_half?: string;
+}) => {
   try {
+    console.log(urlData);
+    const newTags = urlData.tags?.map(tag => (tag.id))
+    console.log(newTags);
     const response = await fetch(GQL_API_LINK, {
       method: "POST",
       headers: {
@@ -172,9 +241,14 @@ export const updateUser = async (urlData: any) => {
       },
       body: JSON.stringify({
         query: `
-            mutation UpdateUrls($id: String!, $tags: String,$LinksCount: String, $role: String) {
+            mutation UpdateUrls($id: String!, $tags: [String!], $title: String, $back_half: String) {
               updateUrls(
-                  updateUrlsInput: { urlsId: "65b3c14e7f78edf5fff9f0ea", back_half: null, title: null }
+                  updateUrlsInput: {
+                      urlsId: $id,
+                      title: $title,
+                      back_half: $back_half,
+                      tags: $tags,
+                  }
               ) {
                   id
                   created_at
@@ -188,33 +262,28 @@ export const updateUser = async (urlData: any) => {
                   totalRequestCount
               }
           }
-          mutation UpdateUser($id: String!, $password: String,$LinksCount: String, $role: String) {
-            UpdateUser(id: $id, UpdateUser: { password: $password,LinksCount: $LinksCount , role: $role }) {
-              id
-              role
-              LinksCount
-              email
-            }
-          }
         `,
         variables: {
           id: urlData.id,
-          tags: urlData.tags || null,
+          tags: urlData.tags || [],
           title: urlData.title || null,
-          backHalf: urlData.back_half || null,
+          back_half: urlData.back_half || null,
         },
       }),
     });
 
     const data = await response.json();
+    console.log(data);
 
     if (response.ok) {
+      console.log(data);
       return data.data.updateUser;
     } else {
-      throw new Error(data.errors?.[0].message || "Failed to update user");
+      console.log(data);
+      throw new Error(data.errors?.[0].message || "Failed to update url");
     }
   } catch (error) {
-    console.error("Error updating user:", error);
-    throw new Error("Failed to update user");
+    console.error("Error updating url:", error);
+    throw new Error("Failed to update url");
   }
 };
