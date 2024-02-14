@@ -34,8 +34,11 @@ export default function AnimatedMulti({
   console.log(options);
   const handleKeyDown = async (event: any) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
+      console.log('clicked');
+      console.log(selectedOptions)
+      
       const newOption = { value: inputValue.trim(), label: inputValue.trim() };
-      setSelectedOptions([...selectedOptions, newOption]);
+      setSelectedOptions(selectedOptions && [...selectedOptions, newOption]);
       setInputValue("");
       event.preventDefault(); // Prevents form submission
       // const createdTag = createTag({

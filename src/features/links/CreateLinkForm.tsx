@@ -19,7 +19,8 @@ function CreateLinkForm() {
   // if(isLoading ) return Loader
   const userId = user?.id as string
   async function handleClick() {
-    const tagsIds = tags.map((tag: any) => tag.value)
+    const tagsIds = tags.map((tag: any) => tag._id || tag.value)
+    console.log(tagsIds)
     if(userId) {
       shortenUrl({ url, title, userId, back_half, tags: tagsIds });
     }
@@ -119,7 +120,7 @@ function CreateLinkForm() {
           </div>
           <div>
             <p className=" text-lg text-left pb-2">Tags : </p>
-            <AnimatedMulti userId={userId} setTags={setTags} />
+            <AnimatedMulti userId={userId} setTags={setTags} tags={[]} />
           </div>
         </div>
         <div className=" sticky px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
