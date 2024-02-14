@@ -1,22 +1,29 @@
 import { useCreateTag } from "@/features/links/hooks/useCreateTag";
 import { getAllUserTags } from "@/services/apiTag";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 
-export default function AnimatedMulti({ userId , setTags, tags:oldTags}: { userId: string, setTags: any, tags?:any }) {
+export default function AnimatedMulti({
+  userId,
+  setTags,
+  tags: oldTags,
+}: {
+  userId: string;
+  setTags: any;
+  tags?: any;
+}) {
+  const queryClient = useQueryClient();
   const { data: tags } = useQuery({
     queryKey: ["user-tags", userId],
     queryFn: () => getAllUserTags(userId),
   });
 
   console.log(tags);
-  const {createTag} = useCreateTag();
-
-
+  const { createTag } = useCreateTag();
 
   const [inputValue, setInputValue] = useState("");
   const [selectedOptions, setSelectedOptions] = useState<any>(oldTags);
@@ -24,20 +31,44 @@ export default function AnimatedMulti({ userId , setTags, tags:oldTags}: { userI
     value: tag._id,
     label: tag.label,
   }));
-  console.log(options)
-  const handleKeyDown = (event: any) => {
+  console.log(options);
+  const handleKeyDown = async (event: any) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
       const newOption = { value: inputValue.trim(), label: inputValue.trim() };
       setSelectedOptions([...selectedOptions, newOption]);
       setInputValue("");
       event.preventDefault(); // Prevents form submission
-      createTag({userId, value: inputValue.trim(), label: inputValue.trim()})
+      // const createdTag = createTag({
+      //   userId,
+      //   value: inputValue.trim(),
+      //   label: inputValue.trim(),
+      // }) as any;
+      createTag({
+        userId,
+        value: inputValue.trim(),
+        label: inputValue.trim(),
+      }) as any;
+      setTimeout(() => {
+        const createdTag = queryClient.getQueryData(["created-tag"]) as any;
+        console.log(createdTag);
+        const { _id , label } = createdTag;
+        setTags([...selectedOptions, createdTag]);
+        setSelectedOptions([
+          ...selectedOptions,
+          {
+            value: _id,
+            label: label,
+
+          }
+        ]);
+      }, 1000);
+      // console.log(data);
     }
   };
+  console.log(tags);
 
   const handleChange = (selectedOptions: any) => {
-    console.log(selectedOptions)
-    
+    console.log(selectedOptions);
     setTags(selectedOptions);
     setSelectedOptions(selectedOptions);
   };

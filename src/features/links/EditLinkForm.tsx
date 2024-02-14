@@ -21,7 +21,7 @@ function EditLinkForm({ oldData }: any) {
   async function handleClick() {
     const id = oldData.id
     console.log(tags)
-    const oldTagsIds = tags.map((tag: any) => tag.id || tag.value);
+    const oldTagsIds = tags.map((tag: any) => tag._id || tag.value);
     console.log({ id, title, back_half, oldTagsIds });
     if (userId) {
       updateUrl({ id, title, back_half, tags: oldTagsIds });
@@ -123,7 +123,7 @@ function EditLinkForm({ oldData }: any) {
           </Link> */}
           <button
             onClick={handleClick}
-            disabled={isUpdating}
+            // disabled={isUpdating}
             className={`btn-primary flex items-center gap1 ${
               isUpdating ? "opacity-50" : ""
             }`}

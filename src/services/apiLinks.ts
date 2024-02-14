@@ -269,8 +269,10 @@ export const updateUrl = async (urlData: {
           title: urlData.title || null,
           back_half: urlData.back_half || null,
         },
+        
       }),
     });
+    
 
     const data = await response.json();
     console.log(data);

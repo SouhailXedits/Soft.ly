@@ -81,6 +81,16 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const shortenedUrl = isUrlCollapsed
     ? `${link.longUrl.slice(0, 30)} ${link.longUrl.length > 30 ? "..." : ""}`
     : link.longUrl;
+  
+  console.log(link);
+  const { tags:allTags } = link;
+  const transformedTags = allTags.map((item) => ({
+    ...item,
+    value: item.id, // Replace the value property with the id property
+  }));
+  const transformedData = { ...link, tags: transformedTags };
+  console.log(transformedData)
+  
 
   return (
     <div
@@ -128,9 +138,9 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                   >
                     {/* Modal content goes here */}
 
-                    <EditLinkForm oldData={link} />
+                    <EditLinkForm oldData={transformedData} />
                     <button
-                      className=" absolute top-4 right-4"
+                      className=" absolute top-4 right-4 text-3xl"
                       onClick={() => setIsModalOpen(false)}
                     >
                       <BsX />
@@ -190,11 +200,12 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
               <BsLockFill /> Scan data
             </button> */}
             <div className=" flex items-center gap-1">
-               <span>tags :</span>
+              <span>tags :</span>
               {link.tags?.map((tag: any) => (
-                <p
-                  key={tag.id}
-                  className=" bg-stone-200 px-1 rounded">{tag.label}</p>))}
+                <p key={tag.id} className=" bg-stone-200 px-1 rounded">
+                  {tag.label}
+                </p>
+              ))}
             </div>
             {/* <button className="flex items-center gap-1">
               <BsLockFill /> {link.totalRequestCount}
