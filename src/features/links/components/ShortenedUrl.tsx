@@ -84,7 +84,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   
   console.log(link);
   const { tags:allTags } = link;
-  const transformedTags = allTags.map((item) => ({
+  const transformedTags = allTags.map((item:any) => ({
     ...item,
     value: item.id, // Replace the value property with the id property
   }));

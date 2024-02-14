@@ -51,7 +51,7 @@ export default function Header({ onToggleOpen }: SideBarProps) {
         <button onClick={onToggleOpen} className=" text-xl">
           <BsJustify />
         </button>
-        <img className=" h-9" src="/logo-taki.png" alt="sofly.link logo" />
+        <img className=" h-9" src="/logo.png" alt="sofly.link logo" />
       </div>
       <div ref={modalRef} className=" relative flex justify-end w-full">
         <button
