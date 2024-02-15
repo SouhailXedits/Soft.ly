@@ -138,7 +138,10 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                   >
                     {/* Modal content goes here */}
 
-                    <EditLinkForm oldData={transformedData} setIsModalOpen={setIsModalOpen} />
+                    <EditLinkForm
+                      oldData={transformedData}
+                      setIsModalOpen={setIsModalOpen}
+                    />
                     <button
                       className=" absolute top-4 right-4 text-3xl"
                       onClick={() => setIsModalOpen(false)}
@@ -200,12 +203,14 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
               <BsLockFill /> Scan data
             </button> */}
             <div className=" flex items-center gap-1">
-              <span>tags :</span>
-              {link.tags?.map((tag: any) => (
-                <p key={tag.id} className=" bg-stone-200 px-1 rounded">
-                  {tag.label}
-                </p>
-              ))}
+              <span className=" break-keep">tags :</span>
+              <div className=" max-w-[400px] flex gap-1 flex-wrap">
+                {link.tags?.map((tag: any) => (
+                  <p key={tag.id} className=" bg-stone-200 px-1 rounded">
+                    {tag.label}
+                  </p>
+                ))}
+              </div>
             </div>
             {/* <button className="flex items-center gap-1">
               <BsLockFill /> {link.totalRequestCount}
