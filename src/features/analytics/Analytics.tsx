@@ -23,7 +23,6 @@ const Analytics: React.FC = () => {
     queryKey: ["analytics"],
     queryFn: () => getClicksData(userId),
   });
-  console.log(analyticsData)
 
   if (analyticsData?.count.totalRequestCount === 0)
     return (

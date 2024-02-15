@@ -11,18 +11,24 @@ export function useCreateTag() {
   const queryClient = useQueryClient();
 
   const { mutate: createTag, isPending } = useMutation({
-    mutationFn: ({ userId, value, label }: inputTagProps) =>
-      createTagApi({ user_id: userId, value, label }),
-    onSuccess: () => {
+    mutationFn: async ({ userId, value, label }: inputTagProps) => {
+      const createdTag = await createTagApi({ user_id: userId, value, label });
+      return createdTag; // Return the created tag
+    },
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["tags"],
+        queryKey: ["user-tags"],
       });
-      // toast.success("URL Shortened Successfully!");
+      queryClient.setQueryData(["created-tag"], data);
+      console.log(data); 
+      return data; 
     },
     onError: () => {
-      toast.error("Invalid tag format  ! 😢");
+      toast.error("Invalid tag format! 😢");
     },
     retry: false,
   });
+
   return { createTag, isPending };
 }
+

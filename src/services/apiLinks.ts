@@ -15,12 +15,12 @@ export async function getShorterUrl({
   title: string;
   userId: string;
   back_half?: string; // Make back_half parameter optional
-  tags: string[]; // Specify that tags is an array of strings
+  tags: any; // Specify that tags is an array of strings
 }) {
-  console.log(tags);
+
 
   const user_id = userId;
-  console.log(user_id);
+
   // const mutation = gql`
   //   mutation CreateUrls(
   //     $longUrl: String!
@@ -113,7 +113,7 @@ export const getUrls = gql`
       user_id
       totalRequestCount
       tags {
-        id
+        _id
         value
         label
       }
@@ -232,8 +232,8 @@ export const updateUrl = async (urlData: {
 }) => {
   try {
     console.log(urlData);
-    const newTags = urlData.tags?.map(tag => (tag.id))
-    console.log(newTags);
+    // const newTags = urlData.tags?.map((tag:any) => (tag.id))
+    // console.log(newTags);
     const response = await fetch(GQL_API_LINK, {
       method: "POST",
       headers: {
@@ -266,11 +266,13 @@ export const updateUrl = async (urlData: {
         variables: {
           id: urlData.id,
           tags: urlData.tags || [],
-          title: urlData.title || null,
-          back_half: urlData.back_half || null,
+          title: urlData.title ,
+          back_half: urlData.back_half ,
         },
+        
       }),
     });
+    
 
     const data = await response.json();
     console.log(data);

@@ -74,7 +74,6 @@ function LinksLayout() {
       <Link className="btn-primary" to="/qrcodes/create">
         Create a QR Code
       </Link>
-      <p>Learn more</p>
     </div>
   );
 }

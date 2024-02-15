@@ -1,5 +1,4 @@
 
-import { useShorterUrl } from "./hooks/useShortenLink";
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
@@ -7,7 +6,7 @@ import { DOMAIN_NAME } from "@/config";
 import AnimatedMulti from "@/ui/selects/MultiSelect";
 import { useUpdateLink } from "./hooks/useUpdateLink";
 
-function EditLinkForm({ oldData }: any) {
+function EditLinkForm({ oldData, setIsModalOpen }: any) {
   // console.log(oldData);
   const [title, setTitle] = useState(oldData.title);
   const [back_half, setBackhalf] = useState(oldData.back_half);
@@ -21,10 +20,12 @@ function EditLinkForm({ oldData }: any) {
   const {updateUrl, isPending: isUpdating} = useUpdateLink()
   async function handleClick() {
     const id = oldData.id
-    console.log({ id, title, back_half, tags });
+    const oldTagsIds = tags.map((tag: any) => tag._id || tag.value);
+    console.log({ id, title, back_half, oldTagsIds });
     if (userId) {
-      updateUrl({ id, title, back_half, tags });
+      updateUrl({ id, title, back_half, tags: oldTagsIds });
     }
+    setIsModalOpen(false)
   }
   
 
@@ -122,7 +123,7 @@ function EditLinkForm({ oldData }: any) {
           </Link> */}
           <button
             onClick={handleClick}
-            disabled={isUpdating}
+            // disabled={isUpdating}
             className={`btn-primary flex items-center gap1 ${
               isUpdating ? "opacity-50" : ""
             }`}
