@@ -200,12 +200,15 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
               <BsLockFill /> Scan data
             </button> */}
             <div className=" flex items-center gap-1">
-              <span>tags :</span>
+              <span className=" break-keep">tags :</span>
+              <div className=" max-w-[400px] flex gap-1 flex-wrap">
+
               {link.tags?.map((tag: any) => (
                 <p key={tag.id} className=" bg-stone-200 px-1 rounded">
                   {tag.label}
                 </p>
               ))}
+              </div>
             </div>
             {/* <button className="flex items-center gap-1">
               <BsLockFill /> {link.totalRequestCount}
