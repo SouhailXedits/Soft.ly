@@ -35,9 +35,3 @@ export const createTag = async (tag: {user_id: string, value: string, label: str
   }
 };
 
-// Example usage:
-// postTag("exampleTag");
-
-
-// write a post request to that user http://localhost:3500/tags ?
-
