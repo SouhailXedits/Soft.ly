@@ -20,13 +20,11 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
   const {updateUrl, isPending: isUpdating} = useUpdateLink()
   async function handleClick() {
     const id = oldData.id
-    console.log(oldTags)
-    console.log(tags)
     const oldTagsIds = tags.map((tag: any) => tag._id || tag.value);
     console.log({ id, title, back_half, oldTagsIds });
-    // if (userId) {
-    //   updateUrl({ id, title, back_half, tags: oldTagsIds });
-    // }
+    if (userId) {
+      updateUrl({ id, title, back_half, tags: oldTagsIds });
+    }
     setIsModalOpen(false)
   }
   

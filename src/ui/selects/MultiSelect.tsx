@@ -24,7 +24,10 @@ export default function AnimatedMulti({
 
   console.log(tags);
   console.log(oldTags);
-  const oldReformedTags= oldTags?.map((tag: any) => ({ value: tag._id, label: tag.label }));
+  const oldReformedTags = oldTags?.map((tag: any) => ({
+    value: tag._id,
+    label: tag.label,
+  }));
   const { createTag } = useCreateTag();
 
   const [inputValue, setInputValue] = useState("");
@@ -52,12 +55,13 @@ export default function AnimatedMulti({
         (tag: any) => tag.label === inputValue.trim()
       );
       console.log(existingTag);
-      if(existingTag) {
+      if (existingTag) {
         setSelectedOptions(selectedOptions.concat(existingTag));
-        console.log('already exists');
+        
+        console.log("already exists");
         return;
       }
-      console.log('created');
+      console.log("created");
       createTag({
         userId,
         value: inputValue.trim(),
@@ -90,8 +94,6 @@ export default function AnimatedMulti({
     return `No options found. Press Enter to add "${inputValue}" as a new option.`;
   };
   console.log(selectedOptions);
-  
-  
 
   return (
     <Select

@@ -17,10 +17,10 @@ export async function getShorterUrl({
   back_half?: string; // Make back_half parameter optional
   tags: any; // Specify that tags is an array of strings
 }) {
-  console.log(tags);
+
 
   const user_id = userId;
-  console.log(user_id);
+
   // const mutation = gql`
   //   mutation CreateUrls(
   //     $longUrl: String!
@@ -266,8 +266,8 @@ export const updateUrl = async (urlData: {
         variables: {
           id: urlData.id,
           tags: urlData.tags || [],
-          title: urlData.title || null,
-          back_half: urlData.back_half || null,
+          title: urlData.title ,
+          back_half: urlData.back_half ,
         },
         
       }),
