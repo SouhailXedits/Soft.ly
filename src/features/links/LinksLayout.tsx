@@ -211,7 +211,6 @@ function LinksLayout() {
       <Link className="btn-primary" to="/links/create">
         Create a short link
       </Link>
-      <span>Learn more</span>
     </div>
   );
 }
