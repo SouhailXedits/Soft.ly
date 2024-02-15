@@ -16,7 +16,7 @@ export async function getAllUserTags(userId: string) {
 export const createTag = async (tag: {user_id: string, value: string, label: string}) => {
     
   try {
-    const response = await fetch("http://localhost:3500/tags", {
+    const response = await fetch(`${API_LINK}/tags`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
