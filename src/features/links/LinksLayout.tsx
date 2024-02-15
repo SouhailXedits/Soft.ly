@@ -33,7 +33,7 @@ function LinksLayout() {
       });
     },
   });
-  
+
   const allUrls = data?.getUrlsWithUserId.reverse() || ([] as any);
   console.log(allUrls);
   // let sorted = [] as any;
@@ -46,7 +46,6 @@ function LinksLayout() {
 
   // const reversedUrlsArray = allUrls.reverse();
   // console.log(reversedUrlsArray);
-
 
   const [filteredUrls, setFilteredUrls] = useState<any[]>([]);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
@@ -68,7 +67,7 @@ function LinksLayout() {
     }
   }, [data, filters, isFilterApplied]);
   // console.log(filters)
-  console.log(data)
+  console.log(data);
   // const {data: urlData} = useQuery({
   //   queryKey: []
   // })
@@ -86,7 +85,6 @@ function LinksLayout() {
     setSelectedLinks(updatedSelectedLinks);
     setIsAllSelected(updatedSelectedLinks.length === filteredUrls?.length);
   };
-
 
   const handleFilterByDateClick = () => {
     setIsFilterApplied(false);
@@ -175,7 +173,7 @@ function LinksLayout() {
         ""
       )}
 
-      {sorted?.length !== 0 && (
+      {sorted?.length !== 0 &&
         sorted?.map(
           (Newlink: {
             id: number;
@@ -194,7 +192,7 @@ function LinksLayout() {
               onSelect={handleLinkSelection}
             />
           )
-        ))}
+        )}
       {sorted?.length === 0 && (
         <>
           <img

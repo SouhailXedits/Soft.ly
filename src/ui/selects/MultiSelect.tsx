@@ -23,10 +23,12 @@ export default function AnimatedMulti({
   });
 
   console.log(tags);
+  console.log(oldTags);
+  const oldReformedTags= oldTags?.map((tag: any) => ({ value: tag._id, label: tag.label }));
   const { createTag } = useCreateTag();
 
   const [inputValue, setInputValue] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState<any>(oldTags);
+  const [selectedOptions, setSelectedOptions] = useState<any>(oldReformedTags);
   const options = tags?.map((tag: any) => ({
     value: tag._id,
     label: tag.label,
@@ -34,9 +36,9 @@ export default function AnimatedMulti({
   console.log(options);
   const handleKeyDown = async (event: any) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
-      console.log('clicked');
-      console.log(selectedOptions)
-      
+      console.log("clicked");
+      console.log(selectedOptions);
+
       const newOption = { value: inputValue.trim(), label: inputValue.trim() };
       setSelectedOptions(selectedOptions && [...selectedOptions, newOption]);
       setInputValue("");
@@ -46,6 +48,16 @@ export default function AnimatedMulti({
       //   value: inputValue.trim(),
       //   label: inputValue.trim(),
       // }) as any;
+      const existingTag = tags.find(
+        (tag: any) => tag.label === inputValue.trim()
+      );
+      console.log(existingTag);
+      if(existingTag) {
+        setSelectedOptions(selectedOptions.concat(existingTag));
+        console.log('already exists');
+        return;
+      }
+      console.log('created');
       createTag({
         userId,
         value: inputValue.trim(),
@@ -54,21 +66,20 @@ export default function AnimatedMulti({
       setTimeout(() => {
         const createdTag = queryClient.getQueryData(["created-tag"]) as any;
         console.log(createdTag);
-        const { _id , label } = createdTag;
+        const { _id, label } = createdTag;
         setTags([...selectedOptions, createdTag]);
         setSelectedOptions([
           ...selectedOptions,
           {
             value: _id,
             label: label,
-
-          }
+          },
         ]);
       }, 1000);
       // console.log(data);
     }
   };
-  console.log(tags);
+  // console.log(tags);
 
   const handleChange = (selectedOptions: any) => {
     console.log(selectedOptions);
@@ -78,13 +89,18 @@ export default function AnimatedMulti({
   const customNoOptionsMessage = ({ inputValue }: any) => {
     return `No options found. Press Enter to add "${inputValue}" as a new option.`;
   };
+  console.log(selectedOptions);
+  
+  
 
   return (
     <Select
       closeMenuOnSelect={false}
       components={animatedComponents}
       inputValue={inputValue}
-      onInputChange={(input) => setInputValue(input)}
+      onInputChange={(input) => {
+        setInputValue(input);
+      }}
       onKeyDown={handleKeyDown}
       onChange={handleChange}
       value={selectedOptions}

@@ -113,7 +113,7 @@ export const getUrls = gql`
       user_id
       totalRequestCount
       tags {
-        id
+        _id
         value
         label
       }

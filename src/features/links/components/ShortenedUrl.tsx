@@ -138,7 +138,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                   >
                     {/* Modal content goes here */}
 
-                    <EditLinkForm oldData={transformedData} />
+                    <EditLinkForm oldData={transformedData} setIsModalOpen={setIsModalOpen} />
                     <button
                       className=" absolute top-4 right-4 text-3xl"
                       onClick={() => setIsModalOpen(false)}
