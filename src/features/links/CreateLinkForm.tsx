@@ -110,7 +110,7 @@ function CreateLinkForm() {
               />
               {backHalfFormatWarning && (
                 <p className="text-red-500 mt-2">
-                  Please enter check that back-half didn't contain any spaces .
+                  Please check that back-half didn't contain any spaces .
                 </p>
               )}
             </div>
