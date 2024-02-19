@@ -112,7 +112,7 @@ function CreateLinkForm() {
               />
               {backHalfFormatWarning && (
                 <p className="text-red-500 mt-2">
-                  Please enter check that back-half didn't contain any spaces .
+                  Please check that back-half didn't contain any spaces .
                 </p>
               )}
             </div>
@@ -129,7 +129,7 @@ function CreateLinkForm() {
           <button
             onClick={handleClick}
             disabled={isButtonDisabled || isPending || backHalfFormatWarning}
-            className={`btn-primary flex items-center gap1 ${
+            className={`btn-primary flex items-center gap1 disabled:cursor-not-allowed ${
               isButtonDisabled ? "opacity-50" : ""
             }`}
           >
