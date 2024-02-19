@@ -1,4 +1,3 @@
-
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
@@ -11,23 +10,24 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
   const [title, setTitle] = useState(oldData.title);
   const [back_half, setBackhalf] = useState(oldData.back_half);
   // const { shortenUrl, isPending } = useShorterUrl();
+
+  const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { user } = useUser();
-  const oldTags = oldData.tags
+  const oldTags = oldData.tags;
   const [tags, setTags] = useState(oldTags);
   // if(isLoading ) return Loader
   const userId = user?.id as string;
 
-  const {updateUrl, isPending: isUpdating} = useUpdateLink()
+  const { updateUrl, isPending: isUpdating } = useUpdateLink();
   async function handleClick() {
-    const id = oldData.id
+    const id = oldData.id;
     const oldTagsIds = tags.map((tag: any) => tag._id || tag.value);
     console.log({ id, title, back_half, oldTagsIds });
     if (userId) {
       updateUrl({ id, title, back_half, tags: oldTagsIds });
     }
-    setIsModalOpen(false)
+    setIsModalOpen(false);
   }
-  
 
   // const handleUrlBlur = () => {
   //   let updatedUrl = url.trim();
@@ -45,13 +45,13 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;
 
-    // const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
-
-    // setBackHalfFormatWarning(true);
-    setBackhalf(newBackHalf);
-    // if (!backHalfRegex.test(newBackHalf)) {
-    // } else {
-    // }
+    const backHalfRegex = /^\S*$/;
+    setBackHalfFormatWarning(false);
+    if (!backHalfRegex.test(newBackHalf)) {
+      setBackHalfFormatWarning(true);
+    } else {
+      setBackhalf(newBackHalf);
+    }
   };
 
   const domainName = DOMAIN_NAME;
@@ -110,6 +110,11 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
                 defaultValue={oldData.back_half}
                 onChange={handleBackHalfChange}
               />
+              {backHalfFormatWarning && (
+                <p className="text-red-500 mt-2">
+                  Please check that back-half didn't contain any spaces .
+                </p>
+              )}
             </div>
           </div>
           <div>
@@ -123,8 +128,8 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
           </Link> */}
           <button
             onClick={handleClick}
-            // disabled={isUpdating}
-            className={`btn-primary flex items-center gap1 ${
+            disabled={isUpdating || backHalfFormatWarning}
+            className={`btn-primary flex items-center gap1 disabled:opacity-60 disabled:cursor-not-allowed ${
               isUpdating ? "opacity-50" : ""
             }`}
           >
