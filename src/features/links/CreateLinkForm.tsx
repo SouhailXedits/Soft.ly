@@ -12,7 +12,7 @@ function CreateLinkForm() {
   const [back_half, setBackhalf] = useState("");
   const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { shortenUrl, isPending } = useShorterUrl();
-  const isButtonDisabled = url === "";
+  const isButtonDisabled = url === "" || backHalfFormatWarning;
   const { user} = useUser()
   const [tags, setTags] = useState([]);
   console.log(tags)
@@ -42,14 +42,14 @@ function CreateLinkForm() {
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;
 
-    // const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
-
+    const backHalfRegex = /^\S*$/;
+;
     setBackHalfFormatWarning(false);
-    // setBackHalfFormatWarning(true);
-    setBackhalf(newBackHalf);
-    // if (!backHalfRegex.test(newBackHalf)) {
-    // } else {
-    // }
+    if (!backHalfRegex.test(newBackHalf)) {
+      setBackHalfFormatWarning(true);
+    } else {
+      setBackhalf(newBackHalf);
+    }
   };
 
   const domainName = DOMAIN_NAME
@@ -112,8 +112,7 @@ function CreateLinkForm() {
               />
               {backHalfFormatWarning && (
                 <p className="text-red-500 mt-2">
-                  Please enter a valid back-half with a maximum length of 10
-                  alphanumeric characters.
+                  Please enter check that back-half didn't contain any spaces .
                 </p>
               )}
             </div>
@@ -129,7 +128,7 @@ function CreateLinkForm() {
           </Link>
           <button
             onClick={handleClick}
-            disabled={isButtonDisabled || isPending}
+            disabled={isButtonDisabled || isPending || backHalfFormatWarning}
             className={`btn-primary flex items-center gap1 ${
               isButtonDisabled ? "opacity-50" : ""
             }`}
