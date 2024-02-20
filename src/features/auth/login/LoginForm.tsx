@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
+// import React, { useEffect } from "react";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import { useLogin } from "./useLogin";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
-import Loader from "../../../ui/Loader";
+// import Loader from "../../../ui/Loader";
 import { LoginFormValues } from "../../../types";
+// import Loader from "@/ui/Loader";
 
 // interface LoginFormValues {
 //   email: string;
@@ -15,16 +17,10 @@ const LoginForm: React.FC = () => {
   const { login, isPending: loggingIn } = useLogin();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useUser();
-  console.log(isAuthenticated);
+  
 
-  useEffect(
-    function () {
-      if (isAuthenticated && !isLoading) navigate("/");
-    },
-    [isAuthenticated, isLoading, navigate]
-  );
 
-  if (isLoading) return <Loader />;
+  if (isAuthenticated && !isLoading) navigate("/");
 
   const initialValues: LoginFormValues = {
     email: "",
@@ -36,7 +32,12 @@ const LoginForm: React.FC = () => {
     { setSubmitting }: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      login(values);
+      const {email, password} = values ;
+      const userData = {
+        email: email.trim(),
+        password: password
+      }
+      login(userData);
     } catch (error) {
       console.error("Login failed", error);
     } finally {
@@ -51,7 +52,7 @@ const LoginForm: React.FC = () => {
           <div>
             <div className=" mb-3">
               <img
-                src="/logo.png"
+                src="/logo-taki.png"
                 alt=" logo softly"
                 className="w-[10rem]"
               />

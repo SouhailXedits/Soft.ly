@@ -11,7 +11,6 @@ function NavigLink({
   onClick?: () => void;
 }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  console.log(isMobile);
 
   const baseNavLink = (
     <NavLink

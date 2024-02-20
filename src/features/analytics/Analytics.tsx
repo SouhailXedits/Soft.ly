@@ -8,6 +8,7 @@ import { getClicksData } from "../../services/apiLinks";
 import { useUser } from "../auth/useUser";
 import { useQuery } from "@tanstack/react-query";
 import { getRandomColor } from "../../utils/helpers";
+import LineChartComp from "./components/LineChartComp";
 
 const Analytics: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
@@ -30,7 +31,6 @@ const Analytics: React.FC = () => {
       </div>
     );
 
-  console.log(analyticsData);
 
   const devicesObj = analyticsData?.count?.devices;
   let devicesClicks: {
@@ -77,12 +77,20 @@ const Analytics: React.FC = () => {
     }));
   }
 
-  const countryCodes = analyticsData?.count?.country_code || {};
-  console.log(countryCodes);
+  // const countryCodes = analyticsData?.count?.country_code || {};
+
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
+  const fakeData = [
+    { name: "12/11", value: 12 },
+    { name: "12/12", value: 4 },
+    { name: "12/13", value: 6 },
+    { name: "12/14", value: 7 },
+    { name: "12/15", value: 9 },
+    { name: "12/16", value: 3 },
+  ];
 
   const renderChart = (chartComponent: React.ReactNode, filterby: string) => (
     <div className="flex bg-white p-6 rounded-xl flex-col">
@@ -144,12 +152,12 @@ const Analytics: React.FC = () => {
               "total clicks"
             )}
 
-            {/* {renderChart(
+            {renderChart(
               <div className="pt-5 mt-5">
-                <LineChartComp data={data} />
+                <LineChartComp data={fakeData} />
               </div>,
               "over time"
-            )} */}
+            )}
             {/* 
             {renderChart(
               <div className="flex flex-col gap-2 mt-6">

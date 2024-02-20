@@ -3,24 +3,23 @@ import { useEffect } from "react";
 import { useUser } from "../features/auth/useUser";
 import Loader from "./Loader";
 
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
 
-function ProtectedRoute({ children }: {children: React.ReactNode}) {
-  const navigate = useNavigate()
+  const { isLoading, isAuthenticated } = useUser();
   
-  const { isLoading  , isAuthenticated } = useUser();
-  useEffect(
-    function () {
-      if (!isAuthenticated) navigate("/login");
-    },
-    [isAuthenticated, navigate]
-  );
 
-  if (isLoading)
-    return (
+  useEffect(() => {
+    const redirectTimeout = setTimeout(() => {
+      if (!isAuthenticated) {
+        navigate("/login");
+      }
+    }, 1000);
 
-        <Loader />
+    return () => clearTimeout(redirectTimeout);
+  }, [isAuthenticated, navigate]);
+  if (isLoading) return <Loader />;
 
-    );
   if (isAuthenticated) return children;
 }
 
