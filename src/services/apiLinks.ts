@@ -229,6 +229,7 @@ export const updateUrl = async (urlData: {
   tags?: any;
   title?: string;
   back_half?: string;
+  longUrl?: string;
 }) => {
   try {
     console.log(urlData);
@@ -241,13 +242,14 @@ export const updateUrl = async (urlData: {
       },
       body: JSON.stringify({
         query: `
-            mutation UpdateUrls($id: String!, $tags: [String!], $title: String, $back_half: String) {
+            mutation UpdateUrls($id: String!, $tags: [String!], $title: String, $back_half: String, $longUrl: String) {
               updateUrls(
                   updateUrlsInput: {
                       urlsId: $id,
                       title: $title,
                       back_half: $back_half,
                       tags: $tags,
+                      longUrl: $longUrl
                   }
               ) {
                   id
@@ -266,13 +268,12 @@ export const updateUrl = async (urlData: {
         variables: {
           id: urlData.id,
           tags: urlData.tags || [],
-          title: urlData.title ,
-          back_half: urlData.back_half ,
+          title: urlData.title,
+          back_half: urlData.back_half,
+          longUrl: urlData.longUrl,
         },
-        
       }),
     });
-    
 
     const data = await response.json();
     console.log(data);

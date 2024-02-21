@@ -1,4 +1,3 @@
-
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
@@ -10,26 +9,26 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
   // console.log(oldData);
   const [title, setTitle] = useState(oldData.title);
   const [back_half, setBackhalf] = useState(oldData.back_half);
+  const [longUrl, setUrl] = useState(oldData.longUrl);
   // const { shortenUrl, isPending } = useShorterUrl();
 
   const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { user } = useUser();
-  const oldTags = oldData.tags
+  const oldTags = oldData.tags;
   const [tags, setTags] = useState(oldTags);
   // if(isLoading ) return Loader
   const userId = user?.id as string;
 
-  const {updateUrl, isPending: isUpdating} = useUpdateLink()
+  const { updateUrl, isPending: isUpdating } = useUpdateLink();
   async function handleClick() {
-    const id = oldData.id
+    const id = oldData.id;
     const oldTagsIds = tags.map((tag: any) => tag._id || tag.value);
     console.log({ id, title, back_half, oldTagsIds });
     if (userId) {
-      updateUrl({ id, title, back_half, tags: oldTagsIds });
+      updateUrl({ id, title, back_half, tags: oldTagsIds, longUrl });
     }
-    setIsModalOpen(false)
+    setIsModalOpen(false);
   }
-  
 
   // const handleUrlBlur = () => {
   //   let updatedUrl = url.trim();
@@ -67,9 +66,10 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
             className="form-input"
             type="text"
             placeholder="https://example.com/my-long-url"
-            value={oldData.longUrl}
-            disabled
-            // onChange={(e) => setUrl(e.target.value)}
+            defaultValue={oldData.longUrl}
+            // value={oldData.longUrl}
+            // disabled
+            onChange={(e) => setUrl(e.target.value)}
           />
 
           <h1 className=" text-xl font-bold mt-6 mb-2">Code details</h1>

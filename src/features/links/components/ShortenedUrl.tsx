@@ -205,6 +205,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
             <div className=" flex items-center gap-1">
               <span className=" break-keep">tags :</span>
               <div className=" max-w-[400px] flex gap-1 flex-wrap">
+
                 {link.tags?.map((tag: any) => (
                   <p key={tag.id} className=" bg-stone-200 px-1 rounded">
                     {tag.label}

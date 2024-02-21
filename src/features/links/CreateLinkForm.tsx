@@ -13,15 +13,15 @@ function CreateLinkForm() {
   const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { shortenUrl, isPending } = useShorterUrl();
   const isButtonDisabled = url === "" || backHalfFormatWarning;
-  const { user} = useUser()
+  const { user } = useUser();
   const [tags, setTags] = useState([]);
-  console.log(tags)
+  console.log(tags);
   // if(isLoading ) return Loader
-  const userId = user?.id as string
+  const userId = user?.id as string;
   async function handleClick() {
-    const tagsIds = tags.map((tag: any) => tag._id || tag.value)
-    console.log(tagsIds)
-    if(userId) {
+    const tagsIds = tags.map((tag: any) => tag._id || tag.value);
+    console.log(tagsIds);
+    if (userId) {
       shortenUrl({ url, title, userId, back_half, tags: tagsIds });
     }
   }
@@ -43,7 +43,6 @@ function CreateLinkForm() {
     const newBackHalf = e.target.value;
 
     const backHalfRegex = /^\S*$/;
-;
     setBackHalfFormatWarning(false);
     if (!backHalfRegex.test(newBackHalf)) {
       setBackHalfFormatWarning(true);
@@ -52,8 +51,7 @@ function CreateLinkForm() {
     }
   };
 
-  const domainName = DOMAIN_NAME
-
+  const domainName = DOMAIN_NAME;
 
   return (
     <div className="flex bg-white min-h-screen px-12 py-7 justify-center">
