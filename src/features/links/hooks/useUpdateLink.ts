@@ -15,8 +15,8 @@ export function useUpdateLink() {
   const navigate = useNavigate();
 
   const { mutate: updateUrl, isPending } = useMutation({
-    mutationFn: ({ id, title, back_half, tags }: updateUrlInput) =>
-      updateUrlApi({ id, title, back_half, tags }),
+    mutationFn: ({ id, title, back_half, tags, longUrl }: updateUrlInput) =>
+      updateUrlApi({ id, title, back_half, tags, longUrl }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["urls"],
