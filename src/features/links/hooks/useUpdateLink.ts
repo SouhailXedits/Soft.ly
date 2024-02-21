@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getShorterUrl } from "../../../services/apiLinks";
+import {  updateUrl  as updateUrlApi } from "../../../services/apiLinks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { getShorterUrlParams } from "../../../types";
+import { updateUrlInput } from "../../../types";
 
 // interface getShorterUrlParams {
 //   url: string;
@@ -10,24 +10,24 @@ import { getShorterUrlParams } from "../../../types";
 //   userId: string;
 //   back_half: string;
 // }
-export function useShorterUrl() {
+export function useUpdateLink() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { mutate: shortenUrl, isPending } = useMutation({
-    mutationFn: ({ url, title, userId, back_half, tags }: getShorterUrlParams) =>
-      getShorterUrl({ longUrl: url, title, userId, back_half, tags }),
+  const { mutate: updateUrl, isPending } = useMutation({
+    mutationFn: ({ id, title, back_half, tags, longUrl }: updateUrlInput) =>
+      updateUrlApi({ id, title, back_half, tags, longUrl }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["urls"],
       });
       navigate("/links", { replace: true });
-      toast.success("URL Shortened Successfully!");
+      toast.success("URL updated Successfully!");
     },
     onError: () => {
-      toast.error("Invalid link or you've exceed your limit ! 😢");
+      toast.error("error updating the url ! 😢");
     },
     retry: false,
   });
-  return { shortenUrl, isPending };
+  return { updateUrl, isPending };
 }

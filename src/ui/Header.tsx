@@ -17,7 +17,6 @@ export default function Header({ onToggleOpen }: SideBarProps) {
   const { user } = useUser();
   const firstLetter = user?.email?.charAt(0)?.toUpperCase();
   const handleShowProfileModal = () => {
-    
     setShowProfileModal((prevIsOpen) => !prevIsOpen);
   };
 

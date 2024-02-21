@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
+import AnimatedMulti from "@/ui/selects/MultiSelect";
 
 function CreateLinkForm() {
   const [url, setUrl] = useState("");
@@ -11,13 +12,17 @@ function CreateLinkForm() {
   const [back_half, setBackhalf] = useState("");
   const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { shortenUrl, isPending } = useShorterUrl();
-  const isButtonDisabled = url === "";
-  const { user} = useUser()
+  const isButtonDisabled = url === "" || backHalfFormatWarning;
+  const { user } = useUser();
+  const [tags, setTags] = useState([]);
+  console.log(tags);
   // if(isLoading ) return Loader
-  const userId = user?.id
+  const userId = user?.id as string;
   async function handleClick() {
-    if(userId) {
-      shortenUrl({ url, title, userId, back_half });
+    const tagsIds = tags.map((tag: any) => tag._id || tag.value);
+    console.log(tagsIds);
+    if (userId) {
+      shortenUrl({ url, title, userId, back_half, tags: tagsIds });
     }
   }
 
@@ -37,18 +42,16 @@ function CreateLinkForm() {
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;
 
-    // const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
-
+    const backHalfRegex = /^\S*$/;
     setBackHalfFormatWarning(false);
-    // setBackHalfFormatWarning(true);
-    setBackhalf(newBackHalf);
-    // if (!backHalfRegex.test(newBackHalf)) {
-    // } else {
-    // }
+    if (!backHalfRegex.test(newBackHalf)) {
+      setBackHalfFormatWarning(true);
+    } else {
+      setBackhalf(newBackHalf);
+    }
   };
 
-  const domainName = DOMAIN_NAME
-
+  const domainName = DOMAIN_NAME;
 
   return (
     <div className="flex bg-white min-h-screen px-12 py-7 justify-center">
@@ -107,11 +110,14 @@ function CreateLinkForm() {
               />
               {backHalfFormatWarning && (
                 <p className="text-red-500 mt-2">
-                  Please enter a valid back-half with a maximum length of 10
-                  alphanumeric characters.
+                  Please check that back-half didn't contain any spaces .
                 </p>
               )}
             </div>
+          </div>
+          <div>
+            <p className=" text-lg text-left pb-2">Tags : </p>
+            <AnimatedMulti userId={userId} setTags={setTags} tags={[]} />
           </div>
         </div>
         <div className=" sticky px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
@@ -120,8 +126,8 @@ function CreateLinkForm() {
           </Link>
           <button
             onClick={handleClick}
-            disabled={isButtonDisabled || isPending}
-            className={`btn-primary flex items-center gap1 ${
+            disabled={isButtonDisabled || isPending || backHalfFormatWarning}
+            className={`btn-primary flex items-center gap1 disabled:cursor-not-allowed ${
               isButtonDisabled ? "opacity-50" : ""
             }`}
           >

@@ -14,7 +14,7 @@ function CreateLinkForm() {
   const userId = user?.id
   async function handleClick() {
     if (userId) {
-      generateQr({ url, title, userId });
+      generateQr({ url, title, userId, tags: []});
     } else {
       console.error("User ID is undefined");
     }

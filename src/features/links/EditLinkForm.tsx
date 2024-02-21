@@ -1,25 +1,33 @@
-
-import { useShorterUrl } from "./hooks/useShortenLink";
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { useUser } from "../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
 import AnimatedMulti from "@/ui/selects/MultiSelect";
+import { useUpdateLink } from "./hooks/useUpdateLink";
 
-function EditLinkForm({ oldData }: any) {
-  console.log(oldData);
-  const [url, ] = useState("");
-  const [title, setTitle] = useState("");
-  const [back_half, setBackhalf] = useState("");
-  const { shortenUrl, isPending } = useShorterUrl();
-  const isButtonDisabled = url === "";
+function EditLinkForm({ oldData, setIsModalOpen }: any) {
+  // console.log(oldData);
+  const [title, setTitle] = useState(oldData.title);
+  const [back_half, setBackhalf] = useState(oldData.back_half);
+  const [longUrl, setUrl] = useState(oldData.longUrl);
+  // const { shortenUrl, isPending } = useShorterUrl();
+
+  const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { user } = useUser();
+  const oldTags = oldData.tags;
+  const [tags, setTags] = useState(oldTags);
   // if(isLoading ) return Loader
-  const userId = user?.id;
+  const userId = user?.id as string;
+
+  const { updateUrl, isPending: isUpdating } = useUpdateLink();
   async function handleClick() {
+    const id = oldData.id;
+    const oldTagsIds = tags.map((tag: any) => tag._id || tag.value);
+    console.log({ id, title, back_half, oldTagsIds });
     if (userId) {
-      shortenUrl({ url, title, userId, back_half });
+      updateUrl({ id, title, back_half, tags: oldTagsIds, longUrl });
     }
+    setIsModalOpen(false);
   }
 
   // const handleUrlBlur = () => {
@@ -38,13 +46,13 @@ function EditLinkForm({ oldData }: any) {
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;
 
-    // const backHalfRegex = /^[a-zA-Z0-9]{0,10}$/;
-
-    // setBackHalfFormatWarning(true);
-    setBackhalf(newBackHalf);
-    // if (!backHalfRegex.test(newBackHalf)) {
-    // } else {
-    // }
+    const backHalfRegex = /^\S*$/;
+    setBackHalfFormatWarning(false);
+    if (!backHalfRegex.test(newBackHalf)) {
+      setBackHalfFormatWarning(true);
+    } else {
+      setBackhalf(newBackHalf);
+    }
   };
 
   const domainName = DOMAIN_NAME;
@@ -58,9 +66,10 @@ function EditLinkForm({ oldData }: any) {
             className="form-input"
             type="text"
             placeholder="https://example.com/my-long-url"
-            value={oldData.longUrl}
-            disabled
-            // onChange={(e) => setUrl(e.target.value)}
+            defaultValue={oldData.longUrl}
+            // value={oldData.longUrl}
+            // disabled
+            onChange={(e) => setUrl(e.target.value)}
           />
 
           <h1 className=" text-xl font-bold mt-6 mb-2">Code details</h1>
@@ -68,7 +77,7 @@ function EditLinkForm({ oldData }: any) {
           <input
             className="form-input"
             type="text"
-            defaultValue={title}
+            defaultValue={oldData.title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <h1 className=" text-2xl font-bold mt-4 pt-6 border-t-2 ">
@@ -100,14 +109,19 @@ function EditLinkForm({ oldData }: any) {
               <input
                 type="text"
                 className="form-input w-full"
-                defaultValue={back_half}
+                defaultValue={oldData.back_half}
                 onChange={handleBackHalfChange}
               />
+              {backHalfFormatWarning && (
+                <p className="text-red-500 mt-2">
+                  Please check that back-half didn't contain any spaces .
+                </p>
+              )}
             </div>
           </div>
           <div>
             <p className=" text-lg text-left pb-2">Tags : </p>
-            <AnimatedMulti />
+            <AnimatedMulti tags={tags} userId={userId} setTags={setTags} />
           </div>
         </div>
         <div className="px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
@@ -116,9 +130,9 @@ function EditLinkForm({ oldData }: any) {
           </Link> */}
           <button
             onClick={handleClick}
-            disabled={isButtonDisabled || isPending}
-            className={`btn-primary flex items-center gap1 ${
-              isButtonDisabled ? "opacity-50" : ""
+            disabled={isUpdating || backHalfFormatWarning}
+            className={`btn-primary flex items-center gap1 disabled:opacity-60 disabled:cursor-not-allowed ${
+              isUpdating ? "opacity-50" : ""
             }`}
           >
             Edit Short Link <BsArrowRight />

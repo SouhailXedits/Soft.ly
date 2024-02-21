@@ -34,6 +34,19 @@ function LinksLayout() {
     },
   });
 
+  const allUrls = data?.getUrlsWithUserId.reverse() || ([] as any);
+  console.log(allUrls);
+  // let sorted = [] as any;
+
+  // const sorted = allUrls.sort(
+  //   (a: any, b: any) =>
+  //     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  // );
+  // console.log(sorted);
+
+  // const reversedUrlsArray = allUrls.reverse();
+  // console.log(reversedUrlsArray);
+
   const [filteredUrls, setFilteredUrls] = useState<any[]>([]);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
 
@@ -54,7 +67,7 @@ function LinksLayout() {
     }
   }, [data, filters, isFilterApplied]);
   // console.log(filters)
-  console.log(data)
+  console.log(data);
   // const {data: urlData} = useQuery({
   //   queryKey: []
   // })
@@ -161,7 +174,7 @@ function LinksLayout() {
       )}
 
       {sorted?.length !== 0 &&
-        filteredUrls.map(
+        sorted?.map(
           (Newlink: {
             id: number;
             created_at: string;
@@ -170,6 +183,7 @@ function LinksLayout() {
             title: string;
             iconFilePath: string;
             totalRequestCount: string;
+            tags: any;
           }) => (
             <ShortenedUrl
               link={Newlink}
@@ -197,7 +211,6 @@ function LinksLayout() {
       <Link className="btn-primary" to="/links/create">
         Create a short link
       </Link>
-      <span>Learn more</span>
     </div>
   );
 }
