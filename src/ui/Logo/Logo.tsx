@@ -3,7 +3,7 @@ function Logo({ isCollapsed }: { isCollapsed: boolean }) {
     <div>
       <img
         className={` ${isCollapsed ? " w-[32px]" : "w-[150px]"}  m-3`}
-        src={isCollapsed ? "/collapsed-logo.png" : `/logo.png`}
+        src={isCollapsed ? "/logo-taki-collapsed.png" : `/logo-taki.png`}
         alt="softly logo"
       />
     </div>

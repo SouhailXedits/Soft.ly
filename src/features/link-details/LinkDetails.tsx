@@ -5,12 +5,11 @@ import BarChartComp from "./components/BarChartComp";
 import CountryRow from "./components/CountryRow";
 // import WorldMap from "./components/WorldMap";
 import { getClicksDataByUrl, getUrl } from "../../services/apiLinks";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getRandomColor } from "../../utils/helpers";
 import { Link, useSearchParams } from "react-router-dom";
 import { GQL_API_LINK } from "@/config";
 import request from "graphql-request";
-import { ApiResponse } from "@/types";
 import ShorenedUrl from "../links/components/ShortenedUrl";
 
 const LinkDetails: React.FC = () => {
