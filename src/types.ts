@@ -58,7 +58,8 @@ export interface updateUrlInput {
   id: string;
   title?: string;
   back_half?: string;
-  tags?: any
+  tags?: any;
+  longUrl?: string;
 }
 
 export type QrRowProps = {

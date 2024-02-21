@@ -122,7 +122,7 @@ export const getUrls = gql`
 `;
 
 export const getUrl = gql`
-  query Urls {
+  query Urls($id: String!) {
     urls(id: $id) {
       id
       created_at
@@ -130,7 +130,16 @@ export const getUrl = gql`
       shortUrl
       title
       qr_image_url
+      back_half
+      qr_image_svg
+      iconFilePath
       user_id
+      totalRequestCount
+      tags {
+        _id
+        value
+        label
+      }
     }
   }
 `;
@@ -229,6 +238,7 @@ export const updateUrl = async (urlData: {
   tags?: any;
   title?: string;
   back_half?: string;
+  longUrl?: string;
 }) => {
   try {
     console.log(urlData);
@@ -241,13 +251,14 @@ export const updateUrl = async (urlData: {
       },
       body: JSON.stringify({
         query: `
-            mutation UpdateUrls($id: String!, $tags: [String!], $title: String, $back_half: String) {
+            mutation UpdateUrls($id: String!, $tags: [String!], $title: String, $back_half: String, $longUrl: String) {
               updateUrls(
                   updateUrlsInput: {
                       urlsId: $id,
                       title: $title,
                       back_half: $back_half,
                       tags: $tags,
+                      longUrl: $longUrl
                   }
               ) {
                   id
@@ -266,13 +277,12 @@ export const updateUrl = async (urlData: {
         variables: {
           id: urlData.id,
           tags: urlData.tags || [],
-          title: urlData.title ,
-          back_half: urlData.back_half ,
+          title: urlData.title,
+          back_half: urlData.back_half,
+          longUrl: urlData.longUrl,
         },
-        
       }),
     });
-    
 
     const data = await response.json();
     console.log(data);
