@@ -4,16 +4,34 @@ import PieChartComp from "./components/PieChartComp";
 import BarChartComp from "./components/BarChartComp";
 import CountryRow from "./components/CountryRow";
 // import WorldMap from "./components/WorldMap";
-import { getClicksDataByUrl } from "../../services/apiLinks";
-import { useQuery } from "@tanstack/react-query";
+import { getClicksDataByUrl, getUrl } from "../../services/apiLinks";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRandomColor } from "../../utils/helpers";
 import { Link, useSearchParams } from "react-router-dom";
+import { GQL_API_LINK } from "@/config";
+import request from "graphql-request";
+import { ApiResponse } from "@/types";
+import ShorenedUrl from "../links/components/ShortenedUrl";
 
 const LinkDetails: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
   const [searchParams] = useSearchParams();
   const urlId = searchParams.get("id");
+  // const queryClient = useQueryClient()
+  const { data, isPending } = useQuery<any>({
+    queryKey: ["url", urlId],
+    queryFn: async ({ queryKey }) => {
+      const [, id] = queryKey; // Destructure the queryKey
+      const getUrlQuery = getUrl;
 
+      return request(GQL_API_LINK, getUrlQuery, {
+        id: id, // Pass the variable as expected by the operation
+      });
+    },
+  }) ;
+
+
+  console.log(data);
 
   const { data: analyticsData } = useQuery({
     queryKey: ["url-analytics"],
@@ -83,12 +101,11 @@ const LinkDetails: React.FC = () => {
           <BsThreeDots />
         </button> */}
       </div>
-      <div className=" w-full self-center overflow-auto ">
-
-          {chartComponent}
-      </div>
+      <div className=" w-full self-center overflow-auto ">{chartComponent}</div>
     </div>
   );
+
+  const link = data?.urls[0];
 
   return (
     <div className="p-5 flex flex-col items-center">
@@ -99,6 +116,13 @@ const LinkDetails: React.FC = () => {
           </Link>
         </div>
         <div className="flex flex-col w-full">
+          <div>
+            {!isPending && <ShorenedUrl
+              link={link}
+              isSelected={false}
+              onSelect={() => console.log()}
+            />}
+          </div>
           <div className="flex flex-col gap-5">
             {/* <div className="flex bg-white p-6 rounded-xl flex-col">
               <div className="flex gap-2 items-center justify-between">
@@ -198,12 +222,14 @@ const LinkDetails: React.FC = () => {
                     <p>Click + Scan</p>
                     {/* <p>%</p> */}
                   </div>
-                  {activeTab === "cities" ? 
-                  citiesClicks?.map((country) => (
-                    <CountryRow key={country.id} country={country} />
-                  )) : countriesClicks?.map((country) => (
-                    <CountryRow key={country.id} country={country} />))}
-                  
+                  {activeTab === "cities"
+                    ? citiesClicks?.map((country) => (
+                        <CountryRow key={country.id} country={country} />
+                      ))
+                    : countriesClicks?.map((country) => (
+                        <CountryRow key={country.id} country={country} />
+                      ))}
+
                   {/* <DataRow data={data}/> */}
                 </div>
               </div>,

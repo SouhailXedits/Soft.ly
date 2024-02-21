@@ -122,7 +122,7 @@ export const getUrls = gql`
 `;
 
 export const getUrl = gql`
-  query Urls {
+  query Urls($id: String!) {
     urls(id: $id) {
       id
       created_at
@@ -130,7 +130,16 @@ export const getUrl = gql`
       shortUrl
       title
       qr_image_url
+      back_half
+      qr_image_svg
+      iconFilePath
       user_id
+      totalRequestCount
+      tags {
+        _id
+        value
+        label
+      }
     }
   }
 `;
