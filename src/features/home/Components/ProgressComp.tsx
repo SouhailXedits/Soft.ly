@@ -8,14 +8,13 @@ import { useEffect, useState } from "react";
 
 function ProgressComp() {
   const { user } = useUser();
-  // const userId =
   const [userId, setUserId] = useState(user?.id ?? "");
 
   useEffect(() => {
     if (user) {
       setUserId(user.id);
     }
-  });
+  }, []);
 
   const { data, error } = useQuery<ApiResponse>({
     queryKey: ["urls", { user_id: userId }],
