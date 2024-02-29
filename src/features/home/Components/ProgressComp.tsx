@@ -1,21 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { useUser } from "../../auth/useUser";
-import { ApiResponse } from "../../../types";
 import request from "graphql-request";
 import { GQL_API_LINK } from "../../../config";
 import { getUrls } from "../../../services/apiLinks";
 import { useEffect, useState } from "react";
+import { ApiResponse } from "@/types/links";
 
 function ProgressComp() {
   const { user } = useUser();
-  // const userId =
   const [userId, setUserId] = useState(user?.id ?? "");
 
   useEffect(() => {
     if (user) {
       setUserId(user.id);
     }
-  });
+  }, []);
 
   const { data, error } = useQuery<ApiResponse>({
     queryKey: ["urls", { user_id: userId }],
@@ -36,7 +35,6 @@ function ProgressComp() {
 
   const maxUrls = user?.LinksCount as any;
   const usagePercentage = (allUrls.length / +maxUrls) * 100;
-
 
   return (
     <div className=" p-4 flex flex-col gap-2 bg-white rounded-lg">

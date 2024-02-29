@@ -3,7 +3,7 @@ import { gql } from "graphql-tag";
 import { client } from "../main";
 import request from "graphql-request";
 import { GQL_API_LINK } from "../config";
-import { LoginResult, ValidateTokenResult } from "../types";
+import { LoginResult, ValidateTokenResult } from "../types/auth";
 
 export async function signup({
   email,
@@ -32,7 +32,6 @@ export async function signup({
   }
 }
 
-
 export async function login({
   email,
   password,
@@ -40,13 +39,11 @@ export async function login({
   email: string;
   password: string;
 }) {
-  
-
   const mutation = gql`
     mutation LoginMutation($email: String!, $password: String!) {
       login(loginInput: { email: $email, password: $password }) {
         token
-        user{
+        user {
           id
           email
           role
@@ -67,11 +64,6 @@ export async function login({
   }
 }
 
-
-
-
-
-
 export async function getCurrentUser() {
   const getUserQuery = gql`
     query ValidateToken($jwt: String!) {
@@ -83,26 +75,23 @@ export async function getCurrentUser() {
       }
     }
   `;
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
   const variables = {
     jwt: token,
   };
   const data = await request<ValidateTokenResult>(
     GQL_API_LINK,
     getUserQuery,
-    variables,
+    variables
   );
-  console.log(data)
+  console.log(data);
 
   return data?.validateToken;
-  
 }
 
 export const getUser = gql`
   query ValidateToken {
-    validateToken(
-      jwt: $jwt
-    ) {
+    validateToken(jwt: $jwt) {
       id
       role
       email
@@ -110,11 +99,6 @@ export const getUser = gql`
   }
 `;
 
-
 export async function logout() {
-  localStorage.removeItem('token')
+  localStorage.removeItem("token");
 }
-
-
-
-

@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
-import PieChartComp from "./components/PieChartComp";
-import BarChartComp from "./components/BarChartComp";
-import CountryRow from "./components/CountryRow";
-// import WorldMap from "./components/WorldMap";
-import { getClicksDataByUrl, getUrl } from "../../services/apiLinks";
+import PieChartComp from "./PieChartComp";
+import BarChartComp from "./BarChartComp";
+import CountryRow from "./CountryRow";
+import { getClicksDataByUrl, getUrl } from "../../../services/apiLinks";
 import { useQuery } from "@tanstack/react-query";
-import { getRandomColor } from "../../utils/helpers";
 import { Link, useSearchParams } from "react-router-dom";
 import { GQL_API_LINK } from "@/config";
 import request from "graphql-request";
-import ShorenedUrl from "../links/components/ShortenedUrl";
+import ShorenedUrl from "../../links/components/ShortenedUrl";
+import { getCitiesClicks, getCountriesClicks, getDevicesObj, getReferresClicks } from "@/utils/extractData";
 
 const LinkDetails: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
@@ -20,69 +19,25 @@ const LinkDetails: React.FC = () => {
   const { data, isPending } = useQuery<any>({
     queryKey: ["url", urlId],
     queryFn: async ({ queryKey }) => {
-      const [, id] = queryKey; // Destructure the queryKey
+      const [, id] = queryKey;
       const getUrlQuery = getUrl;
 
       return request(GQL_API_LINK, getUrlQuery, {
-        id: id, // Pass the variable as expected by the operation
+        id: id,
       });
     },
-  }) ;
-
-
-  console.log(data);
+  });
 
   const { data: analyticsData } = useQuery({
     queryKey: ["url-analytics"],
     queryFn: () => getClicksDataByUrl(urlId),
   });
 
-  const devicesObj = analyticsData?.count?.devices;
-  let devicesClicks: {
-    id: number;
-    name: string;
-    value: number;
-    color: string;
-  }[] = [];
-  if (devicesObj) {
-    devicesClicks = Object.keys(devicesObj).map((device, index) => ({
-      id: index + 1,
-      name: device.toLowerCase(),
-      value: devicesObj[device],
-      color: getRandomColor(),
-    }));
-  }
+  const devicesClicks = getDevicesObj(analyticsData);
+  const referrersClicks = getReferresClicks(analyticsData);
+  const countriesClicks = getCountriesClicks(analyticsData);
+  const citiesClicks = getCitiesClicks(analyticsData);
 
-  const referrersObj = analyticsData?.count?.referrerDomains;
-  let referrersClicks: { id: number; name: string; value: number }[] = [];
-  if (referrersObj) {
-    referrersClicks = Object.keys(referrersObj).map((referrer, index) => ({
-      id: index + 1,
-      name: referrer.toLowerCase(),
-      value: referrersObj[referrer],
-    }));
-  }
-
-  const countriesObj = analyticsData?.count?.country_name;
-  let countriesClicks: { id: number; name: string; clicks: number }[] = [];
-  if (countriesObj) {
-    countriesClicks = Object.keys(countriesObj).map((country, index) => ({
-      id: index + 1,
-      name: country.toLowerCase(),
-      clicks: countriesObj[country],
-    }));
-  }
-  const citiesObj = analyticsData?.count?.Location;
-  let citiesClicks: { id: number; name: string; clicks: number }[] = [];
-  if (citiesObj) {
-    citiesClicks = Object.keys(citiesObj).map((city, index) => ({
-      id: index + 1,
-      name: city.toLowerCase(),
-      clicks: citiesObj[city],
-    }));
-  }
-
-  // const countryCodes = analyticsData?.count?.country_code || {};
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
@@ -116,11 +71,13 @@ const LinkDetails: React.FC = () => {
         </div>
         <div className="flex flex-col w-full">
           <div>
-            {!isPending && <ShorenedUrl
-              link={link}
-              isSelected={false}
-              onSelect={() => console.log()}
-            />}
+            {!isPending && (
+              <ShorenedUrl
+                link={link}
+                isSelected={false}
+                onSelect={() => console.log()}
+              />
+            )}
           </div>
           <div className="flex flex-col gap-5">
             {/* <div className="flex bg-white p-6 rounded-xl flex-col">

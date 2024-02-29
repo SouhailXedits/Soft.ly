@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
-import { useUser } from "../auth/useUser";
+import { useUser } from "../../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
 import AnimatedMulti from "@/ui/selects/MultiSelect";
-import { useUpdateLink } from "./hooks/useUpdateLink";
+import { useUpdateLink } from "./useUpdateLink";
 
 function EditLinkForm({ oldData, setIsModalOpen }: any) {
   // console.log(oldData);
