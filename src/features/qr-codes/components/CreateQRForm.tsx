@@ -9,7 +9,7 @@ function CreateLinkForm() {
   const [title, setTitle] = useState("");
   const { generateQr } = useGenerateQR();
 
-  const isButtonDisabled = url === "";
+  const isButtonDisabled = url.trim() === "";
   const { user } = useUser();
   const userId = user?.id;
   async function handleClick() {

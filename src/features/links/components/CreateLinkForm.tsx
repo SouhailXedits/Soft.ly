@@ -12,7 +12,7 @@ function CreateLinkForm() {
   const [back_half, setBackhalf] = useState("");
   const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { shortenUrl, isPending } = useShorterUrl();
-  const isButtonDisabled = url === "" || backHalfFormatWarning;
+  const isButtonDisabled = url.trim() === "" || backHalfFormatWarning;
   const { user } = useUser();
   const [tags, setTags] = useState([]);
   // if(isLoading ) return Loader
