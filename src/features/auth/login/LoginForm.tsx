@@ -5,7 +5,7 @@ import { useLogin } from "./useLogin";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 // import Loader from "../../../ui/Loader";
-import { LoginFormValues } from "../../../types";
+import { LoginFormValues } from "../../../types/auth";
 // import Loader from "@/ui/Loader";
 
 // interface LoginFormValues {
@@ -17,8 +17,6 @@ const LoginForm: React.FC = () => {
   const { login, isPending: loggingIn } = useLogin();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useUser();
-  
-
 
   if (isAuthenticated && !isLoading) navigate("/");
 
@@ -32,11 +30,11 @@ const LoginForm: React.FC = () => {
     { setSubmitting }: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      const {email, password} = values ;
+      const { email, password } = values;
       const userData = {
         email: email.trim(),
-        password: password
-      }
+        password: password,
+      };
       login(userData);
     } catch (error) {
       console.error("Login failed", error);
@@ -51,11 +49,7 @@ const LoginForm: React.FC = () => {
         <div className=" flex flex-col gap-4 justify-center items-center bg-gray-500 p-[80px] md:p-[30px] pt-5 rounded-bl-3xl rounded-tl-3xl md:rounded-bl-none md:rounded-tr-3xl">
           <div>
             <div className=" mb-3">
-              <img
-                src="/logo.png"
-                alt=" logo softly"
-                className="w-[10rem]"
-              />
+              <img src="/logo.png" alt=" logo softly" className="w-[10rem]" />
             </div>
             <h3 className=" text-2xl text-center font-bold text-gray-100 drop-shadow-lg">
               Sign in Now

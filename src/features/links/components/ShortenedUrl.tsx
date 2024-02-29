@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import CopyToClipboardButton from "../../../utils/CopyToClipBoard";
 import { useDeleteLink } from "../hooks/useDeleteLink";
 import { Link } from "react-router-dom";
-import { shortenedUrlProps } from "../../../types";
+import { shortenedUrlProps } from "../../../types/links";
 import EditLinkForm from "../hooks/EditLinkForm";
 
 const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
@@ -82,14 +82,12 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
     ? `${link.longUrl.slice(0, 30)} ${link.longUrl.length > 30 ? "..." : ""}`
     : link.longUrl;
 
-  console.log(link);
   const { tags: allTags } = link;
   const transformedTags = allTags.map((item: any) => ({
     ...item,
     value: item.id, // Replace the value property with the id property
   }));
   const transformedData = { ...link, tags: transformedTags };
-  console.log(transformedData);
 
   return (
     <div
@@ -135,8 +133,6 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                     ref={editmodalRef}
                     className="bg-white p-6 rounded-lg relative"
                   >
-                    {/* Modal content goes here */}
-
                     <EditLinkForm
                       oldData={transformedData}
                       setIsModalOpen={setIsModalOpen}
@@ -147,7 +143,6 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                     >
                       <BsX />
                     </button>
-                    {/* <button onClick={closeModal}>Close Modal</button> */}
                   </div>
                 </div>
               )}
@@ -198,9 +193,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
             <button className=" flex items-center gap-2">
               <BsBarChart /> Engagments : {link.totalRequestCount}
             </button>
-            {/* <button className="flex items-center gap-1">
-              <BsLockFill /> Scan data
-            </button> */}
+
             <div className=" flex items-center gap-1">
               <span className=" break-keep">tags :</span>
               <div className=" max-w-[400px] flex gap-1 flex-wrap">
@@ -211,9 +204,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                 ))}
               </div>
             </div>
-            {/* <button className="flex items-center gap-1">
-              <BsLockFill /> {link.totalRequestCount}
-            </button> */}
+
             <p className="flex items-center gap-1 ">
               <BsCalendar /> {formatDate(link.created_at)}
             </p>

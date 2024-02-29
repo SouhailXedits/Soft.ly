@@ -13,10 +13,9 @@ import {
 import { formatDate } from "../../../utils/helpers";
 import { useEffect, useRef, useState } from "react";
 import { useDeleteQR } from "../hooks/useDeleteQr";
-import { QrRowProps } from "../../../types";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-
+import { QrRowProps } from "@/types/analytics";
 
 const QrRow = ({ qr }: QrRowProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);

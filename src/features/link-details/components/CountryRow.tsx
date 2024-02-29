@@ -1,6 +1,5 @@
+import { DataCountry } from "@/types/analytics";
 
-
-import { DataCountry } from "../../../types";
 
 const CountryRow = ({ country }: DataCountry) => {
   return (

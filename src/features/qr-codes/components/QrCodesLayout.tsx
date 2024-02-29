@@ -5,7 +5,7 @@ import QrRow from "./QrRow";
 import request from "graphql-request";
 import { useUser } from "../../auth/useUser";
 import { GQL_API_LINK } from "../../../config";
-import { ApiResponse, UrlData } from "../../../types";
+import { ApiResponse, UrlData } from "../../../types/links";
 import { getUrls } from "@/services/apiLinks";
 
 function QRCodesLayout() {

@@ -4,20 +4,14 @@ import { useDeleteUsers } from "../useDeleteUsers";
 import EditUserModal from "./EditModal";
 import { useUpdateUser } from "../useUpdateUser";
 import { useUser } from "../../useUser";
-import { UserRowProps } from "@/types";
-
-
-
-
-
+import { UserRowProps } from "@/types/auth";
 
 function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const { deleteManyUsers, isDeleting } = useDeleteUsers();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const {updateUser} = useUpdateUser()
-
+  const { updateUser } = useUpdateUser();
 
   const modalRef = useRef<HTMLDivElement | null>(null);
   // console.log(modalRef);
@@ -69,13 +63,10 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
     closeModal();
   };
 
-
-
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
   };
-  const {id: userId } = user
-
+  const { id: userId } = user;
 
   const handleSaveEdit = async (data: {
     password?: string;
@@ -90,7 +81,7 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
       }
 
       newData.role = data.role;
-      newData.shortsLimits = data.shortsLimits
+      newData.shortsLimits = data.shortsLimits;
 
       // console.log({ id: userId, ...newData });
       updateUser({ id: userId, ...newData });
@@ -101,9 +92,8 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
     }
   };
 
-  const {user: curUser} = useUser();
+  const { user: curUser } = useUser();
   const isCurrentUser = curUser?.id === userId;
-
 
   return (
     <tr key={user.id}>
@@ -139,17 +129,18 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
                 aria-orientation="vertical"
                 aria-labelledby={`options-menu-${user.id}`}
               >
-                
-                { isCurrentUser ? '' : 
+                {isCurrentUser ? (
+                  ""
+                ) : (
                   <button
-                  onClick={handleDelete}
-                  disabled={isDeleting}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                  role="menuitem"
-                >
-                  Delete
-                </button> 
-                }
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Delete
+                  </button>
+                )}
                 <button
                   onClick={() => handleEdit()}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -161,17 +152,16 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
             </div>
           )}
         </div>
-      {isEditModalOpen && (
-        <EditUserModal
-          user = {user}
-          onClose={handleCloseEditModal}
-          onEdit={handleSaveEdit}
-        />
-      )}
+        {isEditModalOpen && (
+          <EditUserModal
+            user={user}
+            onClose={handleCloseEditModal}
+            onEdit={handleSaveEdit}
+          />
+        )}
       </td>
-      
     </tr>
   );
 }
 
-export default UserRow
+export default UserRow;
