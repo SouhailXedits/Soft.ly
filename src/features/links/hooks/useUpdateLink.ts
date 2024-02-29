@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {  updateUrl  as updateUrlApi } from "../../../services/apiLinks";
+import { updateUrl as updateUrlApi } from "../../../services/apiLinks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { updateUrlInput } from "../../../types";
+import { updateUrlInput } from "../../../types/links";
 
 // interface getShorterUrlParams {
 //   url: string;

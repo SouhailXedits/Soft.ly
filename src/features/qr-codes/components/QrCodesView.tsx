@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import QrRow from "./components/QrRow";
+import QrRow from "./QrRow";
 // import { useState } from "react";
 import request from "graphql-request";
-import { useUser } from "../auth/useUser";
-import { GQL_API_LINK } from "../../config";
-import { ApiResponse, UrlData } from "../../types";
+import { useUser } from "../../auth/useUser";
+import { GQL_API_LINK } from "../../../config";
+import { ApiResponse, UrlData } from "../../../types/links";
 import { getUrls } from "@/services/apiLinks";
 
-function LinksLayout() {
-  //const [showFilter, setShowFilter] = useState("active");
+function QRCodesLayout() {
   const { user } = useUser();
   const userId = user?.id;
   const { data } = useQuery<ApiResponse>({
@@ -18,7 +17,7 @@ function LinksLayout() {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const [, { user_id }] = queryKey;
-      const getUrlsQuery = getUrls
+      const getUrlsQuery = getUrls;
 
       return request(GQL_API_LINK, getUrlsQuery, {
         user_id,
@@ -28,32 +27,15 @@ function LinksLayout() {
   const allUrls = data?.getUrlsWithUserId || [];
   return (
     <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto h-screen">
-      {allUrls?.length !== 0 ? (
+      {allUrls?.length > 0 ? (
         <div className=" flex items-center justify-between w-full">
           <h2 className=" text-3xl font-bold ">QR Codes</h2>
-          {/* <div className="flex items-center gap-2">
-            <button
-              className=" flex items-center gap-1 rounded border p-2 disabled:opacity-60 disabled:cursor-not-allowed"
-              disabled
-            >
-              Export
-            </button>
-            <select
-              className="p-2.5 rounded"
-              value={showFilter}
-              onChange={(e) => setShowFilter(e.target.value)}
-            >
-              <option value="active">Active</option>
-              <option value="hidden">Hidden</option>
-              <option value="customized">Customized</option>
-            </select>
-          </div> */}
         </div>
       ) : (
         ""
       )}
 
-      {allUrls?.length !== 0 ? (
+      {allUrls?.length > 0 ? (
         allUrls?.map((qr: UrlData) => <QrRow key={qr.id} qr={qr} />)
       ) : (
         <>
@@ -78,4 +60,4 @@ function LinksLayout() {
   );
 }
 
-export default LinksLayout;
+export default QRCodesLayout;

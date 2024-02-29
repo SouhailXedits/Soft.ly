@@ -1,5 +1,3 @@
-
-
 import {
   BsThreeDots,
   // BsFillPencilFill,
@@ -17,19 +15,19 @@ import { useEffect, useRef, useState } from "react";
 import CopyToClipboardButton from "../../../utils/CopyToClipBoard";
 import { useDeleteLink } from "../hooks/useDeleteLink";
 import { Link } from "react-router-dom";
-import { shortenedUrlProps } from "../../../types";
-import EditLinkForm from "../EditLinkForm";
+import { shortenedUrlProps } from "../../../types/links";
+import EditLinkForm from "../hooks/EditLinkForm";
 
-const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
+const ShortenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);
-  const { deleteL, isPending } = useDeleteLink();
+  const { deletLink, isPending } = useDeleteLink();
   const [isOpenOptionsModal, setIsOpenOptionsModal] = useState(false);
   function toggleUrlCollapse() {
     setIsUrlCollapsed(!isUrlCollapsed);
   }
 
   function handleDelete() {
-    deleteL(String(link.id));
+    deletLink(String(link.id));
   }
 
   const handleOptionsModalOpen = () => {
@@ -56,13 +54,15 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
     };
   }, [isOpenOptionsModal]);
 
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const editmodalRef = useRef<any>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event:any) => {
-      if (editmodalRef.current && !editmodalRef.current.contains(event.target)) {
+    const handleClickOutside = (event: any) => {
+      if (
+        editmodalRef.current &&
+        !editmodalRef.current.contains(event.target)
+      ) {
         setIsModalOpen(false);
       }
     };
@@ -81,16 +81,13 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const shortenedUrl = isUrlCollapsed
     ? `${link.longUrl.slice(0, 30)} ${link.longUrl.length > 30 ? "..." : ""}`
     : link.longUrl;
-  
-  console.log(link);
-  const { tags:allTags } = link;
-  const transformedTags = allTags.map((item:any) => ({
+
+  const { tags: allTags } = link;
+  const transformedTags = allTags.map((item: any) => ({
     ...item,
     value: item.id, // Replace the value property with the id property
   }));
   const transformedData = { ...link, tags: transformedTags };
-  console.log(transformedData)
-  
 
   return (
     <div
@@ -136,8 +133,6 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                     ref={editmodalRef}
                     className="bg-white p-6 rounded-lg relative"
                   >
-                    {/* Modal content goes here */}
-
                     <EditLinkForm
                       oldData={transformedData}
                       setIsModalOpen={setIsModalOpen}
@@ -148,7 +143,6 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                     >
                       <BsX />
                     </button>
-                    {/* <button onClick={closeModal}>Close Modal</button> */}
                   </div>
                 </div>
               )}
@@ -199,13 +193,10 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
             <button className=" flex items-center gap-2">
               <BsBarChart /> Engagments : {link.totalRequestCount}
             </button>
-            {/* <button className="flex items-center gap-1">
-              <BsLockFill /> Scan data
-            </button> */}
+
             <div className=" flex items-center gap-1">
               <span className=" break-keep">tags :</span>
               <div className=" max-w-[400px] flex gap-1 flex-wrap">
-
                 {link.tags?.map((tag: any) => (
                   <p key={tag.id} className=" bg-stone-200 px-1 rounded">
                     {tag.label}
@@ -213,9 +204,7 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
                 ))}
               </div>
             </div>
-            {/* <button className="flex items-center gap-1">
-              <BsLockFill /> {link.totalRequestCount}
-            </button> */}
+
             <p className="flex items-center gap-1 ">
               <BsCalendar /> {formatDate(link.created_at)}
             </p>
@@ -226,4 +215,4 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   );
 };
 
-export default ShorenedUrl;
+export default ShortenedUrl;

@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { useGenerateQR } from "./hooks/useGenerateQR";
+import { useGenerateQR } from "../hooks/useGenerateQR";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { useUser } from "../auth/useUser";
+import { useUser } from "../../auth/useUser";
 
 function CreateLinkForm() {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const { generateQr } = useGenerateQR();
 
-  const isButtonDisabled = url === "";
-  const {user} = useUser()
-  const userId = user?.id
+  const isButtonDisabled = url.trim() === "";
+  const { user } = useUser();
+  const userId = user?.id;
   async function handleClick() {
     if (userId) {
-      generateQr({ url, title, userId, tags: []});
+      generateQr({ url, title, userId, tags: [] });
     } else {
       console.error("User ID is undefined");
     }

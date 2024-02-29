@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useShorterUrl } from "./hooks/useShortenLink";
+import { useShorterUrl } from "../hooks/useShortenLink";
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
-import { useUser } from "../auth/useUser";
+import { useUser } from "../../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
 import AnimatedMulti from "@/ui/selects/MultiSelect";
 
@@ -12,15 +12,13 @@ function CreateLinkForm() {
   const [back_half, setBackhalf] = useState("");
   const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
   const { shortenUrl, isPending } = useShorterUrl();
-  const isButtonDisabled = url === "" || backHalfFormatWarning;
+  const isButtonDisabled = url.trim() === "" || backHalfFormatWarning;
   const { user } = useUser();
   const [tags, setTags] = useState([]);
-  console.log(tags);
   // if(isLoading ) return Loader
   const userId = user?.id as string;
   async function handleClick() {
     const tagsIds = tags.map((tag: any) => tag._id || tag.value);
-    console.log(tagsIds);
     if (userId) {
       shortenUrl({ url, title, userId, back_half, tags: tagsIds });
     }

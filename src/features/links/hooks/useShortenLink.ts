@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getShorterUrl } from "../../../services/apiLinks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { getShorterUrlParams } from "../../../types";
+import { getShorterUrlParams } from "../../../types/links";
 
 // interface getShorterUrlParams {
 //   url: string;
@@ -15,7 +15,13 @@ export function useShorterUrl() {
   const navigate = useNavigate();
 
   const { mutate: shortenUrl, isPending } = useMutation({
-    mutationFn: ({ url, title, userId, back_half, tags }: getShorterUrlParams) =>
+    mutationFn: ({
+      url,
+      title,
+      userId,
+      back_half,
+      tags,
+    }: getShorterUrlParams) =>
       getShorterUrl({ longUrl: url, title, userId, back_half, tags }),
     onSuccess: () => {
       queryClient.invalidateQueries({

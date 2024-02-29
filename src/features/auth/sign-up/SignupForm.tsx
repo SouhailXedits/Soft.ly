@@ -4,10 +4,9 @@ import { useSignUp } from "./useSignup";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 import Loader from "../../../ui/Loader";
-import { LoginFormValues } from "../../../types";
 import { useQueryClient } from "@tanstack/react-query";
 import { BsArrowLeft } from "react-icons/bs";
-
+import { LoginFormValues } from "@/types/auth";
 
 const LoginForm: React.FC = () => {
   const queryClient = useQueryClient();
@@ -48,7 +47,9 @@ const LoginForm: React.FC = () => {
     <div className="flex bg-white min-h-screen justify-between">
       <div className=" flex flex-col justify-between w-full items-center">
         <div className="flex flex-col basis-[60%] px-5 py-10 gap-5 relative w-[80%] md:w-full">
-          <Link to='/users' className=" flex items-center gap-2 text-gray-500"><BsArrowLeft/> <span>Go back</span></Link>
+          <Link to="/users" className=" flex items-center gap-2 text-gray-500">
+            <BsArrowLeft /> <span>Go back</span>
+          </Link>
           <h1 className=" text-xl font-bold">Enter your user credantials</h1>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             <Form className=" flex flex-col gap-3">
@@ -81,14 +82,10 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
       <div className=" flex flex-col basis-[40%] items-center bg-gray-100 px-4 py-10 gap-7 sm:hidden">
-        <img
-          src="/default-user.png"
-          alt="default user image"
-        />
+        <img src="/default-user.png" alt="default user image" />
       </div>
     </div>
   );
-
 };
 
 export default LoginForm;
