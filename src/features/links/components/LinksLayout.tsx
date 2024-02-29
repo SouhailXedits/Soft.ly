@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import ShortenedUrl from "./components/ShortenedUrl";
+import ShortenedUrl from "./ShortenedUrl";
 import { request } from "graphql-request";
 
 import { useEffect, useRef, useState } from "react";
-import { useUser } from "../auth/useUser";
-import { GQL_API_LINK } from "../../config";
-import { getUrls } from "../../services/apiLinks";
-import { ApiResponse } from "../../types";
+import { useUser } from "../../auth/useUser";
+import { GQL_API_LINK } from "../../../config";
+import { getUrls } from "../../../services/apiLinks";
+import { ApiResponse, IShortenedUrl } from "../../../types/links";
 import { BsCalendar } from "react-icons/bs";
 import DateRangePicker from "@/ui/calendars/DateRangePicker";
 function LinksLayout() {
-  const [, setIsAllSelected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState<number[]>([]);
   const [filters, setFilters] = useState({
@@ -36,41 +35,25 @@ function LinksLayout() {
 
   const allUrls = data?.getUrlsWithUserId.reverse() || ([] as any);
   console.log(allUrls);
-  // let sorted = [] as any;
-
-  // const sorted = allUrls.sort(
-  //   (a: any, b: any) =>
-  //     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-  // );
-  // console.log(sorted);
-
-  // const reversedUrlsArray = allUrls.reverse();
-  // console.log(reversedUrlsArray);
 
   const [filteredUrls, setFilteredUrls] = useState<any[]>([]);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
 
   useEffect(() => {
     if (data && isFilterApplied) {
-      // Filter URLs based on date range
       const filteredData = data.getUrlsWithUserId.filter((url: any) => {
         const createdAt = new Date(url.created_at);
         const fromDate = new Date(filters.dateRange.from);
         const toDate = new Date(filters.dateRange.to);
-        // Adjusting the end date to include the full day
         toDate.setDate(toDate.getDate() + 1);
-        return createdAt >= fromDate && createdAt < toDate; // Use '<' instead of '<='
+        return createdAt >= fromDate && createdAt < toDate;
       });
       setFilteredUrls(filteredData);
     } else {
       setFilteredUrls(data?.getUrlsWithUserId || []);
     }
   }, [data, filters, isFilterApplied]);
-  // console.log(filters)
   console.log(data);
-  // const {data: urlData} = useQuery({
-  //   queryKey: []
-  // })
 
   const handleLinkSelection = (linkId: number) => {
     const updatedSelectedLinks = [...selectedLinks];
@@ -83,7 +66,6 @@ function LinksLayout() {
     }
 
     setSelectedLinks(updatedSelectedLinks);
-    setIsAllSelected(updatedSelectedLinks.length === filteredUrls?.length);
   };
 
   const handleFilterByDateClick = () => {
@@ -140,15 +122,10 @@ function LinksLayout() {
           {" "}
           <BsCalendar /> Filter By Created date
         </button>
-        {/* <button className=" p-2 border rounded flex items-center gap-1 bg-white">
-          {" "}
-          <BsCalendar /> Add filters
-        </button> */}
       </div>
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
           <div ref={modalRef} className="bg-white p-6 rounded-lg">
-            {/* Modal content goes here */}
             <h2>Filter by date :</h2>
             <DateRangePicker
               setdate={handleChangeDateRange}
@@ -160,12 +137,11 @@ function LinksLayout() {
             >
               apply filters
             </button>
-            {/* <button onClick={closeModal}>Close Modal</button> */}
           </div>
         </div>
       )}
 
-      {sorted?.length !== 0 ? (
+      {sorted?.length > 0 ? (
         <div className="flex items-center justify-between w-full ">
           <h2 className="text-3xl font-bold">Links</h2>
         </div>
@@ -173,26 +149,15 @@ function LinksLayout() {
         ""
       )}
 
-      {sorted?.length !== 0 &&
-        sorted?.map(
-          (Newlink: {
-            id: number;
-            created_at: string;
-            longUrl: string;
-            shortUrl: string;
-            title: string;
-            iconFilePath: string;
-            totalRequestCount: string;
-            tags: any;
-          }) => (
-            <ShortenedUrl
-              link={Newlink}
-              key={Newlink.id}
-              isSelected={selectedLinks.includes(Newlink.id)}
-              onSelect={handleLinkSelection}
-            />
-          )
-        )}
+      {sorted?.length > 0 &&
+        sorted?.map((Newlink: IShortenedUrl) => (
+          <ShortenedUrl
+            link={Newlink}
+            key={Newlink.id}
+            isSelected={selectedLinks.includes(Newlink.id)}
+            onSelect={handleLinkSelection}
+          />
+        ))}
       {sorted?.length === 0 && (
         <>
           <img

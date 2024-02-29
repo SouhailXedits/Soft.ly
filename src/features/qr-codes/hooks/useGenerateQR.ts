@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { getShorterUrl } from "../../../services/apiLinks";
-import { getShorterUrlParams } from "../../../types";
+import { getShorterUrlParams } from "../../../types/links";
 
 // interface GenerateQRParams {
 //   url: string;
@@ -17,7 +17,7 @@ import { getShorterUrlParams } from "../../../types";
 // }
 
 export function useGenerateQR() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { mutate: generateQr, isPending } = useMutation({

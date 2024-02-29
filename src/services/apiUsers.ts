@@ -1,6 +1,5 @@
 import { GQL_API_LINK } from "@/config";
-import { User } from "@/types";
-
+import { User } from "@/types/auth";
 
 export const deleteManyUsers = async (userIds: string[]) => {
   try {
@@ -35,8 +34,6 @@ export const deleteManyUsers = async (userIds: string[]) => {
     throw new Error("Failed to delete users");
   }
 };
-
-
 
 export const updateUser = async (userData: any) => {
   try {
@@ -78,15 +75,14 @@ export const updateUser = async (userData: any) => {
   }
 };
 
-
- export const fetchAllUsers = async () => {
-    const response = await fetch(GQL_API_LINK, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
+export const fetchAllUsers = async () => {
+  const response = await fetch(GQL_API_LINK, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
           query GetAllUser {
             getAllUser {
               id
@@ -96,9 +92,9 @@ export const updateUser = async (userData: any) => {
             }
           }
         `,
-      }),
-    });
-    const data = await response.json();
+    }),
+  });
+  const data = await response.json();
 
-    return data.data.getAllUser as User[];
-  };
+  return data.data.getAllUser as User[];
+};

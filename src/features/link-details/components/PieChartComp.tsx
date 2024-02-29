@@ -1,9 +1,16 @@
-import { Cell, Pie, PieChart, Legend, Tooltip, ResponsiveContainer } from "recharts";
-import { PieChartCompProps } from "../../../types";
+import {
+  Cell,
+  Pie,
+  PieChart,
+  Legend,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { PieChartCompProps } from "../../../types/analytics";
 
-const PieChartComp = ({data}:PieChartCompProps) => {
+const PieChartComp = ({ data }: PieChartCompProps) => {
   return (
-    <ResponsiveContainer width='100%' height={240}>
+    <ResponsiveContainer width="100%" height={240}>
       <PieChart width={730} height={250}>
         <Pie
           data={data}
@@ -17,7 +24,7 @@ const PieChartComp = ({data}:PieChartCompProps) => {
           label
         >
           {data.map((entry) => (
-            <Cell fill={entry.color} key={entry.value} stroke={entry.color}/>
+            <Cell fill={entry.color} key={entry.value} stroke={entry.color} />
           ))}
         </Pie>
         <Tooltip />
@@ -32,6 +39,6 @@ const PieChartComp = ({data}:PieChartCompProps) => {
       </PieChart>
     </ResponsiveContainer>
   );
-}
+};
 
 export default PieChartComp;

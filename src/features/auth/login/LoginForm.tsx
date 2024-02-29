@@ -5,7 +5,7 @@ import { useLogin } from "./useLogin";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../useUser";
 // import Loader from "../../../ui/Loader";
-import { LoginFormValues } from "../../../types";
+import { LoginFormValues } from "../../../types/auth";
 // import Loader from "@/ui/Loader";
 
 // interface LoginFormValues {
@@ -17,8 +17,6 @@ const LoginForm: React.FC = () => {
   const { login, isPending: loggingIn } = useLogin();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useUser();
-  
-
 
   if (isAuthenticated && !isLoading) navigate("/");
 
@@ -32,11 +30,11 @@ const LoginForm: React.FC = () => {
     { setSubmitting }: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      const {email, password} = values ;
+      const { email, password } = values;
       const userData = {
         email: email.trim(),
-        password: password
-      }
+        password: password,
+      };
       login(userData);
     } catch (error) {
       console.error("Login failed", error);
