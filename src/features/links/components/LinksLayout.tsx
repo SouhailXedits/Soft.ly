@@ -11,7 +11,6 @@ import { ApiResponse } from "../../../types";
 import { BsCalendar } from "react-icons/bs";
 import DateRangePicker from "@/ui/calendars/DateRangePicker";
 function LinksLayout() {
-  const [, setIsAllSelected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState<number[]>([]);
   const [filters, setFilters] = useState({
@@ -83,7 +82,6 @@ function LinksLayout() {
     }
 
     setSelectedLinks(updatedSelectedLinks);
-    setIsAllSelected(updatedSelectedLinks.length === filteredUrls?.length);
   };
 
   const handleFilterByDateClick = () => {
