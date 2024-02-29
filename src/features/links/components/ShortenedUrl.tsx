@@ -18,16 +18,16 @@ import { Link } from "react-router-dom";
 import { shortenedUrlProps } from "../../../types/links";
 import EditLinkForm from "../hooks/EditLinkForm";
 
-const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
+const ShortenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);
-  const { deleteL, isPending } = useDeleteLink();
+  const { deletLink, isPending } = useDeleteLink();
   const [isOpenOptionsModal, setIsOpenOptionsModal] = useState(false);
   function toggleUrlCollapse() {
     setIsUrlCollapsed(!isUrlCollapsed);
   }
 
   function handleDelete() {
-    deleteL(String(link.id));
+    deletLink(String(link.id));
   }
 
   const handleOptionsModalOpen = () => {
@@ -215,4 +215,4 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   );
 };
 
-export default ShorenedUrl;
+export default ShortenedUrl;

@@ -5,7 +5,7 @@ import { deleteLink } from "../../../services/apiQr";
 export function useDeleteLink() {
   const queryClient = useQueryClient();
 
-  const { mutate: deleteL, isPending } = useMutation({
+  const { mutate: deletLink, isPending } = useMutation({
     mutationFn: (id: string): Promise<void> => deleteLink(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -20,5 +20,5 @@ export function useDeleteLink() {
     retry: false,
   });
 
-  return { deleteL, isPending };
+  return { deletLink, isPending };
 }

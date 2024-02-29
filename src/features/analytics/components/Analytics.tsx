@@ -7,8 +7,8 @@ import CountryRow from "./CountryRow";
 import { getClicksData } from "../../../services/apiLinks";
 import { useUser } from "../../auth/useUser";
 import { useQuery } from "@tanstack/react-query";
-import { getRandomColor } from "../../../utils/helpers";
 import LineChartComp from "./LineChartComp";
+import { getCitiesClicks, getCountriesClicks, getDevicesObj, getReferresClicks } from "@/utils/extractData";
 
 const Analytics: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
@@ -29,54 +29,16 @@ const Analytics: React.FC = () => {
       <div className=" w-full h-screen flex items-center justify-center ">
         <p>You have no analytics right now ! *</p>
       </div>
-    );
+  );
 
-  const devicesObj = analyticsData?.count?.devices;
-  let devicesClicks: {
-    id: number;
-    name: string;
-    value: number;
-    color: string;
-  }[] = [];
-  if (devicesObj) {
-    devicesClicks = Object.keys(devicesObj).map((device, index) => ({
-      id: index + 1,
-      name: device.toLowerCase(),
-      value: devicesObj[device],
-      color: getRandomColor(),
-    }));
-  }
+  const devicesClicks = getDevicesObj(analyticsData);
+  const referrersClicks = getReferresClicks(analyticsData);
+  const countriesClicks = getCountriesClicks(analyticsData);
+  const citiesClicks = getCitiesClicks(analyticsData);
 
-  const referrersObj = analyticsData?.count?.referrerDomains;
-  let referrersClicks: { id: number; name: string; value: number }[] = [];
-  if (referrersObj) {
-    referrersClicks = Object.keys(referrersObj).map((referrer, index) => ({
-      id: index + 1,
-      name: referrer.toLowerCase(),
-      value: referrersObj[referrer],
-    }));
-  }
+  
 
-  const countriesObj = analyticsData?.count?.country_name;
-  let countriesClicks: { id: number; name: string; clicks: number }[] = [];
-  if (countriesObj) {
-    countriesClicks = Object.keys(countriesObj).map((country, index) => ({
-      id: index + 1,
-      name: country.toLowerCase(),
-      clicks: countriesObj[country],
-    }));
-  }
-  const citiesObj = analyticsData?.count?.Location;
-  let citiesClicks: { id: number; name: string; clicks: number }[] = [];
-  if (citiesObj) {
-    citiesClicks = Object.keys(citiesObj).map((city, index) => ({
-      id: index + 1,
-      name: city.toLowerCase(),
-      clicks: citiesObj[city],
-    }));
-  }
-
-  // const countryCodes = analyticsData?.count?.country_code || {};
+  
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -112,20 +74,7 @@ const Analytics: React.FC = () => {
       <div className=" p-4 flex-col flex gap-3 sticky top-0 bg-gray-100 z-40">
         <div className=" flex items-center justify-between">
           <h1 className=" text-3xl font-semibold">Analytics</h1>
-          {/* <button className=" btn-primary flex items-center gap-1">
-            <BsPlusCircle /> Add module
-          </button> */}
         </div>
-        {/* <div className=" flex gap-2 justify-start w-full pb-5 border-b-2">
-          <button className=" p-2 border rounded flex items-center gap-1 bg-white ">
-            {" "}
-            <BsCalendar /> Filter By Created date
-          </button>
-          <button className=" p-2 border rounded flex items-center gap-1 bg-white">
-            {" "}
-            <BsCalendar /> Add filters
-          </button>
-        </div> */}
       </div>
       <div className="flex 3xl:flex-col w-full gap-4">
         <div className="flex flex-col w-full">

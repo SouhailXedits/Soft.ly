@@ -17,11 +17,11 @@ import { Suspense, lazy } from "react";
 
 import LinksLayout from "./features/links";
 const CreateLinkForm = lazy(
-  () => import("./features/links")
+  () => import("./features/links/components/CreateLinkForm")
 );
 const QrCodesLayout = lazy(() => import("./features/qr-codes"));
 const CreateQRForm = lazy(
-  () => import("./features/qr-codes")
+  () => import("./features/qr-codes/components/CreateQRForm")
 );
 
 function App() {
