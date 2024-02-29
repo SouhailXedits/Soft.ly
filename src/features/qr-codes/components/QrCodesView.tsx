@@ -27,7 +27,7 @@ function QRCodesLayout() {
   const allUrls = data?.getUrlsWithUserId || [];
   return (
     <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto h-screen">
-      {allUrls?.length !== 0 ? (
+      {allUrls?.length > 0 ? (
         <div className=" flex items-center justify-between w-full">
           <h2 className=" text-3xl font-bold ">QR Codes</h2>
         </div>
@@ -35,7 +35,7 @@ function QRCodesLayout() {
         ""
       )}
 
-      {allUrls?.length !== 0 ? (
+      {allUrls?.length > 0 ? (
         allUrls?.map((qr: UrlData) => <QrRow key={qr.id} qr={qr} />)
       ) : (
         <>

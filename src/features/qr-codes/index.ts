@@ -1,2 +1,2 @@
-import QRCodesLayout from "./components/QrCodesLayout";
+import QRCodesLayout from "./components/QrCodesView";
 export default QRCodesLayout;

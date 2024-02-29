@@ -141,7 +141,7 @@ function LinksLayout() {
         </div>
       )}
 
-      {sorted?.length !== 0 ? (
+      {sorted?.length > 0 ? (
         <div className="flex items-center justify-between w-full ">
           <h2 className="text-3xl font-bold">Links</h2>
         </div>
@@ -149,7 +149,7 @@ function LinksLayout() {
         ""
       )}
 
-      {sorted?.length !== 0 &&
+      {sorted?.length > 0 &&
         sorted?.map((Newlink: IShortenedUrl) => (
           <ShortenedUrl
             link={Newlink}
