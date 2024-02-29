@@ -1,47 +1,43 @@
+import { Link } from "react-router-dom";
+import { useShorterUrl } from "../hooks/useShortenLink";
 import { ChangeEvent, useState } from "react";
 import { BsArrowRight, BsLockFill } from "react-icons/bs";
-import { useUser } from "../auth/useUser";
+import { useUser } from "../../auth/useUser";
 import { DOMAIN_NAME } from "@/config";
 import AnimatedMulti from "@/ui/selects/MultiSelect";
-import { useUpdateLink } from "./hooks/useUpdateLink";
 
-function EditLinkForm({ oldData, setIsModalOpen }: any) {
-  // console.log(oldData);
-  const [title, setTitle] = useState(oldData.title);
-  const [back_half, setBackhalf] = useState(oldData.back_half);
-  const [longUrl, setUrl] = useState(oldData.longUrl);
-  // const { shortenUrl, isPending } = useShorterUrl();
-
+function CreateLinkForm() {
+  const [url, setUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [back_half, setBackhalf] = useState("");
   const [backHalfFormatWarning, setBackHalfFormatWarning] = useState(false);
+  const { shortenUrl, isPending } = useShorterUrl();
+  const isButtonDisabled = url === "" || backHalfFormatWarning;
   const { user } = useUser();
-  const oldTags = oldData.tags;
-  const [tags, setTags] = useState(oldTags);
+  const [tags, setTags] = useState([]);
+  console.log(tags);
   // if(isLoading ) return Loader
   const userId = user?.id as string;
-
-  const { updateUrl, isPending: isUpdating } = useUpdateLink();
   async function handleClick() {
-    const id = oldData.id;
-    const oldTagsIds = tags.map((tag: any) => tag._id || tag.value);
-    console.log({ id, title, back_half, oldTagsIds });
+    const tagsIds = tags.map((tag: any) => tag._id || tag.value);
+    console.log(tagsIds);
     if (userId) {
-      updateUrl({ id, title, back_half, tags: oldTagsIds, longUrl });
+      shortenUrl({ url, title, userId, back_half, tags: tagsIds });
     }
-    setIsModalOpen(false);
   }
 
-  // const handleUrlBlur = () => {
-  //   let updatedUrl = url.trim();
+  const handleUrlBlur = () => {
+    let updatedUrl = url.trim();
 
-  //   if (
-  //     updatedUrl !== "" &&
-  //     !updatedUrl.startsWith("http://") &&
-  //     !updatedUrl.startsWith("https://")
-  //   ) {
-  //     updatedUrl = "https://" + updatedUrl + "/";
-  //     setUrl(updatedUrl);
-  //   }
-  // };
+    if (
+      updatedUrl !== "" &&
+      !updatedUrl.startsWith("http://") &&
+      !updatedUrl.startsWith("https://")
+    ) {
+      updatedUrl = "https://" + updatedUrl + "/";
+      setUrl(updatedUrl);
+    }
+  };
 
   const handleBackHalfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newBackHalf = e.target.value;
@@ -58,18 +54,18 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
   const domainName = DOMAIN_NAME;
 
   return (
-    <div className="flex bg-white px-12 py-7 justify-center">
+    <div className="flex bg-white min-h-screen px-12 py-7 justify-center">
       <div className=" flex flex-col justify-between">
         <div className="flex flex-col basis-[60%] px-5 py-10 gap-3 relative">
+          <h1 className=" text-3xl font-bold">Create new</h1>
           <p>Destination URL</p>
           <input
             className="form-input"
             type="text"
             placeholder="https://example.com/my-long-url"
-            defaultValue={oldData.longUrl}
-            // value={oldData.longUrl}
-            // disabled
+            value={url}
             onChange={(e) => setUrl(e.target.value)}
+            onBlur={handleUrlBlur}
           />
 
           <h1 className=" text-xl font-bold mt-6 mb-2">Code details</h1>
@@ -77,7 +73,7 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
           <input
             className="form-input"
             type="text"
-            defaultValue={oldData.title}
+            defaultValue={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <h1 className=" text-2xl font-bold mt-4 pt-6 border-t-2 ">
@@ -109,7 +105,7 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
               <input
                 type="text"
                 className="form-input w-full"
-                defaultValue={oldData.back_half}
+                defaultValue={back_half}
                 onChange={handleBackHalfChange}
               />
               {backHalfFormatWarning && (
@@ -121,21 +117,21 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
           </div>
           <div>
             <p className=" text-lg text-left pb-2">Tags : </p>
-            <AnimatedMulti tags={tags} userId={userId} setTags={setTags} />
+            <AnimatedMulti userId={userId} setTags={setTags} tags={[]} />
           </div>
         </div>
-        <div className="px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
-          {/* <Link to="/" className="border px-4 py-1.5 rounded">
+        <div className=" sticky px-4 bottom-0 py-3 flex justify-end space-x-4 items-center  border bg-white ">
+          <Link to="/" className="border px-4 py-1.5 rounded">
             Cancel
-          </Link> */}
+          </Link>
           <button
             onClick={handleClick}
-            disabled={isUpdating || backHalfFormatWarning}
-            className={`btn-primary flex items-center gap1 disabled:opacity-60 disabled:cursor-not-allowed ${
-              isUpdating ? "opacity-50" : ""
+            disabled={isButtonDisabled || isPending || backHalfFormatWarning}
+            className={`btn-primary flex items-center gap1 disabled:cursor-not-allowed ${
+              isButtonDisabled ? "opacity-50" : ""
             }`}
           >
-            Edit Short Link <BsArrowRight />
+            Generate Short Link <BsArrowRight />
           </button>
         </div>
       </div>
@@ -143,4 +139,4 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
   );
 }
 
-export default EditLinkForm;
+export default CreateLinkForm;

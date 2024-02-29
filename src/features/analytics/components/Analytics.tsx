@@ -1,41 +1,35 @@
 import React, { useState } from "react";
-import { BsArrowLeftShort } from "react-icons/bs";
-import PieChartComp from "./components/PieChartComp";
-import BarChartComp from "./components/BarChartComp";
-import CountryRow from "./components/CountryRow";
+import { BsGraphUp } from "react-icons/bs";
+import PieChartComp from "./PieChartComp";
+import BarChartComp from "./BarChartComp";
+import CountryRow from "./CountryRow";
 // import WorldMap from "./components/WorldMap";
-import { getClicksDataByUrl, getUrl } from "../../services/apiLinks";
+import { getClicksData } from "../../../services/apiLinks";
+import { useUser } from "../../auth/useUser";
 import { useQuery } from "@tanstack/react-query";
-import { getRandomColor } from "../../utils/helpers";
-import { Link, useSearchParams } from "react-router-dom";
-import { GQL_API_LINK } from "@/config";
-import request from "graphql-request";
-import ShorenedUrl from "../links/components/ShortenedUrl";
+import { getRandomColor } from "../../../utils/helpers";
+import LineChartComp from "./LineChartComp";
 
-const LinkDetails: React.FC = () => {
+const Analytics: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("countries");
-  const [searchParams] = useSearchParams();
-  const urlId = searchParams.get("id");
-  // const queryClient = useQueryClient()
-  const { data, isPending } = useQuery<any>({
-    queryKey: ["url", urlId],
-    queryFn: async ({ queryKey }) => {
-      const [, id] = queryKey;
-      const getUrlQuery = getUrl;
 
-      return request(GQL_API_LINK, getUrlQuery, {
-        id: id, 
-      });
-    },
-  }) ;
-
-
-  console.log(data);
-
+  const { user } = useUser();
+  const userId = user?.id;
+  if (userId === undefined) {
+    return <div>Loading...</div>;
+  }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data: analyticsData } = useQuery({
-    queryKey: ["url-analytics"],
-    queryFn: () => getClicksDataByUrl(urlId),
+    queryKey: ["analytics"],
+    queryFn: () => getClicksData(userId),
   });
+
+  if (analyticsData?.count.totalRequestCount === 0)
+    return (
+      <div className=" w-full h-screen flex items-center justify-center ">
+        <p>You have no analytics right now ! *</p>
+      </div>
+    );
 
   const devicesObj = analyticsData?.count?.devices;
   let devicesClicks: {
@@ -83,14 +77,23 @@ const LinkDetails: React.FC = () => {
   }
 
   // const countryCodes = analyticsData?.count?.country_code || {};
+
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
+  const fakeData = [
+    { name: "12/11", value: 12 },
+    { name: "12/12", value: 4 },
+    { name: "12/13", value: 6 },
+    { name: "12/14", value: 7 },
+    { name: "12/15", value: 9 },
+    { name: "12/16", value: 3 },
+  ];
 
   const renderChart = (chartComponent: React.ReactNode, filterby: string) => (
-    <div className="flex bg-white p-6 rounded-xl flex-col items-center">
-      <div className="flex gap-2 items-center justify-between self-start">
-        <div className="flex gap-2 mb-3 ">
+    <div className="flex bg-white p-6 rounded-xl flex-col">
+      <div className="flex gap-2 items-center justify-between">
+        <div className="flex gap-2 mb-2">
           {/* <button className="text-xl">
             <BsGripVertical />
           </button> */}
@@ -100,52 +103,59 @@ const LinkDetails: React.FC = () => {
           <BsThreeDots />
         </button> */}
       </div>
-      <div className=" w-full self-center overflow-auto ">{chartComponent}</div>
+      <div className=" overflow-auto ">{chartComponent}</div>
     </div>
   );
 
-  const link = data?.urls[0];
-
   return (
-    <div className="p-5 flex flex-col items-center">
-      <div className="flex flex-col w-full gap-4 max-w-[70rem] items-center">
-        <div className=" self-start">
-          <Link to="/links" className="flex items-center gap-2 ">
-            <BsArrowLeftShort /> Back to list
-          </Link>
+    <div className="p-5">
+      <div className=" p-4 flex-col flex gap-3 sticky top-0 bg-gray-100 z-40">
+        <div className=" flex items-center justify-between">
+          <h1 className=" text-3xl font-semibold">Analytics</h1>
+          {/* <button className=" btn-primary flex items-center gap-1">
+            <BsPlusCircle /> Add module
+          </button> */}
         </div>
+        {/* <div className=" flex gap-2 justify-start w-full pb-5 border-b-2">
+          <button className=" p-2 border rounded flex items-center gap-1 bg-white ">
+            {" "}
+            <BsCalendar /> Filter By Created date
+          </button>
+          <button className=" p-2 border rounded flex items-center gap-1 bg-white">
+            {" "}
+            <BsCalendar /> Add filters
+          </button>
+        </div> */}
+      </div>
+      <div className="flex 3xl:flex-col w-full gap-4">
         <div className="flex flex-col w-full">
-          <div>
-            {!isPending && <ShorenedUrl
-              link={link}
-              isSelected={false}
-              onSelect={() => console.log()}
-            />}
-          </div>
           <div className="flex flex-col gap-5">
-            {/* <div className="flex bg-white p-6 rounded-xl flex-col">
-              <div className="flex gap-2 items-center justify-between">
-                <div className="flex gap-2">
-                  <h2 className="text-lg font-medium">
-                    Clicks+scans on Short link
-                  </h2>
+            {renderChart(
+              <div className="flex flex-col gap-2 mt-6">
+                <div className="flex flex-col items-center gap-2">
+                  <p className="flex items-center gap-2 text-xl font-bold">
+                    <BsGraphUp />
+                    Dec 17, 2023
+                  </p>
+                  <p>{analyticsData?.count.totalRequestCount}</p>
                 </div>
-                <button className="rounded border p-2">
-                  <BsThreeDots />
-                </button>
-              </div>
-              <div>
-                <WorldMap countries={countryCodes} />
-              </div>
-              
-            </div> */}
+                {/* <div className="flex flex-col items-center pt-5 border-t gap-2">
+                  <p className="flex items-center gap-2 text-xl font-bold">
+                    <BsGraphUp />
+                    Dec 17, 2023
+                  </p>
+                  <p>48 clicks + scans</p>
+                </div> */}
+              </div>,
+              "total clicks"
+            )}
 
-            {/* {renderChart(
+            {renderChart(
               <div className="pt-5 mt-5">
-                <LineChartComp data={data} />
+                <LineChartComp data={fakeData} />
               </div>,
               "over time"
-            )} */}
+            )}
             {/* 
             {renderChart(
               <div className="flex flex-col gap-2 mt-6">
@@ -173,25 +183,6 @@ const LinkDetails: React.FC = () => {
               </div>,
               "in world map"
             )} */}
-          </div>
-        </div>
-
-        <div className="flex flex-col w-full">
-          <div className="flex flex-col gap-5">
-            {renderChart(
-              <div>
-                <PieChartComp data={devicesClicks} />
-              </div>,
-              "device clicks"
-            )}
-
-            {renderChart(
-              <div className="mt-8">
-                <BarChartComp data={referrersClicks} />
-              </div>,
-              "referrer"
-            )}
-
             {renderChart(
               <div>
                 <div className="bg-gray-300 flex items-center rounded-full p-1 justify-between gap-1 mt-4 mb-8">
@@ -228,11 +219,28 @@ const LinkDetails: React.FC = () => {
                     : countriesClicks?.map((country) => (
                         <CountryRow key={country.id} country={country} />
                       ))}
-
                   {/* <DataRow data={data}/> */}
                 </div>
               </div>,
-              "by countries"
+              "by Countries"
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col w-full">
+          <div className="flex flex-col gap-5">
+            {renderChart(
+              <div>
+                <PieChartComp data={devicesClicks} />
+              </div>,
+              "device clicks"
+            )}
+
+            {renderChart(
+              <div className="mt-8">
+                <BarChartComp data={referrersClicks} />
+              </div>,
+              "referrer"
             )}
           </div>
         </div>
@@ -241,4 +249,4 @@ const LinkDetails: React.FC = () => {
   );
 };
 
-export default LinkDetails;
+export default Analytics;

@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
-import Home from "./features/home/Home";
+import Home from "./features/home";
 import LoginForm from "./features/auth/login/LoginForm";
 import Loader from "./ui/Loader";
 import SignupForm from "./features/auth/sign-up/SignupForm";
@@ -11,19 +11,17 @@ import RegisterUser from "./features/auth/sign-up/RegisterUser";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import NotFound from "./ui/NotFound";
 import { Toaster } from "react-hot-toast";
-import Analytics from "./features/analytics/Analytics";
-import LinkDetails from "./features/link-details/LinkDetails";
+import Analytics from "./features/analytics";
+import LinkDetails from "./features/link-details";
 import { Suspense, lazy } from "react";
 
-import LinksLayout from "./features/links/LinksLayout"
+import LinksLayout from "./features/links";
 const CreateLinkForm = lazy(
-  () => import("./features/links/CreateLinkForm")
+  () => import("./features/links")
 );
-const QrCodesLayout = lazy(
-  () => import("./features/qr-codes/QrCodesLayout")
-);
+const QrCodesLayout = lazy(() => import("./features/qr-codes"));
 const CreateQRForm = lazy(
-  () => import("./features/qr-codes/CreateQRForm")
+  () => import("./features/qr-codes")
 );
 
 function App() {
@@ -52,7 +50,7 @@ function App() {
         },
         {
           path: "/links",
-          element: <LinksLayout/>
+          element: <LinksLayout />,
           // element: (
           //   <Suspense fallback={<Loader />}>
           //     <LinksLayout />
@@ -138,7 +136,6 @@ function App() {
       loader: Loader,
       errorElement: <Error />,
     },
-
   ]);
 
   return (

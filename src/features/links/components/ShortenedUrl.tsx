@@ -1,5 +1,3 @@
-
-
 import {
   BsThreeDots,
   // BsFillPencilFill,
@@ -18,7 +16,7 @@ import CopyToClipboardButton from "../../../utils/CopyToClipBoard";
 import { useDeleteLink } from "../hooks/useDeleteLink";
 import { Link } from "react-router-dom";
 import { shortenedUrlProps } from "../../../types";
-import EditLinkForm from "../EditLinkForm";
+import EditLinkForm from "../hooks/EditLinkForm";
 
 const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const [isUrlCollapsed, setIsUrlCollapsed] = useState(true);
@@ -56,13 +54,15 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
     };
   }, [isOpenOptionsModal]);
 
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const editmodalRef = useRef<any>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event:any) => {
-      if (editmodalRef.current && !editmodalRef.current.contains(event.target)) {
+    const handleClickOutside = (event: any) => {
+      if (
+        editmodalRef.current &&
+        !editmodalRef.current.contains(event.target)
+      ) {
         setIsModalOpen(false);
       }
     };
@@ -81,16 +81,15 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
   const shortenedUrl = isUrlCollapsed
     ? `${link.longUrl.slice(0, 30)} ${link.longUrl.length > 30 ? "..." : ""}`
     : link.longUrl;
-  
+
   console.log(link);
-  const { tags:allTags } = link;
-  const transformedTags = allTags.map((item:any) => ({
+  const { tags: allTags } = link;
+  const transformedTags = allTags.map((item: any) => ({
     ...item,
     value: item.id, // Replace the value property with the id property
   }));
   const transformedData = { ...link, tags: transformedTags };
-  console.log(transformedData)
-  
+  console.log(transformedData);
 
   return (
     <div
@@ -205,7 +204,6 @@ const ShorenedUrl = ({ link, isSelected, onSelect }: shortenedUrlProps) => {
             <div className=" flex items-center gap-1">
               <span className=" break-keep">tags :</span>
               <div className=" max-w-[400px] flex gap-1 flex-wrap">
-
                 {link.tags?.map((tag: any) => (
                   <p key={tag.id} className=" bg-stone-200 px-1 rounded">
                     {tag.label}

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import ProgressComp from "./Components/ProgressComp";
-import HeadingCTA from "./Components/HeadingCTA";
+import ProgressComp from "./ProgressComp";
+import HeadingCTA from "./HeadingCTA";
 
 function Home() {
   return (
@@ -9,8 +9,8 @@ function Home() {
         <h1 className=" text-3xl font-bold">Your Connections Platform</h1>
       </div>
       <div className=" bg-white rounded-lg p-3 flex lg:flex-col justify-around gap-3">
-        <HeadingCTA variation="url"/>
-        <HeadingCTA variation="qrCode"/>
+        <HeadingCTA variation="url" />
+        <HeadingCTA variation="qrCode" />
       </div>
       <ProgressComp />
     </div>

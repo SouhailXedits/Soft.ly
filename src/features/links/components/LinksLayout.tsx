@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import ShortenedUrl from "./components/ShortenedUrl";
+import ShortenedUrl from "./ShortenedUrl";
 import { request } from "graphql-request";
 
 import { useEffect, useRef, useState } from "react";
-import { useUser } from "../auth/useUser";
-import { GQL_API_LINK } from "../../config";
-import { getUrls } from "../../services/apiLinks";
-import { ApiResponse } from "../../types";
+import { useUser } from "../../auth/useUser";
+import { GQL_API_LINK } from "../../../config";
+import { getUrls } from "../../../services/apiLinks";
+import { ApiResponse } from "../../../types";
 import { BsCalendar } from "react-icons/bs";
 import DateRangePicker from "@/ui/calendars/DateRangePicker";
 function LinksLayout() {
