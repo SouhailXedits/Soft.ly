@@ -20,11 +20,11 @@ const LinkDetails: React.FC = () => {
   const { data, isPending } = useQuery<any>({
     queryKey: ["url", urlId],
     queryFn: async ({ queryKey }) => {
-      const [, id] = queryKey; // Destructure the queryKey
+      const [, id] = queryKey;
       const getUrlQuery = getUrl;
 
       return request(GQL_API_LINK, getUrlQuery, {
-        id: id, // Pass the variable as expected by the operation
+        id: id, 
       });
     },
   }) ;
