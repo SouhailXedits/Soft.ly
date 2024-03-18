@@ -12,7 +12,6 @@ export function useUpdateUser() {
       id: string;
       password?: string;
       role?: string;
-      shortsLimits?: string;
       email?: string;
     }) => updateUserApi(userData),
     onSuccess: () => {
