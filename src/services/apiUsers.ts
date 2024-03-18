@@ -44,11 +44,10 @@ export const updateUser = async (userData: any) => {
       },
       body: JSON.stringify({
         query: `
-          mutation UpdateUser($id: String!, $password: String,$LinksCount: String, $role: String) {
-            UpdateUser(id: $id, UpdateUser: { password: $password,LinksCount: $LinksCount , role: $role }) {
+          mutation UpdateUser($id: String!, $password: String, $role: String) {
+            UpdateUser(id: $id, UpdateUser: { password: $password , role: $role }) {
               id
               role
-              LinksCount
               email
             }
           }
@@ -56,7 +55,6 @@ export const updateUser = async (userData: any) => {
         variables: {
           id: userData.id,
           password: userData.password || null,
-          LinksCount: userData.shortsLimits || null,
           role: userData.role || null,
         },
       }),
@@ -87,7 +85,6 @@ export const fetchAllUsers = async () => {
             getAllUser {
               id
               role
-              LinksCount
               email
             }
           }

@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import ProgressComp from "./ProgressComp";
+// import { Link } from "react-router-dom";
+// import ProgressComp from "./ProgressComp";
 import HeadingCTA from "./HeadingCTA";
 
 function Home() {
@@ -12,7 +12,7 @@ function Home() {
         <HeadingCTA variation="url" />
         <HeadingCTA variation="qrCode" />
       </div>
-      <ProgressComp />
+      {/* <ProgressComp /> */}
     </div>
   );
 }

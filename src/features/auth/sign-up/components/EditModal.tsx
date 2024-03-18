@@ -8,7 +8,6 @@ interface EditUserModalProps {
   onEdit: (data: {
     password?: string;
     role: string;
-    shortsLimits: string;
   }) => void;
 }
 
@@ -19,11 +18,11 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
 }) => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(user.role);
-  const [shortsLimits, setShortsLimits] = useState(user.LinksCount);
+  // const [shortsLimits, setShortsLimits] = useState(user.LinksCount);
   const isPasswordValid = password.length >= 8 || password === "";
 
   const handleEdit = () => {
-    onEdit({ password, role, shortsLimits });
+    onEdit({ password, role });
 
     onClose();
   };
@@ -47,7 +46,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
             className="mt-1 p-2 border rounded-md w-full"
           />
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             htmlFor="shorts"
             className="block text-sm font-medium text-gray-700"
@@ -61,7 +60,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
             onChange={(e) => setShortsLimits(e.target.value)}
             className="mt-1 p-2 border rounded-md w-full"
           />
-        </div>
+        </div> */}
         <div className="mb-6">
           <label
             htmlFor="role"

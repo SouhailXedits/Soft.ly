@@ -27,7 +27,7 @@ const Analytics: React.FC = () => {
   if (analyticsData?.count.totalRequestCount === 0)
     return (
       <div className=" w-full h-screen flex items-center justify-center ">
-        <p>You have no analytics right now ! *</p>
+        <p>You have no analytics right now !</p>
       </div>
   );
 

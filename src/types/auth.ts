@@ -6,7 +6,6 @@ export interface ValidateTokenResult {
   validateToken: {
     id: string;
     role: string;
-    LinksCount: string;
     email: string;
   };
 }
@@ -19,7 +18,6 @@ export interface LoginFormValues {
 export interface User {
   id: string;
   role: string;
-  LinksCount: string;
   email: string;
 }
 
