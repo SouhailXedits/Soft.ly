@@ -71,7 +71,6 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
   const handleSaveEdit = async (data: {
     password?: string;
     role: string;
-    shortsLimits: string;
   }) => {
     try {
       const newData: { [key: string]: string } = {};
@@ -81,7 +80,6 @@ function UserRow({ user, selectedUsers, setSelectedUsers }: UserRowProps) {
       }
 
       newData.role = data.role;
-      newData.shortsLimits = data.shortsLimits;
 
       // console.log({ id: userId, ...newData });
       updateUser({ id: userId, ...newData });
