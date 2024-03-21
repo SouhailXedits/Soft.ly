@@ -1,12 +1,9 @@
 import { API_LINK } from "@/config";
 
 export async function getAllUserTags(userId: string) {
-  console.log(`${API_LINK}tag/user/${userId}`);
   const res = await fetch(`${API_LINK}tags/user/${userId}`);
   const data = await res.json();
-  console.log(data);
   if (res.ok) {
-    console.log(data);
     return data;
   }
   throw new Error(data.message);

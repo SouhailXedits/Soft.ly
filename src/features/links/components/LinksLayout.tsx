@@ -33,8 +33,8 @@ function LinksLayout() {
     },
   });
 
-  const allUrls = data?.getUrlsWithUserId.reverse() || ([] as any);
-  console.log(allUrls);
+  // const allUrls = data?.getUrlsWithUserId.reverse() || ([] as any);
+  // console.log(allUrls);
 
   const [filteredUrls, setFilteredUrls] = useState<any[]>([]);
   const [isFilterApplied, setIsFilterApplied] = useState(false);
@@ -53,7 +53,6 @@ function LinksLayout() {
       setFilteredUrls(data?.getUrlsWithUserId || []);
     }
   }, [data, filters, isFilterApplied]);
-  console.log(data);
 
   const handleLinkSelection = (linkId: number) => {
     const updatedSelectedLinks = [...selectedLinks];
@@ -111,7 +110,6 @@ function LinksLayout() {
     (a: any, b: any) =>
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
-  console.log(sorted);
   return (
     <div className="flex flex-col items-center text-center gap-5 px-4 py-9  w-full max-w-[70rem] mx-auto h-screen">
       <div className=" flex gap-2 justify-start w-full pb-5 border-b-2 ">

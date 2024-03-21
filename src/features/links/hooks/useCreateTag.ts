@@ -20,7 +20,6 @@ export function useCreateTag() {
         queryKey: ["user-tags"],
       });
       queryClient.setQueryData(["created-tag"], data);
-      console.log(data); 
       return data; 
     },
     onError: () => {
