@@ -23,7 +23,6 @@ function EditLinkForm({ oldData, setIsModalOpen }: any) {
   async function handleClick() {
     const id = oldData.id;
     const oldTagsIds = tags.map((tag: any) => tag._id || tag.value);
-    console.log({ id, title, back_half, oldTagsIds });
     if (userId) {
       updateUrl({ id, title, back_half, tags: oldTagsIds, longUrl });
     }
