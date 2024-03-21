@@ -21,9 +21,7 @@ export default function AnimatedMulti({
     queryKey: ["user-tags", userId],
     queryFn: () => getAllUserTags(userId),
   });
-
-  console.log(tags);
-  console.log(oldTags);
+;
   const oldReformedTags = oldTags?.map((tag: any) => ({
     value: tag._id,
     label: tag.label,
@@ -36,11 +34,8 @@ export default function AnimatedMulti({
     value: tag._id,
     label: tag.label,
   }));
-  console.log(options);
   const handleKeyDown = async (event: any) => {
-    if (event.key === "Enter" && inputValue.trim() !== "") {
-      console.log("clicked");
-      console.log(selectedOptions);
+    if (event.key === "Enter" && inputValue.trim() !== "") {;
 
       const newOption = { value: inputValue.trim(), label: inputValue.trim() };
       setSelectedOptions(selectedOptions && [...selectedOptions, newOption]);
@@ -53,15 +48,11 @@ export default function AnimatedMulti({
       // }) as any;
       const existingTag = tags.find(
         (tag: any) => tag.label === inputValue.trim()
-      );
-      console.log(existingTag);
+      );;
       if (existingTag) {
         setSelectedOptions(selectedOptions.concat(existingTag));
-        
-        console.log("already exists");
         return;
       }
-      console.log("created");
       createTag({
         userId,
         value: inputValue.trim(),
@@ -69,7 +60,6 @@ export default function AnimatedMulti({
       }) as any;
       setTimeout(() => {
         const createdTag = queryClient.getQueryData(["created-tag"]) as any;
-        console.log(createdTag);
         const { _id, label } = createdTag;
         setTags([...selectedOptions, createdTag]);
         setSelectedOptions([
@@ -86,14 +76,12 @@ export default function AnimatedMulti({
   // console.log(tags);
 
   const handleChange = (selectedOptions: any) => {
-    console.log(selectedOptions);
     setTags(selectedOptions);
     setSelectedOptions(selectedOptions);
   };
   const customNoOptionsMessage = ({ inputValue }: any) => {
     return `No options found. Press Enter to add "${inputValue}" as a new option.`;
-  };
-  console.log(selectedOptions);
+  };;
 
   return (
     <Select

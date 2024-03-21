@@ -77,8 +77,6 @@ export async function getShorterUrl({
     }
   `;
 
-  console.log(user_id);
-
   try {
     const result = await client.mutate({
       mutation,
@@ -90,7 +88,6 @@ export async function getShorterUrl({
         tags,
       },
     });
-    console.log(result);
     return result.data;
   } catch (error) {
     console.error("Error during createShortLink mutation:", error);
@@ -240,8 +237,7 @@ export const updateUrl = async (urlData: {
   back_half?: string;
   longUrl?: string;
 }) => {
-  try {
-    console.log(urlData);
+  try {;
     // const newTags = urlData.tags?.map((tag:any) => (tag.id))
     // console.log(newTags);
     const response = await fetch(GQL_API_LINK, {
@@ -284,14 +280,11 @@ export const updateUrl = async (urlData: {
       }),
     });
 
-    const data = await response.json();
-    console.log(data);
+    const data = await response.json();;
 
     if (response.ok) {
-      console.log(data);
       return data.data.updateUser;
     } else {
-      console.log(data);
       throw new Error(data.errors?.[0].message || "Failed to update url");
     }
   } catch (error) {

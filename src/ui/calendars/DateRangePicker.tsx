@@ -11,7 +11,6 @@ export default function DateRangePicker({ setdate, defaultSelected }: any) {
   //   to: addDays(pastMonth, 4),
   // };
   const [range, setRange] = useState<DateRange | undefined>(defaultSelected);
-  console.log(range);
   useEffect(() => {
     if (range) {
       // If only 'from' is selected and 'to' is not selected, set 'to' to be the same as 'from'
